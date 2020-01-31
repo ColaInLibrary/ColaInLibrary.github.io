@@ -1,6 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>加密文档测试</title>
+    <url>/archives/c9238145.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">请输入密码</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="1ab5b9a1b8504bca0b28d43dbac2d8a90545a7de0741771cab3a91eeb656f5dc">1038eaa1cb568772309049d3e58e65ff5d6140142e1be9bc8e5a3710c0424f9083f0387c773bfdba8ceec36540129dce5afc6032cc3c67b0de8a4c82fbc37ce0</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>工科生的基本功</category>
+        <category>GitHub</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+        <tag>Library</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多设备管理个人博客</title>
+    <url>/archives/3a0407be.html</url>
+    <content><![CDATA[<img src=" /images/20200130/00.jpg" width=50% />
+对于新电脑，如何管理已经搭建好的个人博客呢？
+<a id="more"></a>
+
+<h1 id="〇、前言"><a href="#〇、前言" class="headerlink" title="〇、前言"></a>〇、前言</h1><p>当我们更换了一台电脑后，想更新博客内容，如果每次都新建一次网站，未免过于繁琐，因此需要一种方法来管理博客。</p>
+<h1 id="一、原理"><a href="#一、原理" class="headerlink" title="一、原理"></a>一、原理</h1><p>使用hexo搭建的个人博客是静态网页，如果能将网页的静态文件和生产网页的源文件分开管理，那将非常方便。Github本身的分支给我们提供了很好的解决思路。在Github上建立的个人网站的仓库，默认分支是<code>master</code>分支，个人网站的内容也是从这个分支生成的。我们可以新建一个<code>source</code>分支，来存放源文件。这样做有两个好处：</p>
+<ol>
+<li>将网页的静态文件与源文件分开管理；</li>
+<li>在新电脑上克隆源文件的时候，文件夹中的<code>.git</code>是相同的，如果是新建文件夹，那么这个不一样，会导致无法上传。</li>
+</ol>
+<h1 id="二、操作方法"><a href="#二、操作方法" class="headerlink" title="二、操作方法"></a>二、操作方法</h1><h2 id="2-1-源电脑上的操作方法"><a href="#2-1-源电脑上的操作方法" class="headerlink" title="2.1 源电脑上的操作方法"></a>2.1 源电脑上的操作方法</h2><p>直接在github的仓库中，找到<code>Branch：master</code>后的小箭头，输入<code>source</code>新建该分支。为了方便，将该分支在<code>Settings</code>-&gt;<code>Branches</code>中，将<code>source</code>分支设置为default，并Update。</p>
+<p>使用<code>git clone https://github.com/ColaInLibrary/ColaInLibrary.github.io</code>在电脑的其他位置克隆一个名为<code>ColaInLibrary.github.io</code>的文件夹，并将存放博客源文件全拷贝到该文件夹。</p>
+<p>使用<code>git branch</code>命令可以查看当前分支。依次执行<code>git add .</code>、<code>git commit -m &quot;自己修改的内容说明&quot;</code>、<code>git push origin source</code>，将网站的源文件提交至<code>source</code>分支。</p>
+<h2 id="2-2-新电脑上的操作方法"><a href="#2-2-新电脑上的操作方法" class="headerlink" title="2.2 新电脑上的操作方法"></a>2.2 新电脑上的操作方法</h2><h3 id="2-2-1-SSH的添加"><a href="#2-2-1-SSH的添加" class="headerlink" title="2.2.1 SSH的添加"></a>2.2.1 SSH的添加</h3><p>1.配置本机全局git环境</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">"1901151471@qq.com"</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">"ColaInLibrary"</span></span><br></pre></td></tr></table></figure>
+
+<p>2.生成SSH密钥</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">less ~/.ssh/id_rsa.pub          <span class="comment"># 验证是否之前生成过ssh的key，若有，则会出现一串秘钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="number">1901151471</span>@qq.com    <span class="comment"># 若无，则重新生成秘钥</span></span><br></pre></td></tr></table></figure>
+<p>3.Github网页配置<br>从网页上打开<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tLw==" title="https://github.com/">github<i class="fa fa-external-link"></i></span>，没有注册的话需要注册一个账号，注册后正常登录，从头像那里选择<code>settings</code>-&gt;<code>SSH and GPG keys</code>，填入刚刚生成的SSH秘钥，名字可以自己填。在Terminal中输入下列命令测试是否成功。</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>如果成功，会提示<code>Hi ColaInLibrary! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code></p>
+<h3 id="2-2-2-新电脑上博客的配置与发布"><a href="#2-2-2-新电脑上博客的配置与发布" class="headerlink" title="2.2.2 新电脑上博客的配置与发布"></a>2.2.2 新电脑上博客的配置与发布</h3><ol>
+<li>cd 欲存放源文件的目录</li>
+<li><code>git clone https://github.com/ColaInLibrary/ColaInLibrary.github.io</code></li>
+<li>打开<code>ColaInLibrary.github.io</code>文件夹，右键打开Terminal(Windows环境是Git Bash)，依次执行<code>npm install hexo</code>、<code>hexo init</code>、<code>npm install</code> 和 <code>npm install hexo-deployer-git</code>，将该文件夹配置为hexo相关环境</li>
+<li>安装相应的插件<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">npm install hexo-symbols-count-time --save</span><br><span class="line">npm install hexo-related-popular-posts --save</span><br><span class="line">npm install hexo-douban --save</span><br><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br><span class="line">npm install hexo-baidu-url-submit --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm uninstall hexo-generator-index --save</span><br><span class="line">npm install hexo-generator-index-pin-top --save</span><br><span class="line">npm install hexo-blog-encrypt --save</span><br></pre></td></tr></table></figure></li>
+<li>编写新的博客内容后，本地调试：<code>hexo clean &amp;&amp; hexo douban -bgm &amp;&amp; hexo g &amp;&amp; hexo s</code></li>
+<li>将静态网页推送到github：<code>hexo clean &amp;&amp; hexo douban -bgm &amp;&amp; hexo g &amp;&amp; hexo deploy</code></li>
+<li>如果所有文件均不涉密，依次执行<code>git add .</code>、<code>git commit -m &quot;自己修改的内容说明&quot;</code>、<code>git push origin source</code>，将网站的源文件提交至<code>source</code>分支。如果有博客内容加密，可以选择不执行这一步操作，即不更新source分支。</li>
+</ol>
+<blockquote>
+<p>注意：在新电脑上第二次及以后更新博客内容时，在第2步时可以执行<code>git pull</code>来更新自己电脑的本地仓库，如果有加密博客而博客源码又未存放至github，注意需要将加密博客从源电脑拷贝到新电脑的博客文件夹中才行。上述操作的第6步会将将静态网页文件推送到<code>master</code>分支，第7步会将源文件推送到<code>source</code>分支。</p>
+</blockquote>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p>1.<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIxMTkzNzYyL2Fuc3dlci83OTEwOTI4MA==" title="https://www.zhihu.com/question/21193762/answer/79109280">使用hexo，如果换了电脑怎么更新博客？<i class="fa fa-external-link"></i></span></p>
+]]></content>
+      <categories>
+        <category>工科生的基本功</category>
+        <category>GitHub</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+        <tag>Library</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用hexo+NexT+GitHub搭建个人博客</title>
+    <url>/archives/36e68834.html</url>
+    <content><![CDATA[<img src=" /images/20200128/00.jpg" width=50% />
+> 简要记录Ubuntu下用hexo搭建个人博客的一些关键步骤，不包含NexT主题的具体优化。
+
+<a id="more"></a>
+
+<h1 id="〇、前言"><a href="#〇、前言" class="headerlink" title="〇、前言"></a>〇、前言</h1><p>新换了一台电脑后，重搭建了一次博客，记录一些关键步骤及参考网页。本文实践的环境：Ubuntu16.04、NexT7.7、hexo是Ubuntu自动安装的。</p>
+<h1 id="一、安装环境"><a href="#一、安装环境" class="headerlink" title="一、安装环境"></a>一、安装环境</h1><p>1.移除hexo：</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">cd /usr/bin</span><br><span class="line">npm uninstall hexo -g</span><br></pre></td></tr></table></figure>
+<p>2.移除node和npm</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">sudo apt remove node</span><br><span class="line">sudo apt remove nodejs</span><br><span class="line">sudo apt remove npm</span><br></pre></td></tr></table></figure>
+
+<p>3.安装git</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+
+<p>4.安装nvm<br>这里的nvm实际上是node的包版本控制工具，在这里你可以找到各种你想要的版本，这里我们想要成功搭建肯定后面要安装稳定版的node了。直接在终端中执行下列语句</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">export NVM_DIR=<span class="string">"$HOME/.nvm"</span> &amp;&amp; (</span><br><span class="line">  git clone https://github.com/creationix/nvm.git <span class="string">"$NVM_DIR"</span></span><br><span class="line">  cd <span class="string">"$NVM_DIR"</span></span><br><span class="line">  git checkout `git describe --abbrev=<span class="number">0</span> --tags --match <span class="string">"v[0-9]*"</span> origin`</span><br><span class="line">) &amp;&amp; . <span class="string">"$NVM_DIR/nvm.sh"</span></span><br></pre></td></tr></table></figure>
+
+<p>5.配置开机自启<br>在你的<del>/.bashrc,</del>/.profile,或者~/.zshrc中加入如下配置</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">sudo gedit ~/.bashrc  <span class="comment"># 打开该文件，并将下面的语句直接复制到文件末尾，保存关闭</span></span><br><span class="line">export NVM_DIR=<span class="string">"$HOME/.nvm"</span></span><br><span class="line">[ -s <span class="string">"$NVM_DIR/nvm.sh"</span> ] &amp;&amp; . <span class="string">"$NVM_DIR/nvm.sh"</span></span><br></pre></td></tr></table></figure>
+
+<p>6.使用nvm安装node和npm<br>如果执行完上面的命令都没有问题，这里就应该要使用nvm来安装node和npm了，首先先检查远程仓库的版本</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">nvm ls-remote</span><br></pre></td></tr></table></figure>
+<p>如果网不好的情况下这一步骤可能会失败，如果失败再多试几次，或者找个网好的地方就能更下来了，我之前网络情况不太好大概执行了4/5次才刷出来。</p>
+<p>7.安装稳定版<br>如果上面那一步没问题的话，这里就开始安装node的稳定版了。</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">nvm install stable</span><br><span class="line">nvm use node            <span class="comment"># 启用安装好的版本</span></span><br><span class="line">nvm alias default node  <span class="comment"># 设置为默认版本</span></span><br></pre></td></tr></table></figure>
+
+<p>8.安装hexo<br>如果nvm安装完成且成功配置好稳定版以后，就可以安装hexo了，安装hexo的过程其实和大家之前搜的没什么不同，之前安装失败的主要问题，要么是版本不匹配，要么是版本过低，在github也搜索过作者回答大致是低一点的版本是会有bug，不过高版本已经修复了。这边还是再重复一遍吧。</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli         <span class="comment"># 安装hexo</span></span><br><span class="line">mkdir blog                      <span class="comment"># 新建一个文件夹用来存放博客</span></span><br><span class="line">hexo init blog                  <span class="comment"># 用hexoa初始化文件夹</span></span><br><span class="line">cd blog                         <span class="comment"># 打开博客文件夹</span></span><br><span class="line">npm install                     <span class="comment"># 安装npm</span></span><br><span class="line">npm update -g                   <span class="comment"># 更新npm</span></span><br><span class="line">hexo g                          <span class="comment"># 生成静态界面</span></span><br><span class="line">hexo s                          <span class="comment"># 开启本地服务</span></span><br></pre></td></tr></table></figure>
+
+<p>顺利的话,经过上述操作,可以在浏览器中通过网址<code>http://localhost:4000</code>打开一个静态网页,作为调试所用。</p>
+<h1 id="二、Git的环境配置"><a href="#二、Git的环境配置" class="headerlink" title="二、Git的环境配置"></a>二、Git的环境配置</h1><p>1.配置本机全局git环境</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">"1901151471@qq.com"</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">"ColaInLibrary"</span></span><br></pre></td></tr></table></figure>
+
+<p>2.生成SSH密钥</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">less ~/.ssh/id_rsa.pub          <span class="comment"># 验证是否之前生成过ssh的key，若有，则会出现一串秘钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="number">1901151471</span>@qq.com    <span class="comment"># 若无，则重新生成秘钥</span></span><br></pre></td></tr></table></figure>
+<p>3.Github网页配置<br>从网页上打开<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tLw==" title="https://github.com/">github<i class="fa fa-external-link"></i></span>，没有注册的话需要注册一个账号，注册后正常登录，从头像那里选择<code>settings</code>-&gt;<code>SSH and GPG keys</code>，填入刚刚生成的SSH秘钥，名字可以自己填。在Terminal中输入下列命令测试是否成功。</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>如果成功，会提示<code>Hi ColaInLibrary! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code></p>
+<p>4.博客文件夹与GitHub关联<br>打开blog文件夹，在根目录下有一个主题配置文件<code>_config.yml</code>，打开后，找到<code>deploy</code>，并加入下面的内容：</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:YourName/YourName.github.io.git <span class="comment"># 用户名改成你自己的</span></span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、推送博客到GitHub"><a href="#三、推送博客到GitHub" class="headerlink" title="三、推送博客到GitHub"></a>三、推送博客到GitHub</h1><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<h1 id="四、安装插件"><a href="#四、安装插件" class="headerlink" title="四、安装插件"></a>四、安装插件</h1><p>安装插件及配置参考<span class="exturl" data-url="aHR0cHM6Ly90ZGluZy50b3AvYXJjaGl2ZXMvNTY3ZGViZTAuaHRtbA==" title="https://tding.top/archives/567debe0.html">小丁的博客使用的插件<i class="fa fa-external-link"></i></span>。对于非重新建立网站，只需安装插件：</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">npm install hexo-symbols-count-time --save</span><br><span class="line">npm install hexo-related-popular-posts --save</span><br><span class="line">npm install hexo-douban --save</span><br><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br><span class="line">npm install hexo-baidu-url-submit --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm uninstall hexo-generator-index --save</span><br><span class="line">npm install hexo-generator-index-pin-top --save</span><br><span class="line">npm install hexo-blog-encrypt --save</span><br><span class="line">hexo clean &amp;&amp; hexo douban -bgm &amp;&amp; hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、一些其他的修改"><a href="#五、一些其他的修改" class="headerlink" title="五、一些其他的修改"></a>五、一些其他的修改</h1><ol>
+<li>底部增加网站运行时间:blog/themes/next/layout/_partials/footer.swig</li>
+<li>底部增加总访问量，修改掉主题配置文件中busuanzi的计数，增加提示语blog/themes/next/layout/_partials/footer.swig</li>
+<li>文章置顶：只需在博客源文件xx.md开始部分的<code>tags</code>后再添加一个<code>top: 100</code>，这个数字越大越靠前。置顶图标的设置：<code>blog/themes/next/layout/_macro/post.swig</code>文件，在 <div class="post-meta"> 的第一个 <span> 标签下的一段代码。</li>
+<li>文章加密：在博客源文件xx.md开始部分添加如下内容：<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">password: abcd</span><br><span class="line">abstract: 这是一篇加密的博客哦～</span><br><span class="line">message: 请输入密码</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h1><p>1.<span class="exturl" data-url="aHR0cHM6Ly90ZGluZy50b3A=" title="https://tding.top">小丁的个人博客<i class="fa fa-external-link"></i></span><br>2.<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Bhbjg2MTE5MDA3OS9hcnRpY2xlL2RldGFpbHMvODA4NjAxNTM=" title="https://blog.csdn.net/pan861190079/article/details/80860153">Ubuntu 上使用hexo+github打造个人blog<i class="fa fa-external-link"></i></span><br>3.<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hNmQwM2QxMzc4OGI=" title="https://www.jianshu.com/p/a6d03d13788b">linux 下 Hexo + GitHub 搭建个人博客<i class="fa fa-external-link"></i></span><br>4.<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9mMjI4NWQ2M2IzYTg=" title="https://www.jianshu.com/p/f2285d63b3a8">在github上搭建hexo个人博客（Linux-Ubuntu）<i class="fa fa-external-link"></i></span></p>
+]]></content>
+      <categories>
+        <category>工科生的基本功</category>
+        <category>GitHub</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+        <tag>Library</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>常用的数学基础知识集锦</title>
     <url>/archives/8586.html</url>
     <content><![CDATA[<img src=" /images/20191023/00.png" width=50% />
