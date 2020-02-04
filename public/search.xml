@@ -1,6 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Ubuntu安装NVIDIA显卡驱动</title>
+    <url>/archives/745f5887.html</url>
+    <content><![CDATA[<img src=" /images/20200204/00.jpg" width=50% />
+详细介绍Windows下安装Ubuntu双系统的方法。
+<a id="more"></a>
+
+<h1 id="〇、前言"><a href="#〇、前言" class="headerlink" title="〇、前言"></a>〇、前言</h1><p>近段时间做了一下用机器人做分拣的项目，现把相应的环境配置记录下来，方便后续再做这类项目时快速复现环境。从本篇开始，将它以专栏的形式记录下来。这里用一块显卡的原因是，深度学习训练完后的数据，在做机器人抓取时，需要用显卡来处理一些图像相关的数据。</p>
+<p>需要的环境：Ubuntu16.04+NVIDIA GTX 1060。</p>
+<h1 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h1><p>Ubuntu系统安装的教程参见<a href="https://colainlibrary.com/archives/292fe4d9.html">Windows下采用U盘安装Ubuntu双系统详细过程</a>。首先，根据显卡的型号(可以尝试用<code>sudo lspci | grep -i nvidia</code>命令来查看)，到官网相应的驱动。以我用的GTX 1060为例,到<span class="exturl" data-url="aHR0cHM6Ly93d3cuZ2Vmb3JjZS5jbi9kcml2ZXJz" title="https://www.geforce.cn/drivers">NVIDIA的GTX驱动官网<i class="fa fa-external-link"></i></span>找到对应的驱动版本，其中带有(Notebook)的是笔记本版本的，不带的是台式机的，下载时需要注意，如下图所示。</p>
+<p><img src="/images/20200204/01.png" alt="01"></p>
+<p>下载完成后记住驱动软件保存的路径，本文以(~/Downloads/Nvidiaxxx.run)为例。</p>
+<h1 id="二、卸载旧的驱动"><a href="#二、卸载旧的驱动" class="headerlink" title="二、卸载旧的驱动"></a>二、卸载旧的驱动</h1><p>如果原来已经安装过显卡驱动，需要先行卸载掉旧驱动。</p>
+<ul>
+<li><p>如果是从终端中以<code>apt-get install</code>方式安装的，执行下列语句进行卸载。</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">sudo apt-get --purge remove nvidia-*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果之前是以<code>.run</code>文件方式安装的，执行下列语句进行卸载。</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">cd 存放旧的Nvixxx.run路径</span><br><span class="line">sudo ./Nxxxx.run --uninstall  <span class="comment">#./Nxxx.run可以按tab键补全</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="三、安装新的显卡驱动"><a href="#三、安装新的显卡驱动" class="headerlink" title="三、安装新的显卡驱动"></a>三、安装新的显卡驱动</h1><ol>
+<li>运行<code>sudo gedit /etc/modprobe.d/blacklist.conf</code>，在打开的文件末尾添加：<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">blacklist nouveau</span><br><span class="line">options nouveau modeset=<span class="number">0</span></span><br></pre></td></tr></table></figure>
+添加完后保存关闭。</li>
+<li>运行<code>sudo update-initramfs -u</code>更新系统，更新完成后重启系统(一定要重启)。</li>
+<li>验证nouveau是否禁用成功。执行<code>lsmod | grep nouveau</code>，若无任何输出，则禁用成功。</li>
+<li>在第2步可能重启系统后无法正常进入桌面，不用担心，无论系统是否正常进入，都需要按下<code>Ctrl+Alt+F1</code>，在出现的界面依次输入用户名和回车。</li>
+<li>依次执行下列命令：<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">sudo service lightdm stop  <span class="comment">#禁用图形界面</span></span><br><span class="line">cd ~/Downloads             <span class="comment">#打开存放驱动文件的路径</span></span><br><span class="line">chmod +x ./NVIDIA-Linux-x86_64<span class="number">-1060.</span>run     <span class="comment">#给驱动文件修改权限</span></span><br></pre></td></tr></table></figure></li>
+<li>安装显卡驱动的命令如下。执行下面的命令后，一路默认安装即可。<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">sudo ./NVIDIA-Linux-x86_64<span class="number">-1060.</span>run -no-x-check -no-nouveau-check -no-opengl-files</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：如果上面的命令不添加最后的<code>-no-opengl-files</code>，安装完成后会出现循环登录的问题。或者说，如果出现了循环登录的问题，那就准备重装显卡驱动吧。</p>
+</blockquote>
+</li>
+<li>安装完成后，执行<code>sudo service lightdm start</code>，打开图形用户界面，之后正常登录即可。</li>
+</ol>
+<h1 id="四、验证显卡驱动是否安装成功"><a href="#四、验证显卡驱动是否安装成功" class="headerlink" title="四、验证显卡驱动是否安装成功"></a>四、验证显卡驱动是否安装成功</h1><p>显卡驱动安装完成后，可以执行<code>nvidia-smi</code>命令来查看显卡驱动是否安装成功，如果出现下面类似的画面表示显卡驱动安装成功。</p>
+<p><img src="/images/20200204/02.png" alt="02"></p>
+<blockquote>
+<p>说明：上面的图片是网上随便找的，逃～</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>机器人控制</category>
+        <category>专栏——基于深度学习的机器人无序分拣</category>
+      </categories>
+      <tags>
+        <tag>Library</tag>
+        <tag>Linux</tag>
+        <tag>机器人</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows下采用U盘安装Ubuntu双系统详细过程</title>
+    <url>/archives/292fe4d9.html</url>
+    <content><![CDATA[<img src=" /images/20200201/00.jpg" width=50% />
+详细介绍Windows下安装Ubuntu双系统的方法。
+<a id="more"></a>
+
+<h1 id="〇、前言"><a href="#〇、前言" class="headerlink" title="〇、前言"></a>〇、前言</h1><p>需要的硬件设备：一台已装好Windows的电脑、8G或更大的U盘、网络。</p>
+<p>需要的软件环境：Ubuntu16.04安装包。</p>
+<h1 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h1><h2 id="1-1-Windows下进行磁盘划分"><a href="#1-1-Windows下进行磁盘划分" class="headerlink" title="1.1 Windows下进行磁盘划分"></a>1.1 Windows下进行磁盘划分</h2><p>首先，进入Windows，对于win10，直接在左下角的搜索栏里搜索<code>磁盘管理</code>(或者右键<code>此电脑</code>-&gt;<code>管理</code>-&gt;<code>磁盘管理</code>)，找到电脑的磁盘划分。<br><img src="/images/20200201/01.jpg" alt="01"></p>
+<p>上图显示，此电脑有两块硬盘组成，一块是500G的SSD，一块是2T的机械硬盘。SSD上已经装了Win10，为了系统的快速响应，我们将Ubuntu也装在SSD上。因此，选择500G的SSD，右键-&gt;<code>压缩卷</code>，在弹出的对话框中输入压缩空间200G(204800M)，点击<code>压缩</code>，压缩完成后，会有一块200G的未分配区域，如下图所示。</p>
+<p><img src="/images/20200201/02.jpeg" alt="02"></p>
+<h2 id="1-2-U盘的处理"><a href="#1-2-U盘的处理" class="headerlink" title="1.2 U盘的处理"></a>1.2 U盘的处理</h2><p>在Ubuntu官网找到相应的系统镜像文件(.iso文件)，将解压后的文件复制到U盘。</p>
+<blockquote>
+<p>注意：对于UEFI格式的电脑，不要将U盘做成系统盘，只需要将系统镜像文件拷贝到U盘即可。这样做的好处是，U盘可见空间不会缩小，以后想再用该U盘直接删除Ubuntu系统文件即可。那哪些电脑是UEFI格式的电脑呢？事实上，现在(2020年)买到的新电脑几乎都是UEFI格式的。</p>
+</blockquote>
+<h1 id="二、安装Ubuntu"><a href="#二、安装Ubuntu" class="headerlink" title="二、安装Ubuntu"></a>二、安装Ubuntu</h1><p>1.准备工作完成后，准备安装Ubuntu。关机，并将装有Ubuntu的U盘插入，开机连续按F12(这里是Dell电脑，不同品牌电脑不一样)进入引导项选择，如下图所示。</p>
+<p><img src="/images/20200201/03.png" alt="03"></p>
+<p>2.选择自己的U盘启动，上图中是第一项<code>UEFI: KingstonData...</code>，进入Ubuntu的准备安装页面。</p>
+<p><img src="/images/20200201/04.png" alt="04"></p>
+<p>3.在这里可以选择第一项<code>Try Ubuntu</code>，会进入类似WindowsPE的系统，进去之后可以尝试Ubuntu的功能，也可以选择继续安装Ubuntu；选择第二项<code>Install Ubuntu</code>，可以直接开始安装。建议选择第一项，因为可以看到硬盘的情况，有个基本确认，这里可能遇到的问题会在第三节介绍。</p>
+<p>4.顺利进入<code>Try Ubuntu</code>后，会出现正常的桌面如下图所示。</p>
+<p><img src="/images/20200201/05.png" alt="05"></p>
+<p>在上图中，看左侧的侧边栏最下方，有两块硬盘图标，一块是Windows系统盘，另一块是本机的机械硬盘。点击桌面上的第二个图标<code>Install Ubuntu 16.04 LTS</code>，开始安装Ubuntu。</p>
+<p>5.接下来的四个小步骤忘记了顺序，但都会出现。</p>
+<ul>
+<li>选择语言，建议选择默认的英语，这样在以后用系统过程中，系统的系统文件夹及路径都是英文，会很方便；</li>
+<li>选择地区：Shanghai；</li>
+<li>选择是否更新以及安装其他的东西，都不选择。</li>
+</ul>
+<p><img src="/images/20200201/06.png" alt="06"></p>
+<ul>
+<li>选择安装方式，选第四个Something else，进入自定义的安装方式，这样会保留下Windows。</li>
+</ul>
+<p><img src="/images/20200201/07.png" alt="07"></p>
+<p>6.进入硬盘，选择安装系统引导项的位置。</p>
+<p><img src="/images/20200201/08.png" alt="08"></p>
+<p>上图最下方<code>Device for boot loader installation</code>的下拉列表，是选择安装Ubuntu系统引导项的地方，点开后看到有一系列的选择，可以看到有两块硬盘，分别标有512GB、2.0TB，选择标有512GB的那一项，表示把Ubuntu系统引导项安装在512GB的SSD上。</p>
+<p>7.Ubuntu分区。作为新手，只需要分两个区，一个是<code>swap</code>，一个是<code>/</code>。在第6步的图片中，可以看到有一个214769MB的<code>free space</code>，这个是在Windows下分出来装Ubuntu的空间。选中它，并点击<code>+</code>，如下图所示。</p>
+<p><img src="/images/20200201/09.png" alt="09"></p>
+<ul>
+<li>设置swap area。在<code>size</code>处填内存的大小，16G即16384M,一般填8192MB即可。选则主分区，<code>Use as</code>处打开下拉列表，选择<code>swap area</code>，如下图所示。</li>
+</ul>
+<p><img src="/images/20200201/10.png" alt="10"></p>
+<p>点击OK，设置好后如下图所示。从下图可以看出，<code>swap area</code>已经分好。</p>
+<p><img src="/images/20200201/09-2.png" alt="09-2"></p>
+<ul>
+<li>设置<code>/</code>。上图中的<code>free space</code>已经从原来的214769MB缩小为198385MB，再点击这块<code>free space</code>，点击<code>+</code>。在弹出的对话框中，<code>size</code>处默认全部大小全给<code>/</code>，选择逻辑分区，<code>Use as</code>选择<code>Ext4</code>，<code>Mount Point</code>选择<code>/</code>，如下图所示。</li>
+</ul>
+<p><img src="/images/20200201/11.png" alt="11"></p>
+<p>分好后如下图所示。可以看到，原来的那块<code>free space</code>已经消失了。</p>
+<p><img src="/images/20200201/12.png" alt="12"></p>
+<p>8.开始安装。点击上图中右下角的<code>Install now</code>，出现下图，点击<code>Continue</code>。</p>
+<p><img src="/images/20200201/13.png" alt="13"></p>
+<p>9.等待安装完成，一般用几分钟的时间即可。安装完成后，重启系统，开机时出现下图所示的页面，有<code>Ubuntu</code>和<code>Windows Boot Manager</code>两个，表示双系统已经安装好咯，大功告成！</p>
+<p><img src="/images/20200201/14.png" alt="14"></p>
+<h1 id="三、遇到的问题"><a href="#三、遇到的问题" class="headerlink" title="三、遇到的问题"></a>三、遇到的问题</h1><h2 id="3-1-硬盘缺失"><a href="#3-1-硬盘缺失" class="headerlink" title="3.1 硬盘缺失"></a>3.1 硬盘缺失</h2><p>在第二节中选择<code>Try Ubuntu</code>进入系统后，如果侧边栏左下角没有出现硬盘，如下图所示。</p>
+<p><img src="/images/20200201/15.png" alt="15"></p>
+<p>继续选择安装，会出现：</p>
+<p><img src="/images/20200201/16.png" alt="16"></p>
+<p>这表明进入Ubuntu安装时根本没有找到系统的硬盘。造成这样的原因是，Dell电脑的BIOS中<code>SATA Operation</code>中设置有问题。</p>
+<p>解决方案：重启电脑，按<code>F2</code>进入BIOS，选择<code>SATA Operation</code>，选择<code>AHCI</code>，确认后重启，再进入后按照第二节的步骤安装即可。</p>
+<h2 id="3-2-Windows进入失败"><a href="#3-2-Windows进入失败" class="headerlink" title="3.2 Windows进入失败"></a>3.2 Windows进入失败</h2><p>在第3.1节中，修改了<code>SATA Operation</code>后，Windows的引导项还在，但是无法进入了。解决方案：</p>
+<ol>
+<li>先将<code>AHCI</code>模式改为<code>Raid on</code>模式，正常进入Windows，按下<code>Windows+R</code>键，输入<code>msconfig</code>，选择<code>引导</code>，弹出如下对话框。</li>
+</ol>
+<p><img src="/images/20200201/17.png" alt="17"></p>
+<ol start="2">
+<li>选择<code>安全引导</code>，勾选<code>最小</code>，点击<code>确定</code>按钮，如果提示重启，暂不重启。</li>
+<li>单击<code>开始</code>菜单，选择<code>设置</code>，进入后选择<code>系统</code>，再选择<code>电源和睡眠</code>，选择<code>其他电源设置</code>。</li>
+<li>打开<code>电源选项</code>，找到<code>更改电源按钮的功能</code>，进入后，点击上方<code>更改当前不可用的设置</code>，接着在窗口下方<code>关机设置</code>中取消勾选第一项<code>启用快速启动(推荐)</code>，点击<code>保存修改</code>，然后重启电脑。</li>
+<li>重启时按<code>F2</code>，再将<code>Raid on</code>改为<code>AHCI</code>模式，正常启动后进入安全模式，再按下<code>Windows+R</code>键，输入<code>msconfig</code>，在引导界面取消勾选<code>安全引导</code>和<code>最小</code>。</li>
+<li>保存后，重启电脑，大功告成！</li>
+</ol>
+]]></content>
+      <categories>
+        <category>工科生的基本功</category>
+        <category>软件技术</category>
+      </categories>
+      <tags>
+        <tag>Library</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>加密文档测试</title>
     <url>/archives/c9238145.html</url>
     <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -38,10 +174,10 @@
 <p>使用<code>git clone https://github.com/ColaInLibrary/ColaInLibrary.github.io</code>在电脑的其他位置克隆一个名为<code>ColaInLibrary.github.io</code>的文件夹，并将存放博客源文件全拷贝到该文件夹。</p>
 <p>使用<code>git branch</code>命令可以查看当前分支。依次执行<code>git add .</code>、<code>git commit -m &quot;自己修改的内容说明&quot;</code>、<code>git push origin source</code>，将网站的源文件提交至<code>source</code>分支。</p>
 <h2 id="2-2-新电脑上的操作方法"><a href="#2-2-新电脑上的操作方法" class="headerlink" title="2.2 新电脑上的操作方法"></a>2.2 新电脑上的操作方法</h2><h3 id="2-2-1-SSH的添加"><a href="#2-2-1-SSH的添加" class="headerlink" title="2.2.1 SSH的添加"></a>2.2.1 SSH的添加</h3><p>1.配置本机全局git环境</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">"1901151471@qq.com"</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">"ColaInLibrary"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">"YourEmail"</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">"ColaInLibrary"</span></span><br></pre></td></tr></table></figure>
 
 <p>2.生成SSH密钥</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">less ~/.ssh/id_rsa.pub          <span class="comment"># 验证是否之前生成过ssh的key，若有，则会出现一串秘钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="number">1901151471</span>@qq.com    <span class="comment"># 若无，则重新生成秘钥</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">less ~/.ssh/id_rsa.pub          <span class="comment"># 验证是否之前生成过ssh的key，若有，则会出现一串秘钥</span></span><br><span class="line">ssh-keygen -t rsa -C YourEmail    <span class="comment"># 若无，则重新生成秘钥</span></span><br></pre></td></tr></table></figure>
 <p>3.Github网页配置<br>从网页上打开<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tLw==" title="https://github.com/">github<i class="fa fa-external-link"></i></span>，没有注册的话需要注册一个账号，注册后正常登录，从头像那里选择<code>settings</code>-&gt;<code>SSH and GPG keys</code>，填入刚刚生成的SSH秘钥，名字可以自己填。在Terminal中输入下列命令测试是否成功。</p>
 <figure class="highlight py"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 
@@ -103,14 +239,14 @@
 
 <p>顺利的话,经过上述操作,可以在浏览器中通过网址<code>http://localhost:4000</code>打开一个静态网页,作为调试所用。</p>
 <h1 id="二、Git的环境配置"><a href="#二、Git的环境配置" class="headerlink" title="二、Git的环境配置"></a>二、Git的环境配置</h1><p>1.配置本机全局git环境</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">"1901151471@qq.com"</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">"ColaInLibrary"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">"YourEmail"</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">"YourName"</span></span><br></pre></td></tr></table></figure>
 
 <p>2.生成SSH密钥</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">less ~/.ssh/id_rsa.pub          <span class="comment"># 验证是否之前生成过ssh的key，若有，则会出现一串秘钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="number">1901151471</span>@qq.com    <span class="comment"># 若无，则重新生成秘钥</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">less ~/.ssh/id_rsa.pub          <span class="comment"># 验证是否之前生成过ssh的key，若有，则会出现一串秘钥</span></span><br><span class="line">ssh-keygen -t rsa -C YourEmail    <span class="comment"># 若无，则重新生成秘钥</span></span><br></pre></td></tr></table></figure>
 <p>3.Github网页配置<br>从网页上打开<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tLw==" title="https://github.com/">github<i class="fa fa-external-link"></i></span>，没有注册的话需要注册一个账号，注册后正常登录，从头像那里选择<code>settings</code>-&gt;<code>SSH and GPG keys</code>，填入刚刚生成的SSH秘钥，名字可以自己填。在Terminal中输入下列命令测试是否成功。</p>
 <figure class="highlight py"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 
-<p>如果成功，会提示<code>Hi ColaInLibrary! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code></p>
+<p>如果成功，会提示<code>Hi YourName! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code></p>
 <p>4.博客文件夹与GitHub关联<br>打开blog文件夹，在根目录下有一个主题配置文件<code>_config.yml</code>，打开后，找到<code>deploy</code>，并加入下面的内容：</p>
 <figure class="highlight py"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:YourName/YourName.github.io.git <span class="comment"># 用户名改成你自己的</span></span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 
@@ -735,12 +871,12 @@ $$
 
 <h2 id="Client的main-cpp"><a href="#Client的main-cpp" class="headerlink" title="Client的main.cpp"></a>Client的main.cpp</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/shm.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"CKX.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"CShareMemory.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> key = <span class="number">66</span>;</span><br><span class="line">  ckx *p2 = <span class="keyword">new</span> ckx();</span><br><span class="line">  CShareMemory shmm;</span><br><span class="line">  <span class="keyword">int</span> id = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"sizeof *p2 is: "</span> &lt;&lt; <span class="keyword">sizeof</span>(*p2) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"id = "</span> &lt;&lt; id &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (id &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Create sharememory error!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"\n\n1.input data to sharememory\n2.get sharememory data\n3.destroy sharememory\ninput select:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; i;</span><br><span class="line">    <span class="keyword">if</span>(i &gt; <span class="number">3</span> || i &lt; <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">"Input error!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    id = shmm.get_ipc(key, <span class="keyword">sizeof</span>(*p2));</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"id = "</span> &lt;&lt; id &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">if</span>(id &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">"Get sharememory error!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    p2 = (ckx *)shmat(id, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span>(p2 &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">"Get sharememory address error!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">      p2 = <span class="literal">NULL</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span> (i) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>: &#123;</span><br><span class="line">	<span class="keyword">char</span> name[NAME_LEN];</span><br><span class="line">	<span class="keyword">int</span> age = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Input name:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	fflush(<span class="built_in">stdin</span>);</span><br><span class="line">	getchar();</span><br><span class="line">	gets(name);</span><br><span class="line">	<span class="built_in">strcpy</span>(p2-&gt;name, name);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Input age: "</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; age;</span><br><span class="line">	p2-&gt;age = age;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Write success!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>: &#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"name: "</span> &lt;&lt; p2-&gt;name &lt;&lt; <span class="string">"\t"</span> &lt;&lt; <span class="string">"age: "</span> &lt;&lt; p2-&gt;age &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">3</span>: &#123;</span><br><span class="line">	<span class="keyword">if</span>(shmm.destroy_sharememory() == <span class="number">-1</span>)</span><br><span class="line">	  <span class="built_in">cout</span> &lt;&lt; <span class="string">"-1"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	id = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(shmm.close_shm() == <span class="number">-1</span>) &#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">"shmdt error!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(id == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="Server的CMakeLists-txt-1"><a href="#Server的CMakeLists-txt-1" class="headerlink" title="Server的CMakeLists.txt"></a>Server的CMakeLists.txt</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">cmake_minimum_required(VERSION <span class="number">3.1</span><span class="number">.0</span>)</span><br><span class="line">project(shrmmTestClient)</span><br><span class="line"><span class="built_in">set</span> (CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line">include_directories(<span class="string">"./include/"</span>)</span><br><span class="line">add_executable(shrmmTestClient main.cpp ./src/CShareMemory.cpp)</span><br></pre></td></tr></table></figure>
+<h2 id="Client的CMakeLists-txt"><a href="#Client的CMakeLists-txt" class="headerlink" title="Client的CMakeLists.txt"></a>Client的CMakeLists.txt</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">cmake_minimum_required(VERSION <span class="number">3.1</span><span class="number">.0</span>)</span><br><span class="line">project(shrmmTestClient)</span><br><span class="line"><span class="built_in">set</span> (CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line">include_directories(<span class="string">"./include/"</span>)</span><br><span class="line">add_executable(shrmmTestClient main.cpp ./src/CShareMemory.cpp)</span><br></pre></td></tr></table></figure>
 
 <h2 id="程序运行结果"><a href="#程序运行结果" class="headerlink" title="程序运行结果"></a>程序运行结果</h2><p>1.从server中输入名字和年龄存储到共享内存中，并从client中读取：</p>
 <p><img src="/images/20190731shrmm/03.png" alt="03"><br><img src="/images/20190731shrmm/04.png" alt="04"></p>
 <p>2.从client中输入名字和年龄存储到共享内存中，并从server中读取：</p>
-<p><img src="/images/20190731shrmm/05.png" alt="05"><br><img src="s/images/20190731shrmm/06.png" alt="06"></p>
+<p><img src="/images/20190731shrmm/05.png" alt="05"><br><img src="/images/20190731shrmm/06.png" alt="06"></p>
 <blockquote>
 <p>Note：自己创建build文件夹并进行编译！</p>
 </blockquote>

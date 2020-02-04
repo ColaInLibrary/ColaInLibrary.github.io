@@ -57,7 +57,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://colainlibrary.com/images/20200130/00.jpg">
 <meta property="article:published_time" content="2020-01-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-01-31T10:49:04.171Z">
+<meta property="article:modified_time" content="2020-01-31T14:31:11.840Z">
 <meta property="article:author" content="Cola &amp; Library">
 <meta property="article:tag" content="GitHub">
 <meta property="article:tag" content="Library">
@@ -346,10 +346,10 @@
 <p>使用<code>git clone https://github.com/ColaInLibrary/ColaInLibrary.github.io</code>在电脑的其他位置克隆一个名为<code>ColaInLibrary.github.io</code>的文件夹，并将存放博客源文件全拷贝到该文件夹。</p>
 <p>使用<code>git branch</code>命令可以查看当前分支。依次执行<code>git add .</code>、<code>git commit -m &quot;自己修改的内容说明&quot;</code>、<code>git push origin source</code>，将网站的源文件提交至<code>source</code>分支。</p>
 <h2 id="2-2-新电脑上的操作方法"><a href="#2-2-新电脑上的操作方法" class="headerlink" title="2.2 新电脑上的操作方法"></a>2.2 新电脑上的操作方法</h2><h3 id="2-2-1-SSH的添加"><a href="#2-2-1-SSH的添加" class="headerlink" title="2.2.1 SSH的添加"></a>2.2.1 SSH的添加</h3><p>1.配置本机全局git环境</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">"1901151471@qq.com"</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">"ColaInLibrary"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">"YourEmail"</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">"ColaInLibrary"</span></span><br></pre></td></tr></table></figure>
 
 <p>2.生成SSH密钥</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">less ~/.ssh/id_rsa.pub          <span class="comment"># 验证是否之前生成过ssh的key，若有，则会出现一串秘钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="number">1901151471</span>@qq.com    <span class="comment"># 若无，则重新生成秘钥</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">less ~/.ssh/id_rsa.pub          <span class="comment"># 验证是否之前生成过ssh的key，若有，则会出现一串秘钥</span></span><br><span class="line">ssh-keygen -t rsa -C YourEmail    <span class="comment"># 若无，则重新生成秘钥</span></span><br></pre></td></tr></table></figure>
 <p>3.Github网页配置<br>从网页上打开<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tLw==" title="https://github.com/">github<i class="fa fa-external-link"></i></span>，没有注册的话需要注册一个账号，注册后正常登录，从头像那里选择<code>settings</code>-&gt;<code>SSH and GPG keys</code>，填入刚刚生成的SSH秘钥，名字可以自己填。在Terminal中输入下列命令测试是否成功。</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 
@@ -536,14 +536,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -621,12 +621,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">79k</span>
+    <span title="站点总字数">82k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:12</span>
+    <span title="站点阅读时长">1:15</span>
 </div>
 
 
