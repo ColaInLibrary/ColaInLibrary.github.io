@@ -280,7 +280,7 @@ reward_settings:
   comment: Donate us two cups of cola?
 
 reward:
-  wechatpay: /images/wechatpay.jpg
+  wechatpay: /images/wechatpay.png
   alipay: /images/alipay.jpg
   #bitcoin: /images/bitcoin.png
 
