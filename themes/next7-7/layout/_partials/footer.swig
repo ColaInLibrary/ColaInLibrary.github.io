@@ -112,6 +112,7 @@
 </div>
 
 <!-- 网站底部统计本站访问数量 -->
+<!--
 <div>
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
@@ -119,5 +120,5 @@
     <span class="post-meta-divider">|</span>
 已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
 </div>
-
+-->
 {{- next_inject('footer') }}
