@@ -9,6 +9,27 @@
   </url>
   
   <url>
+    <loc>https://colainlibrary.com/archives/3ea3bdaa.html</loc>
+    
+    <lastmod>2020-12-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://colainlibrary.com/archives/423d18b1.html</loc>
+    
+    <lastmod>2020-12-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://colainlibrary.com/archives/51886f65.html</loc>
+    
+    <lastmod>2020-12-27</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://colainlibrary.com/archives/42db6ec5.html</loc>
     
     <lastmod>2020-12-27</lastmod>
@@ -59,13 +80,6 @@
   
   <url>
     <loc>https://colainlibrary.com/archives/85e5f27f.html</loc>
-    
-    <lastmod>2020-07-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://colainlibrary.com/archives/51886f65.html</loc>
     
     <lastmod>2020-07-26</lastmod>
     
@@ -466,13 +480,6 @@
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/tags/MATLAB/</loc>
-    <lastmod>2020-12-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://colainlibrary.com/tags/%E8%8C%B6%E4%BD%99%E8%A3%A8%E8%B0%88/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
@@ -481,6 +488,13 @@
   
   <url>
     <loc>https://colainlibrary.com/tags/VMware/</loc>
+    <lastmod>2020-12-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://colainlibrary.com/tags/MATLAB/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -515,6 +529,13 @@
   </url>
   
   <url>
+    <loc>https://colainlibrary.com/tags/OpenCV/</loc>
+    <lastmod>2020-12-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://colainlibrary.com/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
@@ -523,13 +544,6 @@
   
   <url>
     <loc>https://colainlibrary.com/tags/ROS/</loc>
-    <lastmod>2020-12-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://colainlibrary.com/tags/OpenCV/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -573,13 +587,6 @@
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/</loc>
-    <lastmod>2020-12-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://colainlibrary.com/categories/%E8%8C%B6%E4%BD%99%E8%A3%A8%E8%B0%88/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
@@ -588,6 +595,13 @@
   
   <url>
     <loc>https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2020-12-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -615,14 +629,14 @@
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%97%A0%E5%BA%8F%E5%88%86%E6%8B%A3/</loc>
+    <loc>https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E6%9C%BA%E5%9C%BA%E8%A1%8C%E6%9D%8E%E7%AD%90%E5%88%86%E6%8B%A3%E9%A1%B9%E7%9B%AE/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E6%9C%BA%E5%9C%BA%E8%A1%8C%E6%9D%8E%E7%AD%90%E5%88%86%E6%8B%A3%E9%A1%B9%E7%9B%AE/</loc>
+    <loc>https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%97%A0%E5%BA%8F%E5%88%86%E6%8B%A3/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
