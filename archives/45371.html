@@ -59,7 +59,7 @@
 <meta property="og:image" content="https://colainlibrary.com/images/20190730boost/02.png">
 <meta property="og:image" content="https://colainlibrary.com/images/20190730boost/01.png">
 <meta property="article:published_time" content="2019-07-30T11:00:00.000Z">
-<meta property="article:modified_time" content="2020-01-29T13:57:52.768Z">
+<meta property="article:modified_time" content="2020-12-27T02:50:14.186Z">
 <meta property="article:author" content="Cola &amp; Library">
 <meta property="article:tag" content="Library">
 <meta property="article:tag" content="Linux">
@@ -300,7 +300,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>470</span>
+              <span>498</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -328,7 +328,7 @@
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>boost库是子Linux环境下用来做串口通信的一个库，本篇主要介绍该库的安装方法。</p>
 <h1 id="boost库的安装"><a href="#boost库的安装" class="headerlink" title="boost库的安装"></a>boost库的安装</h1><h2 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h2><p>可以从<span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvYm9vc3QvZmlsZXMvYm9vc3QvMS42OS4wLw==" title="https://sourceforge.net/projects/boost/files/boost/1.69.0/">此链接<i class="fa fa-external-link"></i></span>下载相应的boost 1.69的安装包，也可以自行从官网上下载安装包。下载完成后，右键解压，极好存放的路径。</p>
 <h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><p>在Terminal中，打开安装包存放路径，执行下列语句进行安装。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd 安装包存放路径</span><br><span class="line">./boostrap.sh</span><br><span class="line">./b2</span><br><span class="line">sudo ./b2 --prefix=/usr/local install</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> 安装包存放路径</span><br><span class="line">./bootstrap.sh          <span class="comment">## 注意检查文件名拼写是否和解压后的文件夹中的名字一样</span></span><br><span class="line">./b2</span><br><span class="line">sudo ./b2 --prefix=/usr/<span class="built_in">local</span> install</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>参考链接<span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXhpZGMuY29tL0xpbnV4LzIwMTktMDMvMTU3NjA1Lmh0bQ==" title="https://www.linuxidc.com/Linux/2019-03/157605.htm">Linux下编译安装boost 1.69库全过程<i class="fa fa-external-link"></i></span></p>
@@ -360,6 +360,9 @@
       <div class="popular-posts-title"><a href="/archives/ce622490.html" rel="bookmark">机场行李筐分拣项目环境安装汇总</a></div>
     </li>
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/42db6ec5.html" rel="bookmark">Ubuntu终端科学上网的方法</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/67893eb3.html" rel="bookmark">Darknet Yolov4创建数据集并使用</a></div>
     </li>
     <li class="popular-posts-item">
@@ -367,9 +370,6 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/c836ec8d.html" rel="bookmark">Ubuntu下CUDA和cuDNN的安装</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/fcc8ee58.html" rel="bookmark">Linux下VS Code的设置方法</a></div>
     </li>
   </ul>
 
@@ -424,8 +424,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/archives/24574.html" rel="prev" title="Linux下QT环境的配置">
-      <i class="fa fa-chevron-left"></i> Linux下QT环境的配置
+    <a href="/archives/22984.html" rel="prev" title="C++中配置文件的读取">
+      <i class="fa fa-chevron-left"></i> C++中配置文件的读取
     </a></div>
       <div class="post-nav-item">
     <a href="/archives/10600.html" rel="next" title="Linux下共享内存的使用方法">
@@ -507,7 +507,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -595,7 +595,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">177k</span>
+    <span title="站点总字数">178k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
