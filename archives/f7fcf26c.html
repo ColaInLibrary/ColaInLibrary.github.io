@@ -338,9 +338,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <img src=" /images/20200529/00.jpeg" width=50% />
-介绍Windows环境下使用VS Code加LaTeX的配置方法。
-
+        <p><img src=" /images/20200529/00.jpeg" width=50% /><br>介绍Windows环境下使用VS Code加LaTeX的配置方法。</p>
 <a id="more"></a>
 <h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>对于要写论文的科研人员来说，LaTeX是必不可少的神兵利器，但是LaTeX自带的TeX编辑器界面不够美观，之前用过TeX Studio，个人感觉还比较好用。但对于已经深陷Emacs快捷键不能自拔的我来说，当然还是VS Code更香！本文所用软件环境为：Windows + VS Code + LaTeX Workshop8.9.0 + TeXLive2020 + SumatraPDF。</p>
 <p>哦，我还想说一点，对于一个新的VS Code用户来讲，如何打开VS Code的配置文件(settings.json)都是一个问题，好不容易打开了，照着网上好多的教程一顿操作，发现并不能用。（别问我怎么知道的，说多了都是泪…）Anyway，在这里，你可以学到最详细的配置方法。</p>
@@ -367,12 +365,8 @@
 <p>点击上图中的<strong>在settings.json</strong>中编辑，打开后如下图所示。<br><img src="/images/20200529/05.png" alt="05"></p>
 <p>OK，恭喜一下自己吧，终于成功打开了正确的<strong>settings.json</strong>文件。你可以看到，上图中的<strong>latex-workshop.latex.tools</strong>是没有黄色波浪线提示警告的，完美！</p>
 <p>事实上，从网上看到的各位大佬的settings.json配置文件源码都是Latex Workshop中的一个个配置的组合。这里建议，你从VS Code的设置页面中搜索到他们配置源码前的配置项名称，如果下方有<strong>编辑settings.json</strong>的选项，点进去就可以进入配置文件。如果没有，直接在下方的输入一些字符或者添加一两项，然后再点到配置文件settings.json中，会发现，这个配置项的名称已经加载到了配置文件中，这时可以对照着网上的一些教程修改这个配置项中的内容，不建议将配置项的文件名称复制进去，这样会有警告，无法使配置生效。这才是<strong>打开settings.json的正确姿势</strong>。</p>
-<p>上图中红框的代码就是用来编译中文源码的工具，具体如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">    <span class="string">"command"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">    <span class="string">"args"</span>: [</span><br><span class="line">        <span class="string">"-synctex=1"</span>,</span><br><span class="line">        <span class="string">"-interaction=nonstopmode"</span>,</span><br><span class="line">        <span class="string">"-file-line-error"</span>,</span><br><span class="line">        <span class="string">"%DOCFILE%"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
-<p>添加上xelatex工具后，再从设置中搜索<code>recipe</code>，再次进入settings.json，在<code>latex-workshop.latex.recipes</code>中你可以看到Latex Workshop默认的四种编译方式，在第一种编译方式前面添加如下代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">    <span class="string">"tools"</span>: [</span><br><span class="line">        <span class="string">"xelatex"</span></span><br><span class="line">    ],</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"xelatex ➞ bibtex ➞ xelatex × 2"</span>,</span><br><span class="line">    <span class="string">"tools"</span>: [</span><br><span class="line">        <span class="string">"xelatex"</span>,</span><br><span class="line">        <span class="string">"bibtex"</span>,</span><br><span class="line">        <span class="string">"xelatex"</span>,</span><br><span class="line">        <span class="string">"xelatex"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
+<p>上图中红框的代码就是用来编译中文源码的工具，具体如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">    <span class="string">"command"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">    <span class="string">"args"</span>: [</span><br><span class="line">        <span class="string">"-synctex=1"</span>,</span><br><span class="line">        <span class="string">"-interaction=nonstopmode"</span>,</span><br><span class="line">        <span class="string">"-file-line-error"</span>,</span><br><span class="line">        <span class="string">"%DOCFILE%"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<p>添加上xelatex工具后，再从设置中搜索<code>recipe</code>，再次进入settings.json，在<code>latex-workshop.latex.recipes</code>中你可以看到Latex Workshop默认的四种编译方式，在第一种编译方式前面添加如下代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">    <span class="string">"tools"</span>: [</span><br><span class="line">        <span class="string">"xelatex"</span></span><br><span class="line">    ],</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"xelatex ➞ bibtex ➞ xelatex × 2"</span>,</span><br><span class="line">    <span class="string">"tools"</span>: [</span><br><span class="line">        <span class="string">"xelatex"</span>,</span><br><span class="line">        <span class="string">"bibtex"</span>,</span><br><span class="line">        <span class="string">"xelatex"</span>,</span><br><span class="line">        <span class="string">"xelatex"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
 <p>效果如下图所示：<br><img src="/images/20200529/17.png" alt="17"></p>
 <blockquote>
 <p>说明1：上述代码添加了两种编译方式，name可以自己定义，第一种是直接用xelatex来编译一次，适用于没有参考文献的简短论文；第二种是包含参考文献编译在内的复杂编译，先编译一次，再编译一次参考文献(bibtex)，再编译两次，防止有时候编译没有完美完成（例如图注显示不全的情况）。<br>说明2：同理，你可以屏蔽相应的编译方式。</p>
@@ -382,16 +376,13 @@
 <p>在设置页面搜索<strong>viewer</strong>，找到<strong>Latex-workshop→View→Pdf：Viewer</strong>，将其设置为<strong>external</strong>，这样默认的预览的时候是外部的PDF阅读器。<br><img src="/images/20200529/08-0.png" alt="08-0"></p>
 <p>接下来关联外部的PDF阅读器。同样在设置页面搜索<strong>viewer</strong>，找到<strong>Latex-workshop→View→Pdf→External→Viewer:Command</strong>，将SumatraPDF.exe的安装路径填在下方的方框里。<br><img src="/images/20200529/08.png" alt="08"></p>
 <h3 id="2-4-2-前向搜索与反向搜索设置"><a href="#2-4-2-前向搜索与反向搜索设置" class="headerlink" title="2.4.2 前向搜索与反向搜索设置"></a>2.4.2 前向搜索与反向搜索设置</h3><p>前向搜索，即在tex文档中找到某句话后，可以直接跳转到PDF阅读器中相应的位置。反向搜索，即从PDF文件的位置跳转到源码处。<br>在设置页面搜索<strong>viewer</strong>，找到<strong>Latex-workshop→View→Pdf：Viewer: Args</strong>。<br><img src="/images/20200529/18.png" alt="18"></p>
-<p>随意添加一项后(不需要照上图添加完全)，可以在<strong>settings.json</strong>文件中观察到自动添加了这一配置项，然后复制如下代码中[ ]中的内容：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"latex-workshop.view.pdf.external.viewer.args"</span>: [</span><br><span class="line">    <span class="string">"-forward-search"</span>,</span><br><span class="line">    <span class="string">"%TEX%"</span>,</span><br><span class="line">    <span class="string">"%LINE%"</span>,</span><br><span class="line">    <span class="string">"-reuse-instance"</span>,</span><br><span class="line">    <span class="string">"-inverse-search"</span>,</span><br><span class="line">    <span class="string">"\"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/Code.exe\" \"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/resources/app/out/cli.js\" -r -g \"%f:%l\""</span>,</span><br><span class="line">    <span class="string">"%PDF%"</span>,</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>随意添加一项后(不需要照上图添加完全)，可以在<strong>settings.json</strong>文件中观察到自动添加了这一配置项，然后复制如下代码中[ ]中的内容：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"latex-workshop.view.pdf.external.viewer.args"</span>: [</span><br><span class="line">    <span class="string">"-forward-search"</span>,</span><br><span class="line">    <span class="string">"%TEX%"</span>,</span><br><span class="line">    <span class="string">"%LINE%"</span>,</span><br><span class="line">    <span class="string">"-reuse-instance"</span>,</span><br><span class="line">    <span class="string">"-inverse-search"</span>,</span><br><span class="line">    <span class="string">"\"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/Code.exe\" \"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/resources/app/out/cli.js\" -r -g \"%f:%l\""</span>,</span><br><span class="line">    <span class="string">"%PDF%"</span>,</span><br><span class="line">],</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>注意：只需复制[ ]中的内容，并且注意不要随便打乱顺序，记得修改路径。保存后回到设置页面的对应配置项，就会发现配置项下面已经修改为和上图一样的配置。</p>
 </blockquote>
 <p>在设置页面搜索<strong>Synctex</strong>，再从设置页面里找到<strong>Latex-workshop→View→Pdf→External→Synctex:Command</strong>，同样填入SumatraPDF.exe的路径。<br><img src="/images/20200529/09.png" alt="09"></p>
 <p>在设置页中找到<strong>Latex-workshop→View→Pdf→External→Synctex:Args</strong>。<br><img src="/images/20200529/10.png" alt="10"></p>
-<p>随意添加一项后(不需要照上图添加完全)，可以在<strong>settings.json</strong>文件中观察到自动添加了这一配置项，然后复制如下代码中[ ]中的内容：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//下面这一行不用复制，只是说明修改Synctex:Command后会自动加入这一行</span></span><br><span class="line"><span class="string">"latex-workshop.view.pdf.external.synctex.command"</span>: <span class="string">"C:\\Users\\&lt;YourName&gt;\\AppData\\Local\\SumatraPDF\\SumatraPDF.exe"</span>,</span><br><span class="line"><span class="comment">//下面一行不用复制，自动生成的</span></span><br><span class="line"><span class="string">"latex-workshop.view.pdf.external.synctex.args"</span>: [</span><br><span class="line">    <span class="comment">//将下面内容复制到你的settings.json中，并修改路径</span></span><br><span class="line">    <span class="string">"-forward-search"</span>,</span><br><span class="line">    <span class="string">"%TEX%"</span>,</span><br><span class="line">    <span class="string">"%LINE%"</span>,</span><br><span class="line">    <span class="string">"-reuse-instance"</span>,</span><br><span class="line">    <span class="string">"-inverse-search"</span>,</span><br><span class="line">    <span class="string">"\"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/Code.exe\" \"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/resources/app/out/cli.js\" -r -g \"%f:%l\""</span>,</span><br><span class="line">    <span class="string">"%PDF%"</span>,</span><br><span class="line"><span class="comment">//下面一行不用复制    </span></span><br><span class="line">],</span><br></pre></td></tr></table></figure>
-
+<p>随意添加一项后(不需要照上图添加完全)，可以在<strong>settings.json</strong>文件中观察到自动添加了这一配置项，然后复制如下代码中[ ]中的内容：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//下面这一行不用复制，只是说明修改Synctex:Command后会自动加入这一行</span></span><br><span class="line"><span class="string">"latex-workshop.view.pdf.external.synctex.command"</span>: <span class="string">"C:\\Users\\&lt;YourName&gt;\\AppData\\Local\\SumatraPDF\\SumatraPDF.exe"</span>,</span><br><span class="line"><span class="comment">//下面一行不用复制，自动生成的</span></span><br><span class="line"><span class="string">"latex-workshop.view.pdf.external.synctex.args"</span>: [</span><br><span class="line">    <span class="comment">//将下面内容复制到你的settings.json中，并修改路径</span></span><br><span class="line">    <span class="string">"-forward-search"</span>,</span><br><span class="line">    <span class="string">"%TEX%"</span>,</span><br><span class="line">    <span class="string">"%LINE%"</span>,</span><br><span class="line">    <span class="string">"-reuse-instance"</span>,</span><br><span class="line">    <span class="string">"-inverse-search"</span>,</span><br><span class="line">    <span class="string">"\"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/Code.exe\" \"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/resources/app/out/cli.js\" -r -g \"%f:%l\""</span>,</span><br><span class="line">    <span class="string">"%PDF%"</span>,</span><br><span class="line"><span class="comment">//下面一行不用复制    </span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></p>
 <p>实现前向搜索的方式可为：</p>
 <ol>
 <li>在光标处，选择<strong>Navigate, select, and edit</strong>-&gt;<strong>SyncTeX from cursor</strong>，如下图。<br><img src="/images/20200529/12.png" alt="12"></li>
@@ -405,22 +396,18 @@
 <p>在PDF中<strong>双击即可跳转到源码位置</strong>。反向搜索的效果如下所示：<br><img src="/images/20200529/16.gif" alt="16"></p>
 <!-- 上面的设置方法来自[官方解释](https://github.com/James-Yu/LaTeX-Workshop/wiki/View#latex-workshopsynctexpath).
 ![11]( /images/20200529/11.png) -->
-
 <h3 id="2-4-3-反向搜索的PDF阅读器设置"><a href="#2-4-3-反向搜索的PDF阅读器设置" class="headerlink" title="2.4.3 反向搜索的PDF阅读器设置"></a>2.4.3 反向搜索的PDF阅读器设置</h3><p>如果上述方法不能从PDF跳转至tex文档，还可以尝试下面的方法：<br>在这里，我们需要设置的是<strong>SumatraPDF.exe</strong>。打开SumatraPDF.exe，找到设置-&gt;选项：<br><img src="/images/20200529/14.png" alt="14"></p>
 <p>点开后如下图所示：</p>
 <p><img src="/images/20200529/15.png" alt="15"></p>
-<p>在反向搜索设置里填入下方的<strong>一行超长代码</strong>（不是两行，注意和你自己的路径要对应好）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"\"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/Code.exe\" \"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/resources/app/out/cli.js\" -r -g \"%f:%l\""</span></span><br></pre></td></tr></table></figure>
-<!-- "C:\Users\YourName\AppData\Local\Programs\Microsoft VS Code\Code.exe" "C:\Users\YourName\AppData\Local\Programs\Microsoft VS Code\resources\app\out\cli.js" -r -g "%f:%l"
- -->
-
+<p>在反向搜索设置里填入下方的<strong>一行超长代码</strong>（不是两行，注意和你自己的路径要对应好）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"\"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/Code.exe\" \"C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/resources/app/out/cli.js\" -r -g \"%f:%l\""</span></span><br></pre></td></tr></table></figure><br><!-- "C:\Users\YourName\AppData\Local\Programs\Microsoft VS Code\Code.exe" "C:\Users\YourName\AppData\Local\Programs\Microsoft VS Code\resources\app\out\cli.js" -r -g "%f:%l"
+ --></p>
 <h1 id="3-部分快捷键"><a href="#3-部分快捷键" class="headerlink" title="3 部分快捷键"></a>3 部分快捷键</h1><p>Ctrl+Alt+X：显示LaTeX面板(左侧编译命令面板和文档大纲)。<br>Ctrl+Alt+C：清除辅助文件<br>Ctrl+Alt+V：查看编译的pdf文件(预览)<br>Ctrl+Alt+J：正向搜索</p>
 <h1 id="4-一点感悟"><a href="#4-一点感悟" class="headerlink" title="4 一点感悟"></a>4 一点感悟</h1><p>OK，到这里，本篇博客主体就结束了。有一个小的感受，新手找settings.json这个配置文件是真的难。直接把网上各位大佬的配置源码粘贴进来，总是有问题，这可能是由于软件版本更新后不太适用了。当然，我的这个教程也可能会过时，所以我都写明了软件版本。我认为，从设置页面里打开的settings.json或许可以直接从网上的各位大佬的配置文件源码中复制，有兴趣的可以多多尝试~</p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
 <li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phbWVzLVl1L0xhVGVYLVdvcmtzaG9wL3dpa2kvQ29tcGlsZSNsYXRleC1yZWNpcGU=" title="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">编译的官方解释<i class="fa fa-external-link"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phbWVzLVl1L0xhVGVYLVdvcmtzaG9wL3dpa2kvQ29tcGlsZSNsYXRleC1yZWNpcGU=" title="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">正向搜索的官方解释<i class="fa fa-external-link"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC85MDUyNjIxOA==" title="https://zhuanlan.zhihu.com/p/90526218">配置VScode编辑LaTeX及正反向搜索等设置<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMUpFNDExSzdpaj9mcm9tPXNlYXJjaCZzZWlkPTE0NzkzMjEzNTA4Njc3OTQ1NzU3" title="https://www.bilibili.com/video/BV1JE411K7ij?from=search&seid=14793213508677945757">一个直观的VS Code+Latex视频简介<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMUpFNDExSzdpaj9mcm9tPXNlYXJjaCZhbXA7c2VpZD0xNDc5MzIxMzUwODY3Nzk0NTc1Nw==" title="https://www.bilibili.com/video/BV1JE411K7ij?from=search&amp;seid=14793213508677945757">一个直观的VS Code+Latex视频简介<i class="fa fa-external-link"></i></span></li>
 </ol>
 
     </div>
@@ -591,14 +578,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -679,12 +666,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -818,6 +805,8 @@
 
 
 
+
+  
 
   
 

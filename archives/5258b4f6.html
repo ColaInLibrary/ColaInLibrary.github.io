@@ -324,16 +324,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <img src=" /images/20200227/00.gif" width=30% />
-尝试一下如何用Python发布消息以控制机器人运动
-<a id="more"></a>
-
+        <p><img src=" /images/20200227/00.gif" width=30% /><br>尝试一下如何用Python发布消息以控制机器人运动<br><a id="more"></a></p>
 <h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>在前面的几篇博客中，我们介绍了七自由度机器人是如何运动的，解释了七自由度机器人的URDF模型描述文件，也讲解了用自带的控制器来控制七自由度机器人的运动。到目前为止，我们知道了如何通过发布topic来控制机器人运动，但是每次从终端里发布消息也未免太不方便了。因此，这篇博客我们尝试写一个Python脚本，通过这个脚本来发布topic控制机器人运动。</p>
 <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><p>在前面的博客中已经介绍了当在Gazebo中运行机器人仿真后，具有的topic列表如下：<br><img src="/images/20200227/01.png" alt="01"></p>
 <p>我们知道通过发布topic控制机器人运动的方式如下(以joint4为例)：<br><img src="/images/20200227/02.gif" alt="02"></p>
-<h1 id="2-用Python来控制机器人运动"><a href="#2-用Python来控制机器人运动" class="headerlink" title="2 用Python来控制机器人运动"></a>2 用Python来控制机器人运动</h1><h2 id="2-1-Python脚本的编写"><a href="#2-1-Python脚本的编写" class="headerlink" title="2.1 Python脚本的编写"></a>2.1 Python脚本的编写</h2><p>先来编写发布消息的Python脚本。打开<code>seven_dof_arm_gazebo/scripts</code>文件夹，并在该文件夹下新建 <em>main.py</em> 文件。文件内容的编写参考<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ST1MvVHV0b3JpYWxzL1dyaXRpbmdQdWJsaXNoZXJTdWJzY3JpYmVyJTI4cHl0aG9uJTI5" title="http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29">Writing a Simple Publisher and Subscriber (Python)<i class="fa fa-external-link"></i></span>。这里直接给出内容：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">from</span> std_msgs.msg <span class="keyword">import</span> Float64</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">talker</span><span class="params">()</span>:</span></span><br><span class="line">    pub = rospy.Publisher(<span class="string">'/seven_dof_arm/joint4_position_controller/command'</span>, Float64, queue_size=<span class="number">10</span>)</span><br><span class="line">    rospy.init_node(<span class="string">'seven_dof_arm_talker'</span>, anonymous=<span class="literal">True</span>) <span class="comment"># You can rename this node</span></span><br><span class="line">    rate = rospy.Rate(<span class="number">10</span>) <span class="comment"># 10hz</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> rospy.is_shutdown():</span><br><span class="line">        <span class="comment"># hello_str = "hello world %s" % rospy.get_time()</span></span><br><span class="line">        <span class="comment"># position = math.pi/2</span></span><br><span class="line">        position = math.sin(i)</span><br><span class="line">        rospy.loginfo(position) <span class="comment"># print the position</span></span><br><span class="line">        pub.publish(position)   <span class="comment"># publish the position</span></span><br><span class="line">        rate.sleep()</span><br><span class="line">        i += <span class="number">0.01</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        talker()</span><br><span class="line">    <span class="keyword">except</span> rospy.ROSInterruptException:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-
+<h1 id="2-用Python来控制机器人运动"><a href="#2-用Python来控制机器人运动" class="headerlink" title="2 用Python来控制机器人运动"></a>2 用Python来控制机器人运动</h1><h2 id="2-1-Python脚本的编写"><a href="#2-1-Python脚本的编写" class="headerlink" title="2.1 Python脚本的编写"></a>2.1 Python脚本的编写</h2><p>先来编写发布消息的Python脚本。打开<code>seven_dof_arm_gazebo/scripts</code>文件夹，并在该文件夹下新建 <em>main.py</em> 文件。文件内容的编写参考<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ST1MvVHV0b3JpYWxzL1dyaXRpbmdQdWJsaXNoZXJTdWJzY3JpYmVyJTI4cHl0aG9uJTI5" title="http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29">Writing a Simple Publisher and Subscriber (Python)<i class="fa fa-external-link"></i></span>。这里直接给出内容：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">from</span> std_msgs.msg <span class="keyword">import</span> Float64</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">talker</span><span class="params">()</span>:</span></span><br><span class="line">    pub = rospy.Publisher(<span class="string">'/seven_dof_arm/joint4_position_controller/command'</span>, Float64, queue_size=<span class="number">10</span>)</span><br><span class="line">    rospy.init_node(<span class="string">'seven_dof_arm_talker'</span>, anonymous=<span class="literal">True</span>) <span class="comment"># You can rename this node</span></span><br><span class="line">    rate = rospy.Rate(<span class="number">10</span>) <span class="comment"># 10hz</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> rospy.is_shutdown():</span><br><span class="line">        <span class="comment"># hello_str = "hello world %s" % rospy.get_time()</span></span><br><span class="line">        <span class="comment"># position = math.pi/2</span></span><br><span class="line">        position = math.sin(i)</span><br><span class="line">        rospy.loginfo(position) <span class="comment"># print the position</span></span><br><span class="line">        pub.publish(position)   <span class="comment"># publish the position</span></span><br><span class="line">        rate.sleep()</span><br><span class="line">        i += <span class="number">0.01</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        talker()</span><br><span class="line">    <span class="keyword">except</span> rospy.ROSInterruptException:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="2-2-Python脚本的解释"><a href="#2-2-Python脚本的解释" class="headerlink" title="2.2 Python脚本的解释"></a>2.2 Python脚本的解释</h2><p>在上述程序的第4行和第8行，涉及到了消息的类型，可以在终端中用<code>rostopic info /xxx</code>查看相应消息的类型。<br><img src="/images/20200227/03.png" alt="03"></p>
 <p>从上图中，我们可以看到，<em>/seven_dof_arm/joint4_position_controller/command</em> 的类型是 <em>std_msgs/Float64</em>，所以在第4行修改import数据的类型，在第8行修改topic的名字及类型。</p>
 <p>在程序的第9行，可以自行指定node的名字。</p>
@@ -523,14 +518,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -611,12 +606,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -750,6 +745,8 @@
 
 
 
+
+  
 
   
 

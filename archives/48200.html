@@ -320,26 +320,23 @@
 <p>MATLAB函数学习篇之newrb函数。</p>
 </blockquote>
 <a id="more"></a>
-
 <h2 id="newrb函数介绍"><a href="#newrb函数介绍" class="headerlink" title="newrb函数介绍"></a>newrb函数介绍</h2><p><code>newrb</code>是MATLAB中用于建立径向基函数神经网络(radial basis function network，RBF network)的函数，函数的两种调用格式如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net &#x3D; newrb</span><br><span class="line">[net,tr] &#x3D; newrb(P,T,goal,spread,MN,DF)</span><br></pre></td></tr></table></figure>
-
 <p>径向基网可用于近似函数。 newrb函数将神经元添加到径向基网络的隐藏层，直到它满足指定的均方误差目标。</p>
 <p>第一种函数调用方式<code>net = newrb</code>用于创建一个新的网络，matlab给出各种参数，不实用。</p>
 <p>常用的是第二种调用方式<code>[net,tr] = newrb(P,T,goal,spread,MN,DF)</code>，其中的参数含义如下：</p>
 <ul>
-<li>P – $R \times Q$维矩阵，Q维输入向量</li>
-<li>T – $S \times Q$维矩阵，Q维目标类向量</li>
-<li>goal – 均方误差目标(MSE),默认为0</li>
-<li>spread – 径向基函数(RBF)速度，默认为1</li>
-<li>MN – 最大神经元数，默认为Q</li>
-<li>DF – 在显示之间添加的神经元数量，默认为25</li>
+<li>P — $R \times Q$维矩阵，Q维输入向量</li>
+<li>T — $S \times Q$维矩阵，Q维目标类向量</li>
+<li>goal — 均方误差目标(MSE),默认为0</li>
+<li>spread — 径向基函数(RBF)速度，默认为1</li>
+<li>MN — 最大神经元数，默认为Q</li>
+<li>DF — 在显示之间添加的神经元数量，默认为25</li>
 <li>返回值为径向基网络。</li>
 </ul>
 <p>速度(spread)越大，函数逼近越平滑。 速度太大意味着需要很多神经元才能适应快速变化的功能。<br>太小的速度意味着需要许多神经元来适应平滑的功能，并且网络可能不会很好地概括。<br>使用不同的速度调用newrb以找到给定问题的最佳值。</p>
-<h2 id="示例程序"><a href="#示例程序" class="headerlink" title="示例程序"></a>示例程序</h2><p>MATLAB给出的<span class="exturl" data-url="aHR0cHM6Ly93dzIubWF0aHdvcmtzLmNuL2hlbHAvZGVlcGxlYXJuaW5nL2V4YW1wbGVzL3JhZGlhbC1iYXNpcy1hcHByb3hpbWF0aW9uLmh0bWw/c2VhcmNoSGlnaGxpZ2h0PW5ld3JiJnNfdGlkPWRvY19zcmNodGl0bGU=" title="https://ww2.mathworks.cn/help/deeplearning/examples/radial-basis-approximation.html?searchHighlight=newrb&s_tid=doc_srchtitle">官方示例程序<i class="fa fa-external-link"></i></span>或者在MATLAB命令窗口输入以下命令。</p>
+<h2 id="示例程序"><a href="#示例程序" class="headerlink" title="示例程序"></a>示例程序</h2><p>MATLAB给出的<span class="exturl" data-url="aHR0cHM6Ly93dzIubWF0aHdvcmtzLmNuL2hlbHAvZGVlcGxlYXJuaW5nL2V4YW1wbGVzL3JhZGlhbC1iYXNpcy1hcHByb3hpbWF0aW9uLmh0bWw/c2VhcmNoSGlnaGxpZ2h0PW5ld3JiJmFtcDtzX3RpZD1kb2Nfc3JjaHRpdGxl" title="https://ww2.mathworks.cn/help/deeplearning/examples/radial-basis-approximation.html?searchHighlight=newrb&amp;s_tid=doc_srchtitle">官方示例程序<i class="fa fa-external-link"></i></span>或者在MATLAB命令窗口输入以下命令。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openExample(&#39;nnet&#x2F;demorb1&#39;)</span><br></pre></td></tr></table></figure>
-
 <p>另外从YouTube上搜<code>newrb</code>找到的一个例程如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">clear;</span><br><span class="line">clc;</span><br><span class="line">close all;</span><br><span class="line">x &#x3D; linspace(0,4*pi,3000);</span><br><span class="line">y &#x3D; (sin(x) + cos(x) + tanh(x)) + rand(1,3000);</span><br><span class="line">net &#x3D; newrb(x,y,0.1,1,100,10);</span><br><span class="line">view(net);</span><br><span class="line">result &#x3D; sim(net,x);</span><br><span class="line">scatter(x,y);</span><br><span class="line">hold on;</span><br><span class="line">plot(x,result,&#39;LineWidth&#39;,2,&#39;MarkerSize&#39;,10);</span><br><span class="line">R &#x3D; regression(y,result)</span><br></pre></td></tr></table></figure>
 
@@ -511,14 +508,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -599,12 +596,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -738,6 +735,8 @@
 
 
 
+
+  
 
   
 

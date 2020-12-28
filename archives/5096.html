@@ -308,14 +308,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
             <div class="post-description">介绍坐标旋转的详细过程</div>
 
@@ -332,23 +332,16 @@
 <p>详细介绍坐标旋转的过程。开发环境： MATLAB 2016b + Robotics Toolbox 10.2.</p>
 </blockquote>
 <a id="more"></a>
-
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>坐标旋转是机器人控制、航天器控制中不可缺少的基本功。在与其他同行交流的过程中，因坐标旋转而发生争论，特此将坐标旋转的推导过程记录，以防再发生混乱。</p>
-<h1 id="坐标旋转的推导过程"><a href="#坐标旋转的推导过程" class="headerlink" title="坐标旋转的推导过程"></a>坐标旋转的推导过程</h1><p>首先建立坐标系，假定坐标系$ OX_1Y_1Z_1 $（以下简称1系）由坐标系$ OX_0Y_0Z_0 $（以下简称0系）绕$ Z_0 $轴逆时针旋转$ \theta $所得(右手旋转方向为正)。略去Z方向，在XY平面的示意图如下（这是由于在三维空间中是绕轴旋转，二维空间中绕点旋转）：<br><img src=" /images/20191013/01.jpg" width=40% /></p>
-<!-- ![01.jpg]( /images/20191013/01.jpg) -->
-
+<h1 id="坐标旋转的推导过程"><a href="#坐标旋转的推导过程" class="headerlink" title="坐标旋转的推导过程"></a>坐标旋转的推导过程</h1><p>首先建立坐标系，假定坐标系$ OX_1Y_1Z_1 $（以下简称1系）由坐标系$ OX_0Y_0Z_0 $（以下简称0系）绕$ Z_0 $轴逆时针旋转$ \theta $所得(右手旋转方向为正)。略去Z方向，在XY平面的示意图如下（这是由于在三维空间中是绕轴旋转，二维空间中绕点旋转）：<br><img src=" /images/20191013/01.jpg" width=40% /><br><!-- ![01.jpg]( /images/20191013/01.jpg) --></p>
 <p>上图中，P点在0系中的坐标为$ (x_0, y_0) $，在1系中的坐标为$ (x_1, y_1) $。易得：</p>
-<p>$$ OA = x_0, OB = y_0, OC = x_1, OD = y_1 $$</p>
-<p>作$ AM \bot OC $，根据几何知识，易得：</p>
-<p>$$ \angle AOC = \angle CPN = \angle MAN = \theta  $$</p>
-<p>根据几何知识，易有：</p>
+<script type="math/tex; mode=display">OA = x_0, OB = y_0, OC = x_1, OD = y_1</script><p>作$ AM \bot OC $，根据几何知识，易得：</p>
+<script type="math/tex; mode=display">\angle AOC = \angle CPN = \angle MAN = \theta</script><p>根据几何知识，易有：</p>
 <p><img src="/images/20191013/02.gif" alt="02"> $ \tag{1} $</p>
 <p><img src="/images/20191013/03.gif" alt="03"> $ \tag{2} $</p>
 <p>由上式可得：</p>
-<p>$$ {y_1} =  - {x_0}\sin \theta  + {y_0}\cos \theta \tag{3}$$</p>
-<p>由于绕$Z$轴旋转，因此有：</p>
-<p>$$ {z_1} = {z_0} \tag{4}$$</p>
-<p>将上述结论式(1)、(3)~(4)整理成矩阵形式，有：<br><img src="/images/20191013/04.gif" alt="04"> $ \tag{5} $</p>
+<script type="math/tex; mode=display">{y_1} =  - {x_0}\sin \theta  + {y_0}\cos \theta \tag{3}</script><p>由于绕$Z$轴旋转，因此有：</p>
+<script type="math/tex; mode=display">{z_1} = {z_0} \tag{4}</script><p>将上述结论式(1)、(3)~(4)整理成矩阵形式，有：<br><img src="/images/20191013/04.gif" alt="04"> $ \tag{5} $</p>
 <p>上式中，$T$的下角标表示参考坐标系，上角标表示旋转后的坐标系。由此可得到从0系绕$Z$轴旋转$\theta$到1系的旋转矩阵：</p>
 <p><img src="/images/20191013/13.gif" alt="05"> $ \tag{6} $</p>
 <p>同理，可得从0系绕 Y 轴或 X 轴旋转到1系的旋转矩阵为：</p>
@@ -358,9 +351,8 @@
 <p><img src="/images/20191013/14.gif" alt="07"> $ \tag{8} $</p>
 <p>上式可以理解为用1系的坐标来得到0系。</p>
 <p>从式(6)~(8)可以看出：</p>
-<p>$$ T_0^1 = (T_1^0)^T \tag{9}$$</p>
-<p>值得注意的是，说是旋转矩阵不同，其实最本质的还是在于所求坐标在哪个系的表达方式的问题，如式(10)所示。</p>
-<p><img src="/images/20191013/15.gif" alt="15"> $$ \tag{10} $$</p>
+<script type="math/tex; mode=display">T_0^1 = (T_1^0)^T \tag{9}</script><p>值得注意的是，说是旋转矩阵不同，其实最本质的还是在于所求坐标在哪个系的表达方式的问题，如式(10)所示。</p>
+<p><img src="/images/20191013/15.gif" alt="15"> <script type="math/tex">\tag{10}</script></p>
 <p>因此，与其费尽心思去记容易混淆的坐标旋转矩阵，不如懂得原理之后，每逢遇到旋转矩阵，就在脑海里想象整个的坐标旋转公式，搞明白等式左边的坐标是在哪个坐标系中表示。</p>
 <h1 id="在航天器和机器人中的坐标旋转"><a href="#在航天器和机器人中的坐标旋转" class="headerlink" title="在航天器和机器人中的坐标旋转"></a>在航天器和机器人中的坐标旋转</h1><p>上节讲述了坐标旋转的推导过程，这在航天器和机器人两个领域是常用到的。但两个领域不同之处在于，航天器中往往采用的是用参考坐标系坐标来得到旋转后坐标系坐标的描述方式，机器人中则更习惯采用用旋转后坐标系坐标得到参考坐标系坐标的描述方式。</p>
 <p>在经典的《机器人建模和控制》中，给出坐标旋转的定义方式如下图所示：</p>
@@ -548,14 +540,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -636,12 +628,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -775,6 +767,8 @@
 
 
 
+
+  
 
   
 

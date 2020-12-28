@@ -326,9 +326,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>介绍机场行李筐智能分拣项目的安装环境之CUDA和cuDNN的安装。</p>
-<a id="more"></a>
-
+        <p>介绍机场行李筐智能分拣项目的安装环境之CUDA和cuDNN的安装。<br><a id="more"></a></p>
 <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>在此之前，应当已经先装好了NVIDIA显卡驱动，并通过 <em>nvidia-smi</em> 指令查询到所装显卡对应的cuda版本。依据所安装的显卡版本或者显示的cuda version，从<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm52aWRpYS5jb20vY3VkYS9jdWRhLXRvb2xraXQtcmVsZWFzZS1ub3Rlcy9pbmRleC5odG1s" title="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">NVIDIA显卡驱动与CUDA版本对应网站<i class="fa fa-external-link"></i></span>查询到对应的CUDA版本。本文用的是CUDA 10.2以及cuDNN7.6.5。</p>
 <h2 id="2-CUDA-10-2的安装"><a href="#2-CUDA-10-2的安装" class="headerlink" title="2 CUDA 10.2的安装"></a>2 CUDA 10.2的安装</h2><p>以CUDA 10.2的安装为例，搜索引擎搜索<em>cuda 10.2</em>，进入<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubnZpZGlhLmNvbS9jdWRhLTEwLjItZG93bmxvYWQtYXJjaGl2ZQ==" title="https://developer.nvidia.com/cuda-10.2-download-archive">官方下载页面<i class="fa fa-external-link"></i></span>，选择对应的系统版本等，出现如下页面。</p>
 <p><img src="/images/20201101/01.png" alt="01"></p>
@@ -343,7 +341,6 @@
 <h3 id="2-2-下载cuda-10-2补充包"><a href="#2-2-下载cuda-10-2补充包" class="headerlink" title="2.2 下载cuda-10.2补充包"></a>2.2 下载cuda-10.2补充包</h3><p>从上图中直接点击<strong>Download (121.5MB)</strong>。</p>
 <h3 id="2-3-安装CUDA-10-2"><a href="#2-3-安装CUDA-10-2" class="headerlink" title="2.3 安装CUDA-10.2"></a>2.3 安装CUDA-10.2</h3><p>找到下载好的CUDA-10.2安装包，从其所在目录打开终端，执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh cuda_10.2.89_440.33.01_linux.run</span><br></pre></td></tr></table></figure>
-
 <p>在第一个问题后输入 <strong>accept</strong>。</p>
 <p><img src="/images/20201101/02.png" alt="02"></p>
 <p>按回车后，在出现的页面中通过向下移动光标，选中<strong>Driver</strong>，按回车取消安装这一行（这是默认的显卡驱动，之前已经安装过了，故不再安装），使其前面的[X]变为[ ]。再向下移动光标至最后一行，按回车开始安装。如下图所示。</p>
@@ -351,33 +348,24 @@
 <p><img src="/images/20201101/04.png" alt="04"></p>
 <h3 id="2-4-安装CUDA-10-2补充包"><a href="#2-4-安装CUDA-10-2补充包" class="headerlink" title="2.4 安装CUDA-10.2补充包"></a>2.4 安装CUDA-10.2补充包</h3><p>从终端打开下载好的文件所在目录，执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh cuda_10.2.1_linux.run</span><br></pre></td></tr></table></figure>
-
 <p>选择accept和默认安装即可。</p>
 <p><img src="/images/20201101/05.png" alt="05"></p>
 <p><img src="/images/20201101/06.png" alt="06"></p>
 <p><img src="/images/20201101/07.png" alt="07"></p>
-<h3 id="2-5-环境变量的设置"><a href="#2-5-环境变量的设置" class="headerlink" title="2.5 环境变量的设置"></a>2.5 环境变量的设置</h3><p>执行 </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.bashrc</span><br></pre></td></tr></table></figure>
-
+<h3 id="2-5-环境变量的设置"><a href="#2-5-环境变量的设置" class="headerlink" title="2.5 环境变量的设置"></a>2.5 环境变量的设置</h3><p>执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.bashrc</span><br></pre></td></tr></table></figure></p>
 <p>在打开文件的最后添加以下内容：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/cuda-10.2/bin<span class="variable">$&#123;PATH:+:$&#123;PATH&#125;</span>&#125;             </span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/usr/<span class="built_in">local</span>/cuda-10.2/lib64<span class="variable">$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;</span>&#125;</span><br></pre></td></tr></table></figure>
-
 <p>保存文件后关闭，并执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
-
 <p>使得修改后的环境变量生效。</p>
-<h3 id="2-6-验证安装成功"><a href="#2-6-验证安装成功" class="headerlink" title="2.6 验证安装成功"></a>2.6 验证安装成功</h3><p>执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvcc -V</span><br></pre></td></tr></table></figure>
-
+<h3 id="2-6-验证安装成功"><a href="#2-6-验证安装成功" class="headerlink" title="2.6 验证安装成功"></a>2.6 验证安装成功</h3><p>执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvcc -V</span><br></pre></td></tr></table></figure></p>
 <p>出现cuda的安装版本，表示成功。</p>
 <p><img src="/images/20201101/08.png" alt="08"></p>
 <h2 id="3-cuDNN7-6-5的安装"><a href="#3-cuDNN7-6-5的安装" class="headerlink" title="3 cuDNN7.6.5的安装"></a>3 cuDNN7.6.5的安装</h2><p>cuDNN是一个SDK，是一个专门用于神经网络的加速包，注意，它跟我们的CUDA没有一一对应的关系，即每一个版本的CUDA可能有好几个版本的cuDNN与之对应，但一般有一个最新版本的cuDNN版本与CUDA对应更好。</p>
 <p>下载与CUDA版本相对应的cuDNN版本，将安装包解压之后执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo cp cuda/include/cudnn.h /usr/<span class="built_in">local</span>/cuda/include/</span><br><span class="line">sudo cp cuda/lib64/libcudnn* /usr/<span class="built_in">local</span>/cuda/lib64/</span><br><span class="line">sudo chmod a+r /usr/<span class="built_in">local</span>/cuda/include/cudnn.h</span><br><span class="line">sudo chmod a+r /usr/<span class="built_in">local</span>/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
-
 <p>执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /usr/<span class="built_in">local</span>/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2</span><br></pre></td></tr></table></figure>
-
 <p>下图表示安装成功。</p>
 <p><img src="/images/20201101/09.png" alt="09"></p>
 <h2 id="4-卸载"><a href="#4-卸载" class="headerlink" title="4 卸载"></a>4 卸载</h2><p>直接找到安装目录将其删除就好了。</p>
@@ -468,8 +456,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/archives/85e5f27f.html" rel="prev" title="opencv_contrib的安装方法">
-      <i class="fa fa-chevron-left"></i> opencv_contrib的安装方法
+    <a href="/archives/d7a626d9.html" rel="prev" title="BP神经网络反向传播推导">
+      <i class="fa fa-chevron-left"></i> BP神经网络反向传播推导
     </a></div>
       <div class="post-nav-item">
     <a href="/archives/ef786701.html" rel="next" title="Opencv-3.4.12的安装">
@@ -551,14 +539,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -639,12 +627,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -778,6 +766,8 @@
 
 
 
+
+  
 
   
 

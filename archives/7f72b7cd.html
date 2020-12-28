@@ -321,32 +321,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <img src=" /images/20200223/00.gif" width=30% />
-从本篇开始，介绍一个ROS仿真平台下的七自由度机器人实例。这一篇，我们先让它动起来！
-<a id="more"></a>
-
-<h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>由于工作需要来做一下实物仿真，只用MATLAB感觉有些不够，在机器人领域又有专门的ROS来做仿真，因此，还是系统的来学习一下ROS做仿真的流程吧。掌握之后，可以通过仿真来快速验证自己的算法，也还是不错的。本专栏以《Mastering ROS for Robotics Programming–Second Edition》中的七自由度机器人为例，旨在让初学者可以快速掌握ROS仿真的搭建过程。系统环境：Ubuntu16.04 + ROS kinetic + gazebo7。</p>
+        <p><img src=" /images/20200223/00.gif" width=30% /><br>从本篇开始，介绍一个ROS仿真平台下的七自由度机器人实例。这一篇，我们先让它动起来！<br><a id="more"></a></p>
+<h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>由于工作需要来做一下实物仿真，只用MATLAB感觉有些不够，在机器人领域又有专门的ROS来做仿真，因此，还是系统的来学习一下ROS做仿真的流程吧。掌握之后，可以通过仿真来快速验证自己的算法，也还是不错的。本专栏以《Mastering ROS for Robotics Programming—Second Edition》中的七自由度机器人为例，旨在让初学者可以快速掌握ROS仿真的搭建过程。系统环境：Ubuntu16.04 + ROS kinetic + gazebo7。</p>
 <h1 id="1-初始环境配置"><a href="#1-初始环境配置" class="headerlink" title="1 初始环境配置"></a>1 初始环境配置</h1><p>关于ROS环境的安装，请参考<a href="https://colainlibrary.com/archives/25595.html">ROS(kinetic)有用指令集</a>。如果在添加key时出错，请从官网查找适合软件源、适合ros版本的key。建议安装desktop-full的版本，这样会把gazebo等相关软件安装好。</p>
 <p>装好ros后，需要创建一个工作空间。简单来说，每一个仿真模型我们都可以将其放在一个文件夹里，而工作空间就包含了这些文件夹，然后经过统一编译，便可以执行形式一致的命令来控制模型。下面给出常用的一些基本命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /opt/ros/kinetic/setup.bash		<span class="comment"># sourced your environment</span></span><br><span class="line">mkdir -p ~/catkin_ws/src              <span class="comment"># 创建catkin_ws工作空间，建立一个src文件夹来存放模型源码</span></span><br><span class="line"><span class="built_in">cd</span> ~/catkin_ws/                       <span class="comment"># 打开工作空间</span></span><br><span class="line">catkin_make                           <span class="comment"># 编译</span></span><br><span class="line"><span class="built_in">source</span> devel/setup.bash</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$ROS_PACKAGE_PATH</span> 					      <span class="comment"># 确认环境变量包含了目录</span></span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>说明：<code>catkin_make</code>是编译工作空间的命令，当每次新添加仿真模型后，都需要执行这条命令；<code>source devel/setup.bash</code>这条指令最好在每次打开工作空间后就执行一次，不然在新开的终端中执行<code>roslaunch</code>命令时往往会提示<code>[seven_dof_arm_gazebo_control.launch] is neither a launch file in package [seven_dof_arm_gazebo] nor is [seven_dof_arm_gazebo] a launch file name</code>之类的错误。</p>
 </blockquote>
 <h1 id="2-添加七自由度机器人模型"><a href="#2-添加七自由度机器人模型" class="headerlink" title="2 添加七自由度机器人模型"></a>2 添加七自由度机器人模型</h1><p>在第一节创建了工作空间后，向其中添加仿真模型有两种方法，一种是自行创建新程序包，即新的仿真模型；另一种是对于别人已经写好的仿真模型，直接复制或下载。</p>
-<h1 id="2-1-自行创建新模型"><a href="#2-1-自行创建新模型" class="headerlink" title="2.1 自行创建新模型"></a>2.1 自行创建新模型</h1><p>使用下面的命令可以创建新的程序包：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/src</span><br><span class="line">catkin_create_pkg beginner_tutorials std_msgs rospy roscpp</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
-
+<h1 id="2-1-自行创建新模型"><a href="#2-1-自行创建新模型" class="headerlink" title="2.1 自行创建新模型"></a>2.1 自行创建新模型</h1><p>使用下面的命令可以创建新的程序包：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/src</span><br><span class="line">catkin_create_pkg beginner_tutorials std_msgs rospy roscpp</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure></p>
 <p>上述命令的第2条意思是使用<code>catkin_create_pkg</code>命令来创建一个名为<code>beginner_tutorials</code>的新程序包，这个程序包依赖于<code>std_msgs</code>、<code>roscpp</code>和<code>rospy</code>。如果有其他的依赖项，在后面继续添加即可。</p>
-<p>这里需要注意一下，Gazebo是安装ROS完整版时一起安装的一个仿真环境。为了正常使用，我们还需要安装一些其他的依赖：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装gazebo需要的一些依赖包</span></span><br><span class="line">sudo apt-get install ros-kinetic-gazebo-rospkgs ros-kinetic-gazebo-msgs ros-kinetic-gazebo-plugins ros-kinetic-gazeboros-control</span><br></pre></td></tr></table></figure>
-
-<h1 id="2-2-下载七自由度机器人仿真模型"><a href="#2-2-下载七自由度机器人仿真模型" class="headerlink" title="2.2 下载七自由度机器人仿真模型"></a>2.2 下载七自由度机器人仿真模型</h1><p>对于我们所要用的例子，该书的作者已经帮我编写好了程序，我们可以将其直接下载拿来应用。在以后，我们会逐一介绍模型搭建的原理和实现控制模型的方法。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开工作空间下的src文件夹</span></span><br><span class="line"><span class="built_in">cd</span> ~/catkin_ws/src</span><br><span class="line"><span class="comment"># 下载机器人模型</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/jocacace/mastering_ros_robot_description_pkg.git</span><br><span class="line"><span class="comment"># 下载机器人仿真及控制器源码</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/jocacace/seven_dof_arm_gazebo.git</span><br><span class="line"><span class="comment"># 返回上一层目录</span></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="comment"># 编译</span></span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
-
-<h1 id="3-先让机器人动起来"><a href="#3-先让机器人动起来" class="headerlink" title="3 先让机器人动起来"></a>3 先让机器人动起来</h1><h2 id="3-1-Rviz中显示七自由度机器人"><a href="#3-1-Rviz中显示七自由度机器人" class="headerlink" title="3.1 Rviz中显示七自由度机器人"></a>3.1 Rviz中显示七自由度机器人</h2><p>我们可以先用Rviz对七自由度机器人做一个显示。关于Rviz是个什么东东，本篇就不讲了，目前只需知道它可以做机器人的显示即可。打开一个终端，执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws</span><br><span class="line"><span class="built_in">source</span> devel/setup.bash</span><br><span class="line">roslaunch mastering_ros_robot_description_pkg view_arm.launch</span><br></pre></td></tr></table></figure>
-<p>打开后我们会看到Rviz中的一个七自由度机器人模型，并且有一个简单的GUI界面可以让我们手动操作机器人，如下图所示。<br><img src="/images/20200223/03.gif" alt="03"></p>
+<p>这里需要注意一下，Gazebo是安装ROS完整版时一起安装的一个仿真环境。为了正常使用，我们还需要安装一些其他的依赖：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装gazebo需要的一些依赖包</span></span><br><span class="line">sudo apt-get install ros-kinetic-gazebo-rospkgs ros-kinetic-gazebo-msgs ros-kinetic-gazebo-plugins ros-kinetic-gazeboros-control</span><br></pre></td></tr></table></figure></p>
+<h1 id="2-2-下载七自由度机器人仿真模型"><a href="#2-2-下载七自由度机器人仿真模型" class="headerlink" title="2.2 下载七自由度机器人仿真模型"></a>2.2 下载七自由度机器人仿真模型</h1><p>对于我们所要用的例子，该书的作者已经帮我编写好了程序，我们可以将其直接下载拿来应用。在以后，我们会逐一介绍模型搭建的原理和实现控制模型的方法。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开工作空间下的src文件夹</span></span><br><span class="line"><span class="built_in">cd</span> ~/catkin_ws/src</span><br><span class="line"><span class="comment"># 下载机器人模型</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/jocacace/mastering_ros_robot_description_pkg.git</span><br><span class="line"><span class="comment"># 下载机器人仿真及控制器源码</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/jocacace/seven_dof_arm_gazebo.git</span><br><span class="line"><span class="comment"># 返回上一层目录</span></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="comment"># 编译</span></span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-先让机器人动起来"><a href="#3-先让机器人动起来" class="headerlink" title="3 先让机器人动起来"></a>3 先让机器人动起来</h1><h2 id="3-1-Rviz中显示七自由度机器人"><a href="#3-1-Rviz中显示七自由度机器人" class="headerlink" title="3.1 Rviz中显示七自由度机器人"></a>3.1 Rviz中显示七自由度机器人</h2><p>我们可以先用Rviz对七自由度机器人做一个显示。关于Rviz是个什么东东，本篇就不讲了，目前只需知道它可以做机器人的显示即可。打开一个终端，执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws</span><br><span class="line"><span class="built_in">source</span> devel/setup.bash</span><br><span class="line">roslaunch mastering_ros_robot_description_pkg view_arm.launch</span><br></pre></td></tr></table></figure><br>打开后我们会看到Rviz中的一个七自由度机器人模型，并且有一个简单的GUI界面可以让我们手动操作机器人，如下图所示。<br><img src="/images/20200223/03.gif" alt="03"></p>
 <blockquote>
 <p>说明：本节对应的是2.2节中下载下来的<em>mastering_ros_robot_description_pkg</em>。该Package包含了一些机器人的显示模型，但不包含控制器。<br>注意：如果下载下来的程序在运行过程中提示有错，一般是在<em>mastering_ros_robot_description_pkg/urdf/seven_dof_arm.xacro</em>文件中屏蔽掉了<strong>grasping_frame</strong>的<strong>geometry</strong>属性，将该标签下的属性解除屏蔽即可。新手可参照其他<em>link</em>的<strong>geometry</strong>属性。其实，不解决这个错误也没关系，它只是七自由度机器人模型最上方的那个小白方块的显示，暂时不影响大局。</p>
 </blockquote>
@@ -534,14 +522,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -622,12 +610,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -761,6 +749,8 @@
 
 
 
+
+  
 
   
 

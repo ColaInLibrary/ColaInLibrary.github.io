@@ -320,14 +320,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <img src=" /images/20200205/00.png" width=50% />
-介绍机器人无序分拣项目的第二个环境安装——Realsense相机的驱动安装。
-<a id="more"></a>
-
+        <p><img src=" /images/20200205/00.png" width=50% /><br>介绍机器人无序分拣项目的第二个环境安装——Realsense相机的驱动安装。<br><a id="more"></a></p>
 <h1 id="〇、前言"><a href="#〇、前言" class="headerlink" title="〇、前言"></a>〇、前言</h1><p>笔者在做机器人无序分拣的项目时，采用Intel的Realsense D435i深度相机来采集图像。本篇来介绍该相机的驱动的安装方法，其实主要是把<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0ludGVsUmVhbFNlbnNlL2xpYnJlYWxzZW5zZQ==" title="https://github.com/IntelRealSense/librealsense">官方Github<i class="fa fa-external-link"></i></span>上用到的安装指令给出。</p>
 <p>环境：Ubuntu16.04.</p>
-<h1 id="一、Realsense驱动安装方法"><a href="#一、Realsense驱动安装方法" class="headerlink" title="一、Realsense驱动安装方法"></a>一、Realsense驱动安装方法</h1><p>打开Terminal，依次执行下列命令：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:<span class="number">80</span> --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE</span><br><span class="line">sudo add-apt-repository <span class="string">"deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo xenial main"</span> -u</span><br><span class="line">sudo apt-get install librealsense2-dkms</span><br><span class="line">sudo apt-get install librealsense2-utils</span><br><span class="line">sudo apt-get install librealsense2-dev</span><br><span class="line">sudo apt-get install librealsense2-dbg</span><br></pre></td></tr></table></figure>
+<h1 id="一、Realsense驱动安装方法"><a href="#一、Realsense驱动安装方法" class="headerlink" title="一、Realsense驱动安装方法"></a>一、Realsense驱动安装方法</h1><p>打开Terminal，依次执行下列命令：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:<span class="number">80</span> --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE</span><br><span class="line">sudo add-apt-repository <span class="string">"deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo xenial main"</span> -u</span><br><span class="line">sudo apt-get install librealsense2-dkms</span><br><span class="line">sudo apt-get install librealsense2-utils</span><br><span class="line">sudo apt-get install librealsense2-dev</span><br><span class="line">sudo apt-get install librealsense2-dbg</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>说明：上面的指令来自<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0ludGVsUmVhbFNlbnNlL2xpYnJlYWxzZW5zZS9ibG9iL21hc3Rlci9kb2MvZGlzdHJpYnV0aW9uX2xpbnV4Lm1k" title="https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md">官方Github上Linux的安装方法<i class="fa fa-external-link"></i></span>。采用该方法的好处是，不需要考虑realsense驱动版本，以防和realsense固件版本不匹配。</p>
 </blockquote>
@@ -509,14 +505,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -597,12 +593,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -736,6 +732,8 @@
 
 
 
+
+  
 
   
 

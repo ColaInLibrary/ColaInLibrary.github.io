@@ -320,24 +320,18 @@
 <p>本文说明如何将远程仓库同步到本地，以及本地仓库添加文件后如何上传至远程仓库。</p>
 </blockquote>
 <a id="more"></a>
-
 <p>根据前面几篇博文的介绍，一般来讲我们在远程(即浏览器端)操作GitHub上建立的仓库即可。<br>但是，在远程仓库中添加和删除文件很不方便。因此，需要通过一些指令来将远程仓库更新至<br>本地仓库(即电脑硬盘中存储的仓库)，添加文件后再将本地仓库上传至远程仓库。</p>
 <h3 id="远程仓库的同步"><a href="#远程仓库的同步" class="headerlink" title="远程仓库的同步"></a>远程仓库的同步</h3><p>如果本地还没有该仓库，则需要从远程仓库clone到本地。Windows10系统用<code>windows+X</code>快捷键按出一个菜单栏并选择<code>Windows PowerShell(管理员)</code>，<br>打开首先将当前路径修改至期望存放该仓库的路径，然后使用<code>git clone</code>命令将其克隆至本地。具体命令如下：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> e:       <span class="comment">#打开E盘，准备在根目录下存放该仓库</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ColaInLibrary/colainlibrary.github.com     <span class="comment">#将仓库的URL地址添加在命令后即可同步至本地</span></span><br><span class="line"><span class="built_in">cd</span> colainlibrary.github.com       <span class="comment">#打开同步后的本地仓库</span></span><br></pre></td></tr></table></figure>
-
 <p>三条指令执行完后便从PowerShell中打开了本地仓库。如果在执行<code>git clone</code>时失败，那应该是<code>git</code>没有安装的原因，<br>那么需要下载<span class="exturl" data-url="aHR0cHM6Ly9naXRmb3J3aW5kb3dzLm9yZy8=" title="https://gitforwindows.org/">Git for Windows<i class="fa fa-external-link"></i></span>.安装后可以在文件浏览器中打开本地文件夹<code>colainlibrary.github.com</code>，<br>再点右键，选择<code>Git Bash Here</code>，则可以直接使用<code>git</code>命令，而不需要像 PowerShell一样先打开到本地文件路径。</p>
 <p>如果是已经创建好的本地仓库，从命令行中打开本地仓库后，执行以下命令来将远程仓库同步至本地。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
-
 <h3 id="Git中登录GitHub账号"><a href="#Git中登录GitHub账号" class="headerlink" title="Git中登录GitHub账号"></a>Git中登录GitHub账号</h3><p>为了实现本地仓库同步至远程仓库，往往需要在Git中登录自己的账号，相应的命令为：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email <span class="string">"1901151471@qq.com"</span>    <span class="comment">#登录邮箱</span></span><br><span class="line">git config --global user.name <span class="string">"ColaInLibrary"</span>         <span class="comment">#登录用户名</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="本地仓库同步至远程"><a href="#本地仓库同步至远程" class="headerlink" title="本地仓库同步至远程"></a>本地仓库同步至远程</h3><p>当在本地仓库中添加图片(或者其他文件)至路径<code>E:\colainlibrary.github.com\assests\images</code>后，需要将本地仓库使用如下指令更新至远程仓库。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git status    <span class="comment">#查看当前状态</span></span><br><span class="line">git add *     <span class="comment">#将所有文件添加至缓冲区，也可以使用 git add \assests\images\文件名.jpg添加单个文件</span></span><br><span class="line">git commit -m <span class="string">"image update"</span>     <span class="comment">#引号中是在说本次更新内容</span></span><br><span class="line">git push      <span class="comment">#将在缓冲区的文件push到远程仓库</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="远程仓库文件的删除"><a href="#远程仓库文件的删除" class="headerlink" title="远程仓库文件的删除"></a>远程仓库文件的删除</h3><p>在远程仓库中删除文件十分不便，因此可以先将远程仓库同步至本地仓库再将其删除。以删除远程仓库中的文件夹<code>target</code>为例，首先打开本地仓库的文件夹，然后执行下列命令：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git pull    <span class="comment">#远程仓库同步</span></span><br><span class="line">git rm -r --cached target     <span class="comment">#删除target文件夹</span></span><br><span class="line">git commit -m <span class="string">"删除target文件夹"</span>     <span class="comment">#引号中是说明本次更新内容</span></span><br><span class="line">git push      <span class="comment">#将本次更新push到远程仓库</span></span><br></pre></td></tr></table></figure>
-
 <p>值得一提的是，经过以上操作，远程仓库中的文件夹<code>target</code>被删除掉了，本地仓库中的不会被删掉。</p>
 
     </div>
@@ -508,14 +502,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -596,12 +590,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -735,6 +729,8 @@
 
 
 
+
+  
 
   
 

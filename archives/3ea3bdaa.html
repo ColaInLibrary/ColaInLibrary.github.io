@@ -315,15 +315,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>介绍Ubuntu下安装pcl库的方式。</p>
-<a id="more"></a>
-
+        <p>介绍Ubuntu下安装pcl库的方式。<br><a id="more"></a></p>
 <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>这里包含pcl1.9.1以及VTK-8.2.0两部分内容的安装方式。</p>
-<h1 id="2-PCL1-9-1安装方式"><a href="#2-PCL1-9-1安装方式" class="headerlink" title="2 PCL1.9.1安装方式"></a>2 PCL1.9.1安装方式</h1><p>下载相应的安装包后，执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update  </span><br><span class="line">sudo apt-get install git build-essential linux-libc-dev</span><br><span class="line">sudo apt-get install cmake cmake-gui</span><br><span class="line">sudo apt-get install libusb-1.0-0-dev libusb-dev libudev-dev</span><br><span class="line">sudo apt-get install mpi-default-dev openmpi-bin openmpi-common </span><br><span class="line">sudo apt-get install libflann1.8 libflann-dev</span><br><span class="line">sudo apt-get install libeigen3-dev</span><br><span class="line">sudo apt-get install libboost-all-dev</span><br><span class="line">sudo apt-get install libvtk5.10-qt4 libvtk5.10 libvtk5-dev</span><br><span class="line">sudo apt-get install libqhull* libgtest-dev</span><br><span class="line">sudo apt-get install freeglut3-dev pkg-config</span><br><span class="line">sudo apt-get install libxmu-dev libxi-dev</span><br><span class="line">sudo apt-get install mono-complete</span><br><span class="line">sudo apt-get install qt-sdk openjdk-8-jdk openjdk-8-jre</span><br><span class="line"><span class="built_in">cd</span> pcl-pcl-1.9.1</span><br><span class="line">mkdir build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake -DCMAKE_BUILD_TYPE=None -DCMAKE_INSTALL_PREFIX=/usr \ -DBUILD_GPU=ON-DBUILD_apps=ON -DBUILD_examples=ON \ -DCMAKE_INSTALL_PREFIX=/usr ..</span><br><span class="line">make -j2</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-
-<h1 id="3-VTK-8-2-0的安装"><a href="#3-VTK-8-2-0的安装" class="headerlink" title="3 VTK-8.2.0的安装"></a>3 VTK-8.2.0的安装</h1><p>下载好相应的安装包后，执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> VTK-8.2.0</span><br><span class="line">mkdir build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake ..</span><br><span class="line">make -j4</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<h1 id="2-PCL1-9-1安装方式"><a href="#2-PCL1-9-1安装方式" class="headerlink" title="2 PCL1.9.1安装方式"></a>2 PCL1.9.1安装方式</h1><p>下载相应的安装包后，执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update  </span><br><span class="line">sudo apt-get install git build-essential linux-libc-dev</span><br><span class="line">sudo apt-get install cmake cmake-gui</span><br><span class="line">sudo apt-get install libusb-1.0-0-dev libusb-dev libudev-dev</span><br><span class="line">sudo apt-get install mpi-default-dev openmpi-bin openmpi-common </span><br><span class="line">sudo apt-get install libflann1.8 libflann-dev</span><br><span class="line">sudo apt-get install libeigen3-dev</span><br><span class="line">sudo apt-get install libboost-all-dev</span><br><span class="line">sudo apt-get install libvtk5.10-qt4 libvtk5.10 libvtk5-dev</span><br><span class="line">sudo apt-get install libqhull* libgtest-dev</span><br><span class="line">sudo apt-get install freeglut3-dev pkg-config</span><br><span class="line">sudo apt-get install libxmu-dev libxi-dev</span><br><span class="line">sudo apt-get install mono-complete</span><br><span class="line">sudo apt-get install qt-sdk openjdk-8-jdk openjdk-8-jre</span><br><span class="line"><span class="built_in">cd</span> pcl-pcl-1.9.1</span><br><span class="line">mkdir build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake -DCMAKE_BUILD_TYPE=None -DCMAKE_INSTALL_PREFIX=/usr \ -DBUILD_GPU=ON-DBUILD_apps=ON -DBUILD_examples=ON \ -DCMAKE_INSTALL_PREFIX=/usr ..</span><br><span class="line">make -j2</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-VTK-8-2-0的安装"><a href="#3-VTK-8-2-0的安装" class="headerlink" title="3 VTK-8.2.0的安装"></a>3 VTK-8.2.0的安装</h1><p>下载好相应的安装包后，执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> VTK-8.2.0</span><br><span class="line">mkdir build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake ..</span><br><span class="line">make -j4</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -493,14 +488,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -581,12 +576,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -720,6 +715,8 @@
 
 
 
+
+  
 
   
 

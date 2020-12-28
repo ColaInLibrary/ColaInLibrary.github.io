@@ -300,7 +300,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
+              <span>2.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -319,28 +319,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <img src=" /images/20200314/00.gif" width=30% />
-聊聊科氏力与科式加速度～
-<a id="more"></a>
-
+        <p><img src=" /images/20200314/00.gif" width=30% /><br>聊聊科氏力与科式加速度～<br><a id="more"></a></p>
 <h1 id="1-科氏力简介"><a href="#1-科氏力简介" class="headerlink" title="1 科氏力简介"></a>1 科氏力简介</h1><p>科氏力，全称科里奥利力，是以牛顿力学为基础的。1835年，法国气象学家和工程师科里奥利提出，为了描述旋转体系的运动，需要在运动方程中引入一个假想的力，这就是科里奥利力。引入科里奥利力之后，人们可以像处理惯性系中的运动方程一样简单地处理旋转体系中的运动方程，大大简化了旋转体系的处理方式。由于人类生活的地球本身就是一个巨大的旋转体系，因而科里奥利力很快在流体运动领域取得了成功的应用<sup>[1]</sup>。</p>
 <h1 id="2-科氏力与科式加速度的推导"><a href="#2-科氏力与科式加速度的推导" class="headerlink" title="2 科氏力与科式加速度的推导"></a>2 科氏力与科式加速度的推导</h1><p>让我们开始正题吧！假定有一个圆盘，在这个圆盘的一条半径上有甲、乙两人面对面站立。因为斗地主输了，他们的脚底被第三人丙用胶水粘在了圆盘上。然后丙就跳下了圆盘，让圆盘以角速度 $\pmb\omega$ 转了起来。这样，甲和乙也跟着圆盘在转。这时，丙在圆盘外的惯性系里站好笑嘻嘻地看着他俩为科学献身。</p>
 <p>过了一会儿，丙说：“傻站着干嘛？甲，你给乙从圆盘上扔个小球，看能不能打到他。”<br>甲心里默默地想：都怪乙，上来就出王炸，你固定在圆盘上都不能动，看我用小球打飞你！<br>然后甲就朝乙扔了一个质量为 $m$ 的小球，小球喷射着复仇的火花滴溜溜地朝着乙飞去。<br>乙慌了：妈呀，这撞到了我必死无疑啊，诸神保佑，诸神保佑！<br><img src="/images/20200314/01.gif" alt="01"></p>
 <p>上帝就听到了他的祈祷，派科里奥利过来看看，然后乙就看到那小球球逐渐地越来越偏，狂笑不已：“看到没？我有神之力相助！”<br>丙在外看着，不乐意了：“甲，你怎么放水？”<br>甲也懵了：我特喵没有放水啊，明明朝着乙扔的啊？难道真有神之力将小球给拽跑了？<br>科里奥利本来在和牛顿喝茶，被突然安排过来，心里不爽，就朝着甲微微一笑：小甲呀，你这样扔是永远打不到他滴！你看，是这么回事：</p>
 <p>上图中，黄色的虚线表示甲掷出小球时的方向，红色的线表示小球的实际运动轨迹。很明显，从甲的角度来看，有一个向右的“神之力”将小球拽跑偏了；但从丙的“上帝视角”来看，并没有这个“神之力”将小球拉偏导致打击乙失败，小球跑偏是由于离开甲时具有旋转运动的惯性导致的。因此，“神之力”是在旋转的非惯性系中才观察到的。</p>
 <p>小甲，你跳出来，想象你是丙，以圆盘的径向( $r$ )和切向( $t$ )建立坐标系，从速度角度来分析：<br><img src=" /images/20200314/02.jpeg" width=50% /></p>
-<p>在上图中，假设小球以极短的时间 d$t$ 从 $A$ 运动到 $B$ 点，则转过的微小角度 $\theta$ 满足：<br>$$\theta = \omega \text{d}t   \tag{1}$$<br>因为 $\theta$ 很小，因此：<br>$$\sin\theta = \sin\omega \text{d}t \approx \omega \text{d}t    \tag{2}$$</p>
-<p>$$\cos\theta = \cos\omega \text{d}t \approx 1    \tag{3}$$</p>
-<p>小球从 $A$ 运动到 $B$ 点的过程中，径向速度一直是 $\pmb v$，因此有<br>$$\pmb r_1 = \pmb r_0 + \pmb v\text{d}t \tag{4}$$</p>
-<p>式中，$OA = \pmb r_0$, $OB = \pmb r_1$。</p>
-<p>在 $A$ 点的速度有：<br>$$\pmb v_{rA} = \pmb v  \tag{5}$$</p>
-<p>$$\pmb v_{tA} =  \omega   r_0 \tag{6}$$</p>
-<p>在 $B$ 点的速度有：<br>$$\pmb v_{rB} =  v\cos\theta - \omega r_1 \sin\theta  \<br>=  v - \omega  r_1 \omega \text{d}t\<br>=  v - \omega ( r_0 +  v\text{d}t)\omega \text{d}t\tag{7}$$</p>
-<p>$$\pmb v_{tB} =  v \sin\theta + \omega r_1 \cos\theta \<br>= v\omega\text{d}t + \omega( r_0 +  v\text{d}t)\tag{8}$$</p>
-<p>因此，可以求得加速度：<br>$$\pmb a_r = \frac{ v_{rB} -  v_{rA}}{\text{d}t}\<br>=-\omega^2r_0+O(\text{d}t)  \tag{9}$$</p>
-<p>$$\pmb a_t = \frac{v_{tB}-v_{tA}}{\text{d}t}\<br>=2 \omega v \tag{10}$$</p>
-<p>小甲呀，你这回知道了吧，丙看到小球的径向是有向心加速度 $\omega^2r_0$，方向指向圆心；在切向是有大小为 $2\omega v$，方向为$\pmb\omega\times\pmb v$的“神之加速度”滴！你看到的那个力，它的计算公式为：<br>$$\pmb F = -2m\pmb\omega\times\pmb v  \tag{11}$$</p>
-<p>上帝听到忍不住了：小科，你装什么装。你就想说你就是那个神呗！</p>
+<p>在上图中，假设小球以极短的时间 d$t$ 从 $A$ 运动到 $B$ 点，则转过的微小角度 $\theta$ 满足：</p>
+<script type="math/tex; mode=display">\theta = \omega \text{d}t   \tag{1}</script><p>因为 $\theta$ 很小，因此：</p>
+<script type="math/tex; mode=display">\sin\theta = \sin\omega \text{d}t \approx \omega \text{d}t    \tag{2}</script><script type="math/tex; mode=display">\cos\theta = \cos\omega \text{d}t \approx 1    \tag{3}</script><p>小球从 $A$ 运动到 $B$ 点的过程中，径向速度一直是 $\pmb v$，因此有</p>
+<script type="math/tex; mode=display">\pmb r_1 = \pmb r_0 + \pmb v\text{d}t \tag{4}</script><p>式中，$OA = \pmb r_0$, $OB = \pmb r_1$。</p>
+<p>在 $A$ 点的速度有：</p>
+<script type="math/tex; mode=display">\pmb v_{rA} = \pmb v  \tag{5}</script><script type="math/tex; mode=display">\pmb v_{tA} =  \omega   r_0 \tag{6}</script><p>在 $B$ 点的速度有：</p>
+<script type="math/tex; mode=display">\pmb v_{rB} =  v\cos\theta - \omega r_1 \sin\theta  \\
+=  v - \omega  r_1 \omega \text{d}t\\
+=  v - \omega ( r_0 +  v\text{d}t)\omega \text{d}t\tag{7}</script><script type="math/tex; mode=display">\pmb v_{tB} =  v \sin\theta + \omega r_1 \cos\theta \\
+= v\omega\text{d}t + \omega( r_0 +  v\text{d}t)\tag{8}</script><p>因此，可以求得加速度：</p>
+<script type="math/tex; mode=display">\pmb a_r = \frac{ v_{rB} -  v_{rA}}{\text{d}t}\\
+=-\omega^2r_0+O(\text{d}t)  \tag{9}</script><script type="math/tex; mode=display">\pmb a_t = \frac{v_{tB}-v_{tA}}{\text{d}t}\\
+=2 \omega v \tag{10}</script><p>小甲呀，你这回知道了吧，丙看到小球的径向是有向心加速度 $\omega^2r_0$，方向指向圆心；在切向是有大小为 $2\omega v$，方向为$\pmb\omega\times\pmb v$的“神之加速度”滴！你看到的那个力，它的计算公式为：</p>
+<script type="math/tex; mode=display">\pmb F = -2m\pmb\omega\times\pmb v  \tag{11}</script><p>上帝听到忍不住了：小科，你装什么装。你就想说你就是那个神呗！</p>
 <p>科里奥利力来自于物体运动所具有的惯性，在旋转体系中进行直线运动的质点，由于惯性的作用，有沿着原有运动方向继续运动的趋势，但是由于体系本身是旋转的，在经历了一段时间的运动之后，体系中质点的位置会有所变化，而它原有的运动趋势的方向，如果以旋转体系的视角去观察，就会发生一定程度的偏离。<br>在惯性系中，其实是没有科氏力的，在切向存在科式加速度 $\pmb a_t = 2\pmb\omega\times\pmb v$；在旋转的非惯性系中，可以观察到科氏力 $\pmb F = -2m\pmb\omega\times\pmb v$。科里奥利加速度的方向与科里奥利力的方向相反。这是因为，科里奥利加速度是在惯性系中观察到的，由作用力产生；而科里奥利力则是在转动的参考系中观察到的，它产生的加速度是相对于非惯性系而言的。不能认为科里奥利加速度是由科里奥利力产生的<sup>[1]</sup>。</p>
 <h1 id="3-讨论"><a href="#3-讨论" class="headerlink" title="3 讨论"></a>3 讨论</h1><p>通过上面的讨论，知道了科里奥利力与科式加速度，但是上述推导过程中，个人认为不是特别严谨，尤其是对于科氏力的方向与科式加速度的方向有一些模糊，只是给出了结论。如果你有非常严谨的推导方法，欢迎告诉我～</p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
@@ -517,14 +516,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -605,12 +604,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -744,6 +743,8 @@
 
 
 
+
+  
 
   
 

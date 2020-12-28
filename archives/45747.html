@@ -320,28 +320,21 @@
 <p>本文主要介绍在Linux下实现C++的开发环境搭建，此前应当已经装好Linux系统，笔者所用系统是Ubuntu 16.04。</p>
 </blockquote>
 <a id="more"></a>
-
 <h1 id="开发流程简介"><a href="#开发流程简介" class="headerlink" title="开发流程简介"></a>开发流程简介</h1><p>在Linux环境下实现C++的开发，主要是在Terminal中通过命令行来实现。在这里以“Hello World”为例进行说明。(该代码可以从根目录下<code>code</code>文件中找到)。</p>
 <p>1.建立文件夹，用来存放整个工程文件。例如在<code>Docuements</code>目录下新建文件夹<code>HelloWorld</code>；</p>
 <p>2.在<code>HelloWorld</code>中新建文件<code>main.cpp</code>；</p>
 <p>3.<code>main.cpp</code>中编写代码：</p>
  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello World!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"i = "</span> &lt;&lt; i &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>4.在<code>HelloWorld</code>中新建文件<code>CMakeLists.txt</code>，并在其中编写以下内容：</p>
  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 3.1.0)         #设置版本号</span><br><span class="line">Project(Hello)                                #设置工程名为 Hello</span><br><span class="line">set(SRC_LIST main.cpp $&#123;SRC_FILES&#125;)           #设定源文件集，将main.cpp添加到工程</span><br><span class="line">add_executable(Hello main.cpp $&#123;SRC_LIST&#125;)    #添加可执行程序文件</span><br></pre></td></tr></table></figure>
-
 <p>5.用Terminal执行下列语句，打开当前目录(<code>#</code>后为注释)：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd Documents</span><br><span class="line">cd HelloWorld  #打开当前目录，也可以在想要打开的目录下右击鼠标，选择`Open in Terminal`</span><br></pre></td></tr></table></figure>
-
 <p>6.执行下列语句进行编译：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir build  #创建编译文件夹</span><br><span class="line">cd build     #打开编译文件夹</span><br><span class="line">cmake ..     #寻找CMakeLists，..表示返回上一目录</span><br><span class="line">make         #编译</span><br></pre></td></tr></table></figure>
-
 <p>7.编译成功后，运行可执行程序文件：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./Hello</span><br></pre></td></tr></table></figure>
-
 <p>8.在Terminal中查看显示结果。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello World!</span><br><span class="line">i = <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>本文旨在介绍Ubuntu中C++的开发流程，其中CMakeLists.txt的编写决定了开发者能否完成大型工程项目的编程开发，在以后的博文中再逐渐给出介绍。</p>
 </blockquote>
@@ -514,14 +507,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -602,12 +595,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -741,6 +734,8 @@
 
 
 
+
+  
 
   
 

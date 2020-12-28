@@ -323,7 +323,6 @@
 <p>这是由Cola &amp; Library打造的第一篇技术博客，旨在说明个人网站的建立过程及模板的使用方法。</p>
 </blockquote>
 <a id="more"></a>
-
 <h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>如果你能看到这篇博客，那么你最起码应该掌握：</p>
 <ol>
 <li>了解GitHub为何物？</li>
@@ -337,7 +336,7 @@
 <ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTIxNjgwMzgvYXJ0aWNsZS9kZXRhaWxzLzc3NzE1NDM5" title="https://blog.csdn.net/u012168038/article/details/77715439">手把手教你在Github上建立自己的个人博客网站<i class="fa fa-external-link"></i></span><br>（该网站简要介绍了简历个人网站所需要的内容，并给出了HelloGitHub示例）</li>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC84OGUzNDc0Y2VmNzI=" title="https://www.jianshu.com/p/88e3474cef72">在windows下安装jekyll<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTIvMDgvYmxvZ2dpbmdfd2l0aF9qZWt5bGwuaHRtbA==" title="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">搭建一个免费的，无限流量的Blog—-github Pages和Jekyll入门<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTIvMDgvYmxvZ2dpbmdfd2l0aF9qZWt5bGwuaHRtbA==" title="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">搭建一个免费的，无限流量的Blog——github Pages和Jekyll入门<i class="fa fa-external-link"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC81ODIyOTI5OQ==" title="https://zhuanlan.zhihu.com/p/58229299">GitHub Pages 建立个人网站详细教程<i class="fa fa-external-link"></i></span></li>
 </ul>
 <h3 id="从浏览器创建"><a href="#从浏览器创建" class="headerlink" title="从浏览器创建"></a>从浏览器创建</h3><p>上节中给出的示例均需在本地建立仓库，再上传，环境配置流程繁琐，操作过程不友好，好吧…其实就是Library同学最终有一步“bundle exec jekyll server”不知为何总是过不了，<br>因此偷懒放弃了。However，明明有简单的，为啥要避简就繁呢？</p>
@@ -366,7 +365,8 @@
 <h4 id="换行定义"><a href="#换行定义" class="headerlink" title="换行定义"></a>换行定义</h4><dl><dt>定义1</dt><dd>换行定义.</dd></dl>
 
 <h4 id="图的插入"><a href="#图的插入" class="headerlink" title="图的插入"></a>图的插入</h4><p><img src="/images/avatar.jpg" alt="avatar"></p>
-<h4 id="表的插入"><a href="#表的插入" class="headerlink" title="表的插入"></a>表的插入</h4><table>
+<h4 id="表的插入"><a href="#表的插入" class="headerlink" title="表的插入"></a>表的插入</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>Table Header 1</th>
@@ -374,11 +374,7 @@
 <th>Table Header 3</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>Division 1</td>
-<td>Division 2</td>
-<td>Division 3</td>
-</tr>
+<tbody>
 <tr>
 <td>Division 1</td>
 <td>Division 2</td>
@@ -389,9 +385,15 @@
 <td>Division 2</td>
 <td>Division 3</td>
 </tr>
-</tbody></table>
+<tr>
+<td>Division 1</td>
+<td>Division 2</td>
+<td>Division 3</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h4 id="程序语言的插入，以Clone-Jacman-theme为例"><a href="#程序语言的插入，以Clone-Jacman-theme为例" class="headerlink" title="程序语言的插入，以Clone Jacman theme为例:"></a>程序语言的插入，以Clone Jacman theme为例:</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/Simpleyyt/jekyll-theme-next.git</span><br><span class="line"><span class="built_in">cd</span> jekyll-theme-next</span><br></pre></td></tr></table></figure>
-
 <h4 id="小表情emoji的插入，以及网站链接的插入"><a href="#小表情emoji的插入，以及网站链接的插入" class="headerlink" title="小表情emoji的插入，以及网站链接的插入"></a>小表情emoji的插入，以及网站链接的插入</h4><p>测试用小表情，如： :smile: .</p>
 <p>更多小表情请见 :wink: : <span class="exturl" data-url="aHR0cHM6Ly93d3cud2VicGFnZWZ4LmNvbS90b29scy9lbW9qaS1jaGVhdC1zaGVldC8=" title="https://www.webpagefx.com/tools/emoji-cheat-sheet/">https://www.webpagefx.com/tools/emoji-cheat-sheet/<i class="fa fa-external-link"></i></span>.</p>
 <p>使用知乎的链接类型：</p>
@@ -399,13 +401,10 @@
 <p>:bowtie::smile::laughing::blush::smiley::relaxed::smirk:<br>:heart_eyes::kissing_heart::kissing_closed_eyes::flushed::relieved::satisfied::grin:</p>
 <h4 id="公式的插入"><a href="#公式的插入" class="headerlink" title="公式的插入"></a>公式的插入</h4><p>从以下网站可以获得更多公式相关的内容：<br><span class="exturl" data-url="aHR0cDovL2RvY3MubWF0aGpheC5vcmcvZW4vbGF0ZXN0Lw==" title="http://docs.mathjax.org/en/latest/">http://docs.mathjax.org/en/latest/<i class="fa fa-external-link"></i></span></p>
 <p>另起一行写公式</p>
-<p>$$a^2 + b^2 = c^2$$</p>
-<p>如何实现的呢？用 <strong>double $</strong> 符号，如下</p>
-<p>$$a^2 + b^2 = c^2$$</p>
-<p>行中公式$ sin(x^2) $可以使用<code>$...$</code> 得到。</p>
+<script type="math/tex; mode=display">a^2 + b^2 = c^2</script><p>如何实现的呢？用 <strong>double $</strong> 符号，如下</p>
+<script type="math/tex; mode=display">a^2 + b^2 = c^2</script><p>行中公式$ sin(x^2) $可以使用<code>$$...$$</code> 得到。</p>
 <p>下角标、非斜体文本的实现：</p>
-<p>$$ \mathbf{X}_{n,p} = \mathbf{A}_{n,k} \mathbf{B}_{k,p} $$</p>
-<p>效果如下：</p>
+<script type="math/tex; mode=display">\mathbf{X}\_{n,p} = \mathbf{A}\_{n,k} \mathbf{B}\_{k,p}</script><p>效果如下：</p>
 <p>\[ \mathbf{X}_{n,p} = \mathbf{A}_{n,k} \mathbf{B}_{k,p} \]</p>
 <p>公式的插入有点类似于Latex，可以考虑从MathType直接转化为Latex公式。</p>
 <h4 id="高亮文本"><a href="#高亮文本" class="headerlink" title="高亮文本"></a>高亮文本</h4><ul>
@@ -416,10 +415,7 @@
 <li>高亮后的文本</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert( <span class="string">'Hello, world!'</span> );</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span></span></span><br><span class="line">  puts <span class="string">'foo'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-
 <ul>
 <li>C++的高亮形式</li>
 </ul>
@@ -591,14 +587,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -679,12 +675,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -818,6 +814,8 @@
 
 
 
+
+  
 
   
 

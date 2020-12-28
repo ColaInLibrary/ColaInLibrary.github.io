@@ -320,17 +320,13 @@
 <p>为提升自己的开发速度，因此需要熟练掌握一种编辑器，Emacs就是备受推崇的一种优秀编辑器。本文主要针对对Emacs了解较少的初学者，所使用系统环境是Ubuntu16.04。<br>本文主要参考了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpbndlaXlhbmcvZW1hY3Muc3RhcnRlcg==" title="https://github.com/linweiyang/emacs.starter">Emacs初学者配置文件<i class="fa fa-external-link"></i></span>，但是该文最后所描述的rtags安装有些问题，这是由于其所需的clang版本和rtags版本不匹配造成的。</p>
 </blockquote>
 <a id="more"></a>
-
 <h1 id="Emacs简介"><a href="#Emacs简介" class="headerlink" title="Emacs简介"></a>Emacs简介</h1><p>Emacs是一款优秀的编辑器。</p>
 <h1 id="Emacs的安装"><a href="#Emacs的安装" class="headerlink" title="Emacs的安装"></a>Emacs的安装</h1><p>1.cmake的安装：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install cmake          <span class="comment">//安装cmake是因为后面需要用它来编译</span></span><br></pre></td></tr></table></figure>
-
 <p>2.对于Ubuntu LTS 14.04或以上，安装指令如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:kelleyk/emacs</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install emacs26		<span class="comment">//获取高版本的emacs</span></span><br></pre></td></tr></table></figure>
-
 <p>3.Emacs初学者配置：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;linweiyang&#x2F;emacs.starter   	</span><br><span class="line">cd emacs.starter</span><br><span class="line">.&#x2F;install.sh</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>至此，Emacs已经安装完毕。</p>
 </blockquote>
@@ -338,34 +334,25 @@
 <p>由于自己常用的是C++编程，因此进行以下适合程序员的一些配置。</p>
 </blockquote>
 <h2 id="一、安装Google-Docs的C-语法检查工具"><a href="#一、安装Google-Docs的C-语法检查工具" class="headerlink" title="一、安装Google Docs的C++语法检查工具"></a>一、安装Google Docs的C++语法检查工具</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install python-pip</span><br><span class="line">sudo pip install cpplint</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、安装Zeal工具"><a href="#二、安装Zeal工具" class="headerlink" title="二、安装Zeal工具"></a>二、安装Zeal工具</h2><p>安装Zeal工具并下载语言函数手册库：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install zeal</span><br></pre></td></tr></table></figure>
-
+<h2 id="二、安装Zeal工具"><a href="#二、安装Zeal工具" class="headerlink" title="二、安装Zeal工具"></a>二、安装Zeal工具</h2><p>安装Zeal工具并下载语言函数手册库：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install zeal</span><br></pre></td></tr></table></figure></p>
 <p>使用方法：快捷键为<code>Ctrl+c D</code></p>
 <h2 id="三、rtags工具的安装"><a href="#三、rtags工具的安装" class="headerlink" title="三、rtags工具的安装"></a>三、rtags工具的安装</h2><p>rtags能使开发者在emacs中快速查找变量的声明和定义，是开发的利器！安装rtags要求clang的版本与其相匹配。截止笔者写稿之前，用LLVM/Clang的6.0版本可以与其相配。安装方法如下(首先新打开一个终端)：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install llvm-6.0-dev clang-6.0 libclang-6.0-dev openssl</span><br><span class="line">git clone --recursive https:&#x2F;&#x2F;github.com&#x2F;Andersbakken&#x2F;rtags.git</span><br><span class="line">cd rtags</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">source ~&#x2F;.bashrc </span><br><span class="line">cmake ..</span><br><span class="line">make -j2</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-
 <p>其中<code>make -j2</code>是采用双核编译。</p>
 <p>这里，需要注意的是，如果以上过程无法安装rtags，应该是clang版本与rtags版本不匹配造成的，可用如下方法来查看：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">clang --version</span><br><span class="line">sudo apt-<span class="built_in">get</span> <span class="built_in">remove</span> clang* llvm*   <span class="comment">//移除旧版本</span></span><br><span class="line">sudo apt-<span class="built_in">get</span> update</span><br><span class="line">sudo apt-<span class="built_in">get</span> install llvm<span class="number">-6.0</span>-dev clang<span class="number">-6.0</span> libclang<span class="number">-6.0</span>-dev openssl	<span class="comment">//安装新版本</span></span><br></pre></td></tr></table></figure>
-
 <p>rtags的使用方法：快捷键为<code>Crtl+c r</code>，等待两三秒后，右侧将显示所有的快捷键，这里只给出前三个：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+c r ,   <span class="comment">//当前变量参考</span></span><br><span class="line">Ctrl+c r .   <span class="comment">//当前变量定义</span></span><br><span class="line">Ctrl+c r /   <span class="comment">//当前变量所有参考</span></span><br></pre></td></tr></table></figure>
-
 <h2 id="四、CapsLock与Ctrl键的交换"><a href="#四、CapsLock与Ctrl键的交换" class="headerlink" title="四、CapsLock与Ctrl键的交换"></a>四、CapsLock与Ctrl键的交换</h2><p>由于Emacs严重依赖于快捷键组合，或者说严重依赖于<code>Ctrl</code>键，因此为了方便操作，需要将<code>CapsLock</code>与<code>Ctrl</code>两个按键进行交换。方法如下：</p>
 <p>1.新打开一个终端，输入</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emacs .xmodmap		<span class="comment">//用emacs打开xmodmap文件，如没有，将创建</span></span><br></pre></td></tr></table></figure>
-
 <p>2.在.xmodmap中输入</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">remove</span> Lock = Caps_Lock</span><br><span class="line"><span class="built_in">remove</span> Control = Control_L</span><br><span class="line">keysym Control_L = Caps_Lock</span><br><span class="line">keysym Caps_Lock = Control_L</span><br><span class="line">add Lock = Caps_Lock</span><br><span class="line">add Control = Control_L</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>Emacs中粘贴的快捷键是<code>Ctrl+Y</code>。</p>
 </blockquote>
 <p>3.在终端中执行：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xmodmap .xmodmap</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>至此，完成了Emacs环境的配置，但是对于Emacs的快捷键，还需要花很多时间去摸索和学习。</p>
 </blockquote>
@@ -538,14 +525,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -626,12 +613,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -765,6 +752,8 @@
 
 
 
+
+  
 
   
 

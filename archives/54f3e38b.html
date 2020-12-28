@@ -323,11 +323,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <img src=" /images/20200226/00.gif" width=30% />
-机器人究竟怎么动起来的呢？
-<a id="more"></a>
-
-<h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>在本专栏的第二篇博客中，我们从文件组成的角度分析了七自由度机器人运行的规律，但在第2.3.2.2节，我们看到了<em>seven_dof_arm_gazebo_control.launch<em>文件中加载了</em>seven_dof_arm_gazebo_control.yaml</em> 文件，并在node中加载了controller，这些东西怎么来的，当时没有回答，现在就来回答这个问题。</p>
+        <p><img src=" /images/20200226/00.gif" width=30% /><br>机器人究竟怎么动起来的呢？<br><a id="more"></a></p>
+<h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>在本专栏的第二篇博客中，我们从文件组成的角度分析了七自由度机器人运行的规律，但在第2.3.2.2节，我们看到了<em>seven_dof_arm_gazebo_control.launch</em>文件中加载了<em>seven_dof_arm_gazebo_control.yaml</em> 文件，并在node中加载了controller，这些东西怎么来的，当时没有回答，现在就来回答这个问题。</p>
 <h1 id="1-控制机器人运动"><a href="#1-控制机器人运动" class="headerlink" title="1 控制机器人运动"></a>1 控制机器人运动</h1><p>在本专栏的第一篇博客中，采用ROS中已经做好的相关库，使机器人运动的流程可以归纳如下：<br><img src="/images/20200226/01.png" alt="01"></p>
 <p>首先是在URDF文件的transmission属性指定了<strong>hardware_interface</strong>的类型是<strong>PositionJointInterface</strong>;其次在控制器配置文件 <em>seven_dof_arm_gazebo_control.yaml</em> 中指定了    <strong>namespace</strong>是<strong>seven_dof_arm</strong>，并且指定了控制器的名字<strong>joint_state_controller</strong>和<strong>jointx_state_controller</strong>(x表示1,2,3,…,7)。<em>seven_dof_arm_gazebo_control.yaml</em>中控制器的类型和URDF文件中<strong>hardware_interface</strong>的类型是匹配的。<em>seven_dof_arm_gazebo_control.yaml</em>中控制器的名字和<em>seven_dof_arm_gazebo_launch</em>中控制器节点的参数是一致的。</p>
 <p>关于控制器的类型和hardware_interface之间的匹配关系，见<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NfY29udHJvbCNDb250cm9sbGVycw==" title="http://wiki.ros.org/ros_control#Controllers">ROS wiki ros_control<i class="fa fa-external-link"></i></span>.从官方链接点进去之后可以看到github上相应的.h源文件，打开可以看到它们之间的联系。以position_controllers为例，从官网的链接打开后，可以看到<em>joint_position_controller.h</em>文件：<br><img src="/images/20200226/02.png" alt="02"></p>
@@ -340,7 +337,6 @@
 <p>如果是想控制多个关节，还有joint_group_position_controller.h：<br><img src="/images/20200226/03.png" alt="03"></p>
 <h1 id="2-seven-dof-arm-gazebo-control-yaml"><a href="#2-seven-dof-arm-gazebo-control-yaml" class="headerlink" title="2 seven_dof_arm_gazebo_control.yaml"></a>2 seven_dof_arm_gazebo_control.yaml</h1><p><code>.yaml</code>文件是控制器的配置文件。我们一般在利用ROS已有的控制器时，会将控制器的参数写在该文件中。<em>seven_dof_arm_gazebo_control.yaml</em> 的源码如下：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">seven_dof_arm:</span></span><br><span class="line">  <span class="comment"># Publish all joint states -----------------------------------</span></span><br><span class="line">  <span class="attr">joint_state_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">joint_state_controller/JointStateController</span></span><br><span class="line">    <span class="attr">publish_rate:</span> <span class="number">50</span>  </span><br><span class="line">  </span><br><span class="line">  <span class="comment"># Position Controllers ---------------------------------------</span></span><br><span class="line">  <span class="attr">joint1_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">position_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">shoulder_pan_joint</span></span><br><span class="line">    <span class="attr">pid:</span> <span class="string">&#123;p:</span> <span class="number">100.0</span><span class="string">,</span> <span class="attr">i:</span> <span class="number">0.01</span><span class="string">,</span> <span class="attr">d:</span> <span class="number">10.0</span><span class="string">&#125;</span></span><br><span class="line">  <span class="attr">joint2_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">position_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">shoulder_pitch_joint</span></span><br><span class="line">    <span class="attr">pid:</span> <span class="string">&#123;p:</span> <span class="number">100.0</span><span class="string">,</span> <span class="attr">i:</span> <span class="number">0.01</span><span class="string">,</span> <span class="attr">d:</span> <span class="number">10.0</span><span class="string">&#125;</span></span><br><span class="line">  <span class="attr">joint3_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">position_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">elbow_roll_joint</span></span><br><span class="line">    <span class="attr">pid:</span> <span class="string">&#123;p:</span> <span class="number">100.0</span><span class="string">,</span> <span class="attr">i:</span> <span class="number">0.01</span><span class="string">,</span> <span class="attr">d:</span> <span class="number">10.0</span><span class="string">&#125;</span></span><br><span class="line">  <span class="attr">joint4_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">position_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">elbow_pitch_joint</span></span><br><span class="line">    <span class="attr">pid:</span> <span class="string">&#123;p:</span> <span class="number">100.0</span><span class="string">,</span> <span class="attr">i:</span> <span class="number">0.01</span><span class="string">,</span> <span class="attr">d:</span> <span class="number">10.0</span><span class="string">&#125;</span></span><br><span class="line">  <span class="attr">joint5_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">position_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">wrist_roll_joint</span></span><br><span class="line">    <span class="attr">pid:</span> <span class="string">&#123;p:</span> <span class="number">100.0</span><span class="string">,</span> <span class="attr">i:</span> <span class="number">0.01</span><span class="string">,</span> <span class="attr">d:</span> <span class="number">10.0</span><span class="string">&#125;</span></span><br><span class="line">  <span class="attr">joint6_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">position_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">wrist_pitch_joint</span></span><br><span class="line">    <span class="attr">pid:</span> <span class="string">&#123;p:</span> <span class="number">100.0</span><span class="string">,</span> <span class="attr">i:</span> <span class="number">0.01</span><span class="string">,</span> <span class="attr">d:</span> <span class="number">10.0</span><span class="string">&#125;</span></span><br><span class="line">  <span class="attr">joint7_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">position_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">gripper_roll_joint</span></span><br><span class="line">    <span class="attr">pid:</span> <span class="string">&#123;p:</span> <span class="number">100.0</span><span class="string">,</span> <span class="attr">i:</span> <span class="number">0.01</span><span class="string">,</span> <span class="attr">d:</span> <span class="number">10.0</span><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-
 <p>从源码中可以看出，JointStateController可以控制publish state，JointPositionController可以控制单独一个关节，并可以调节pid参数。</p>
 
     </div>
@@ -512,14 +508,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -600,12 +596,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -739,6 +735,8 @@
 
 
 
+
+  
 
   
 

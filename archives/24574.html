@@ -339,13 +339,11 @@
 <p>开发环境：Ubuntu16.04 LTS、 QT Creator 5.8。 </p>
 </blockquote>
 <a id="more"></a>
-
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>QT Creator是一款可以用来编写界面的IDE，而QT则是库。本文旨在说明QT Creator 5.8的安装方法，以及用cmake来编译创建的QT工程。用cmake的原因是，当开发的<br>程序是包含了大量的第三方库时，QT自带的qmake并不实用，还是跨平台编译工具cmake好用。</p>
 <h1 id="QT-Creator-5-8-及其他库的安装"><a href="#QT-Creator-5-8-及其他库的安装" class="headerlink" title="QT Creator 5.8 及其他库的安装"></a>QT Creator 5.8 及其他库的安装</h1><h2 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h2><p>不知道为啥QT官方的安装过程整的很麻烦，需要用户注册，嗯，注册完还不能直接下载，各(zhen)种(ma)绕(fan)。下载QT的安装包可以从<span class="exturl" data-url="aHR0cDovL2Rvd25sb2FkLnF0LmlvLw==" title="http://download.qt.io/">QT镜像下载<i class="fa fa-external-link"></i></span>。下面直接给出下载过程，关于整个下载页面的说明，请参考<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA5MDQyNy9hcnRpY2xlL2RldGFpbHMvODM4Mjc2Nzg=" title="https://blog.csdn.net/weixin_38090427/article/details/83827678">Qt Creator的下载和安装<i class="fa fa-external-link"></i></span>。</p>
 <p>打开网页后，依次点击<code>archive/</code> -&gt; <code>qt/</code> -&gt; <code>5.8/</code> -&gt; <code>qt-opensource-linux-x64-5.8.0.run</code>，下载安装包。</p>
 <h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><p>在Terminal中，打开安装包存放路径，执行下列语句进行安装。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x qt-opensource-linux-x64<span class="number">-5.8</span><span class="number">.0</span>.<span class="built_in">run</span></span><br><span class="line">./qt-opensource-linux-x64<span class="number">-5.8</span><span class="number">.0</span>.<span class="built_in">run</span></span><br></pre></td></tr></table></figure>
-
 <p>执行完上述语句后，会弹出QT Creator的安装界面，如下图。<br><img src="/images/20190716QT/01.png" alt="01.png"></p>
 <p>点击Next，在下面的输入登录信息点击Skip即可。<br><img src="/images/20190716QT/02.png" alt="02.png"></p>
 <p>继续点击Next。<br><img src="/images/20190716QT/03.png" alt="03.png"></p>
@@ -355,7 +353,6 @@
 <p>在下面的页面中，点击Install，开始安装，等待安装完成即可。<br><img src="/images/20190716QT/07.png" alt="07.png"></p>
 <h2 id="其他库的安装"><a href="#其他库的安装" class="headerlink" title="其他库的安装"></a>其他库的安装</h2><p>以上过程只是安装了QT Creator 5.8，为了能正常使用，还需要安装一些其他的库，依次执行下列语句即可。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install g++</span><br><span class="line">sudo apt-<span class="built_in">get</span> install libx11-dev libxext-dev libxtst-dev</span><br><span class="line">sudo apt-<span class="built_in">get</span> install libgl1-mesa-dev</span><br><span class="line">sudo apt-<span class="built_in">get</span> install build-essential</span><br><span class="line">sudo apt-<span class="built_in">get</span> install libqt4-dev</span><br><span class="line">sudo apt-<span class="built_in">get</span> install git build-essential cmake qt5-<span class="keyword">default</span> qtscript5-dev libssl-dev qttools5-dev qttools5-dev-tools qtmultimedia5-dev libqt5svg5-dev libqt5webkit5-dev libsdl2-dev libasound2 libxmu-dev libxi-dev freeglut3-dev libasound2-dev libjack-jackd2-dev libxrandr-dev libqt5xmlpatterns5-dev libqt5xmlpatterns5 libqt5xmlpatterns5-<span class="keyword">private</span>-dev</span><br></pre></td></tr></table></figure>
-
 <p>说明：上述的命令是通过参考一些帖子得来的，前5条命令笔者并不知道是否为必须，最后一条命令是必须要安装的。事实上，最后一条是包含了前面部分的库的。</p>
 <h1 id="HelloWorld案例介绍"><a href="#HelloWorld案例介绍" class="headerlink" title="HelloWorld案例介绍"></a>HelloWorld案例介绍</h1><p>本节介绍使用QT来创建一个例子HelloWorld，首先使用QT Creator来编写程序，弹出如下的页面，再介绍添加cmake来实现同样的功能。<br><img src="/images/20190716QT/08.png" alt="08.png"></p>
 <h2 id="QT-Creator的创建过程"><a href="#QT-Creator的创建过程" class="headerlink" title="QT Creator的创建过程"></a>QT Creator的创建过程</h2><h3 id="工程的创建"><a href="#工程的创建" class="headerlink" title="工程的创建"></a>工程的创建</h3><p>打开QT Creator，创建一个新的工程，选择相应的存放路径。如下图所示。<br><img src="/images/20190716QT/09.png" alt="09.png"><br><img src="/images/20190716QT/10.png" alt="10.png"><br><img src="/images/20190716QT/11.png" alt="11.png"></p>
@@ -367,15 +364,12 @@
 <p>双击<code>widget.ui</code>，打开如下界面，找到<code>Display Widgets</code>下的<code>Label</code>，用鼠标左键按住拖动至右面的框中，将显示文本修改为“Hello QT and CMAKE!”。</p>
 <p>双击<code>widget.cpp</code>，修改程序如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"widget.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ui_widget.h"</span></span></span><br><span class="line"></span><br><span class="line">Widget::Widget(QWidget *parent) :</span><br><span class="line">    QWidget(parent),</span><br><span class="line">    ui(<span class="keyword">new</span> Ui::Widget)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//窗体标题</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;setWindowTitle(<span class="string">"Qt5.1 窗体应用"</span>);</span><br><span class="line">    <span class="comment">//窗体 ICO 图片,如图不起别名,后缀直接写图片全名。</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;setWindowIcon(QIcon(<span class="string">":/new/prefix1/ico.png"</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget::~Widget()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">delete</span> ui;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>点击上图中左下角的第一个绿色三角，即可运行程序。至此，使用QT Creator创建了第一个界面程序。</p>
 <h3 id="使用cmake对程序进行编译"><a href="#使用cmake对程序进行编译" class="headerlink" title="使用cmake对程序进行编译"></a>使用cmake对程序进行编译</h3><p>在HelloWorld工程中右键，添加新文件，选择<code>General</code> -&gt; <code>Empty File</code>，命名为<code>CMakeLists.txt</code>，如图所示。<br><img src="/images/20190716QT/16.png" alt="16.png"></p>
 <p>并在<code>CMakeLists.txt</code>中添加如下内容：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION <span class="number">2.8</span><span class="number">.11</span> FATAL_ERROR)</span><br><span class="line">project(QtHelloWorld)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_INCLUDE_CURRENT_DIR ON)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_AUTOMOC ON)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_AUTOUIC ON)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_AUTORCC ON)</span><br><span class="line"></span><br><span class="line">find_package(Qt5 REQUIRED Widgets)</span><br><span class="line"> qt5_wrap_cpp( MOC widget.h)</span><br><span class="line">qt5_wrap_ui( UIC widget.ui)</span><br><span class="line">add_executable(QtHelloWorld main.cpp widget.cpp widget.h widget.ui $&#123;RESOURCE_DIR&#125;)</span><br><span class="line">target_link_libraries(QtHelloWorld Qt5::Widgets)</span><br></pre></td></tr></table></figure>
-
 <p>接下来尝试使用cmake对工程进行编译。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd 工程所在目录</span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line">cd build</span><br><span class="line">make -j2</span><br><span class="line">./QtHelloWorld</span><br></pre></td></tr></table></figure>
-
 <h1 id="程序运行结果"><a href="#程序运行结果" class="headerlink" title="程序运行结果"></a>程序运行结果</h1><p><img src="/images/20190716QT/08.png" alt="08.png"></p>
 <p>至此，完成了通过QT Creator创建工程并通过IDE直接运行或者使用cmake来编译运行工程的示例。</p>
 
@@ -465,12 +459,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/archives/22984.html" rel="prev" title="C++中配置文件的读取">
-      <i class="fa fa-chevron-left"></i> C++中配置文件的读取
+    <a href="/archives/56794.html" rel="prev" title="Win10下完美安装MathType的方法">
+      <i class="fa fa-chevron-left"></i> Win10下完美安装MathType的方法
     </a></div>
       <div class="post-nav-item">
-    <a href="/archives/45371.html" rel="next" title="Linux下boost库的安装">
-      Linux下boost库的安装 <i class="fa fa-chevron-right"></i>
+    <a href="/archives/22984.html" rel="next" title="C++中配置文件的读取">
+      C++中配置文件的读取 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -548,14 +542,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -636,12 +630,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -775,6 +769,8 @@
 
 
 
+
+  
 
   
 

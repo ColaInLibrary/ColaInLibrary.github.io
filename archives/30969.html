@@ -324,7 +324,6 @@
 <p>开发环境：Microsoft VS2017。</p>
 </blockquote>
 <a id="more"></a>
-
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>::运算符，是作用域运算符，是C++语言中优先级最高的运算符。该运算符的用法主要有包括以下三个方面：</p>
 <ol>
 <li>代码块的作用域。</li>
@@ -333,7 +332,6 @@
 </ol>
 <h1 id="代码块的作用域"><a href="#代码块的作用域" class="headerlink" title="代码块的作用域"></a>代码块的作用域</h1><p>在函数内如果有一个与全局变量重名的变量，可以用 ::a 的形式访问（a是全局变量名）。示例如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;	</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">2</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"这个a是局部变量： a = "</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"这个a是全局变量： a = "</span> &lt;&lt; ::a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>程序运行结果如下：<br><img src="/images/20190831/01.png" alt="01"></p>
 <h1 id="类的静态成员访问"><a href="#类的静态成员访问" class="headerlink" title="类的静态成员访问"></a>类的静态成员访问</h1><h2 id="类的静态成员变量访问"><a href="#类的静态成员变量访问" class="headerlink" title="类的静态成员变量访问"></a>类的静态成员变量访问</h2><ol>
 <li><p>静态成员变量属于整个类所有。因为静态成员变量并不属于某个对象，所以我们可以通过类名来直接访问公有静态成员变量。也可以通过对象名访问公有成员变量。</p>
@@ -344,11 +342,8 @@
 </li>
 </ol>
 <h3 id="pch-h"><a href="#pch-h" class="headerlink" title="pch.h"></a>pch.h</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> PCH_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PCH_H</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	MyClass();</span><br><span class="line">	~MyClass();</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> b;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">funcTest</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//PCH_H</span></span></span><br></pre></td></tr></table></figure>
-
 <h3 id="pch-cpp"><a href="#pch-cpp" class="headerlink" title="pch.cpp"></a>pch.cpp</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"pch.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MyClass::funcTest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"这是MyClass类中的一个静态函数"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MyClass::MyClass()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MyClass::~MyClass()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h3 id="main-cpp"><a href="#main-cpp" class="headerlink" title="main.cpp"></a>main.cpp</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"pch.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> MyClass::b = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;	</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">2</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"这个a是局部变量： a = "</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"这个a是全局变量： a = "</span> &lt;&lt; ::a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	MyClass obj;</span><br><span class="line">	<span class="comment">//int MyClass::b = 3;		//error!</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"直接调用类中的静态成员变量MyClass::b： b = "</span> &lt;&lt; MyClass::b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"通过类定义的对象来访问静态成员变量：   b = "</span> &lt;&lt; obj.b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	obj.b = a;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"通过类定义的对象来  修改  静态成员变量的值： b = "</span> &lt;&lt; obj.b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"直接调用类中的静态成员变量MyClass::b： b = "</span> &lt;&lt; MyClass::b &lt;&lt; <span class="built_in">endl</span>;	</span><br><span class="line">	MyClass::b = ::a;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"通过类定义的对象来访问静态成员变量的值： b = "</span> &lt;&lt; obj.b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"直接调用类中的静态成员变量MyClass::b： b = "</span> &lt;&lt; MyClass::b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>说明：</p>
 <p>1.Q：第6行的程序为什么要在全局声明？</p>
 <p>  A：静态成员变量是在类外进行初始化的，静态成员变量一定要类外进行声明。这是因为声明描述了如何分配内存，但并不分配内存。这是因为静态类成员是单独存储的，而不是对象的组成部分，所以不是在创建类对象时被定义的，因此不能在类中进行初始化，否则每创建一个对象都会初始化静态成员了。</p>
@@ -389,10 +384,10 @@
       <div class="popular-posts-title"><a href="/archives/10600.html" rel="bookmark">Linux下共享内存的使用方法</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/24574.html" rel="bookmark">Linux下QT环境的配置</a></div>
+      <div class="popular-posts-title"><a href="/archives/22984.html" rel="bookmark">C++中配置文件的读取</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/22984.html" rel="bookmark">C++中配置文件的读取</a></div>
+      <div class="popular-posts-title"><a href="/archives/24574.html" rel="bookmark">Linux下QT环境的配置</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/20080.html" rel="bookmark">C++中vector的用法</a></div>
@@ -533,14 +528,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -621,12 +616,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -760,6 +755,8 @@
 
 
 
+
+  
 
   
 

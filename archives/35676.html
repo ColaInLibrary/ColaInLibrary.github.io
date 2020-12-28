@@ -315,11 +315,9 @@
 <p>本文中的环境为Ubuntu16.04LTS + ROS(kinetic).</p>
 </blockquote>
 <a id="more"></a>
-
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>对于kinetic版本的ROS，默认安装Gazebo版本是7。但是现在需要用到版本为8的Gazebo仿真环境。经过一番查找，找到了相应的方法。</p>
 <h1 id="Gazebo7的卸载"><a href="#Gazebo7的卸载" class="headerlink" title="Gazebo7的卸载"></a>Gazebo7的卸载</h1><p>查看Gazebo的版本：</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gazebo -v</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">将gazebo7卸载：</span><br><span class="line">```py</span><br><span class="line">$ sudo apt-get remove ros-kinetic-gazebo*</span><br><span class="line">$ sudo apt-get remove libgazebo*</span><br><span class="line">$ sudo apt-get remove gazebo*</span><br></pre></td></tr></table></figure>
-
 <h1 id="Gazebo8的安装"><a href="#Gazebo8的安装" class="headerlink" title="Gazebo8的安装"></a>Gazebo8的安装</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c <span class="string">'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" &gt; /etc/apt/sources.list.d/gazebo-stable.list'</span></span><br><span class="line">wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install gazebo8 </span><br><span class="line">sudo apt-get install libgazebo8-dev</span><br><span class="line">sudo apt-get install ros-kinetic-gazebo8-*</span><br></pre></td></tr></table></figure>
 
     </div>
@@ -491,14 +489,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -579,12 +577,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">191k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:45</span>
+    <span title="站点阅读时长">2:54</span>
 </div>
 
 
@@ -718,6 +716,8 @@
 
 
 
+
+  
 
   
 
