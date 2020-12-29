@@ -59,8 +59,10 @@
 <meta property="og:image" content="https://colainlibrary.com/images/20201020/02.png">
 <meta property="og:image" content="https://colainlibrary.com/images/20201020/03.png">
 <meta property="og:image" content="https://colainlibrary.com/images/20201020/04.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20201020/sigmoid.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20201020/tanh.png">
 <meta property="article:published_time" content="2020-10-20T11:00:00.000Z">
-<meta property="article:modified_time" content="2020-12-28T12:18:32.487Z">
+<meta property="article:modified_time" content="2020-12-29T04:10:06.204Z">
 <meta property="article:author" content="Cola &amp; Library">
 <meta property="article:tag" content="Library">
 <meta name="twitter:card" content="summary">
@@ -300,7 +302,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.9k</span>
+              <span>9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -479,7 +481,8 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
 &= \frac{1}{1+e^{-x}} \cdot (1-\frac{1}{1+e^{-x}})\\
  &= y\left( 1 - y \right)
 \end{aligned}
-\tag{24}</script><h2 id="3-2-tanh函数求导"><a href="#3-2-tanh函数求导" class="headerlink" title="3.2 tanh函数求导"></a>3.2 tanh函数求导</h2><p>tanh函数表达式如下</p>
+\tag{24}</script><p>simoid函数及其导数图像如下图所示。<br><img src="/images/20201020/sigmoid.png" alt="05"></p>
+<h2 id="3-2-tanh函数求导"><a href="#3-2-tanh函数求导" class="headerlink" title="3.2 tanh函数求导"></a>3.2 tanh函数求导</h2><p>tanh函数表达式如下</p>
 <script type="math/tex; mode=display">
 \tanh(x) = \frac{e^x-e^{-x}}{e^x+e^{-x}}
 \tag{25}</script><p>求导得</p>
@@ -490,7 +493,8 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
 &=\frac{(e^x+e^{-x})^2 - (e^x-e^{-x})^2}{(e^x+e^{-x})^2}\\
 &= 1 - [\tanh(x)]^2
 \end{aligned}
-\tag{26}</script>
+\tag{26}</script><p>tanh函数及其导数图像如下图所示。<br><img src="/images/20201020/tanh.png" alt="06"></p>
+
     </div>
 
 	<div>
