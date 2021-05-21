@@ -65,7 +65,7 @@
 <meta property="og:image" content="https://colainlibrary.com/images/20200308/06.png">
 <meta property="og:image" content="https://colainlibrary.com/images/20200308/07.png">
 <meta property="article:published_time" content="2020-03-08T11:00:00.000Z">
-<meta property="article:modified_time" content="2020-12-28T08:56:56.604Z">
+<meta property="article:modified_time" content="2021-04-15T08:34:13.102Z">
 <meta property="article:author" content="Cola &amp; Library">
 <meta property="article:tag" content="Library">
 <meta property="article:tag" content="Linux">
@@ -306,7 +306,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -347,11 +347,58 @@
 <blockquote>
 <p>说明：快捷键的修改方法都与此类似，下文直接介绍快捷键的绑定。</p>
 </blockquote>
-<h3 id="3-2-3-其他快捷键的修改"><a href="#3-2-3-其他快捷键的修改" class="headerlink" title="3.2.3 其他快捷键的修改"></a>3.2.3 其他快捷键的修改</h3><p>Files: New Untitled File                C-x C-b     打开新文件<br>View: Toggle Activity Bar Visibility    Alt+B       最左侧的活动标签栏是否显示</p>
+<h3 id="3-2-3-其他快捷键的修改"><a href="#3-2-3-其他快捷键的修改" class="headerlink" title="3.2.3 其他快捷键的修改"></a>3.2.3 其他快捷键的修改</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Key</th>
+<th>中文说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Files: New Untitled File</td>
+<td>C-x C-b</td>
+<td>打开新文件</td>
+</tr>
+<tr>
+<td>View: Toggle Activity Bar Visibility</td>
+<td>Alt+B</td>
+<td>最左侧的活动标签栏是否显示</td>
+</tr>
+<tr>
+<td>Go to Definition</td>
+<td>F12</td>
+<td>转到定义</td>
+</tr>
+<tr>
+<td>Go to Declaration</td>
+<td>Ctrl+F12</td>
+<td>转到声明</td>
+</tr>
+<tr>
+<td>Go back</td>
+<td>Ctrl+Alt+-</td>
+<td>从函数跳转处返回</td>
+</tr>
+<tr>
+<td>Focus Terminal</td>
+<td>Ctrl+x J</td>
+<td>切换到终端</td>
+</tr>
+<tr>
+<td>“emacs.cursorWordRight”</td>
+<td>Ctrl+Alt+F</td>
+<td>光标向右移动一个词</td>
+</tr>
+</tbody>
+</table>
+</div>
 <blockquote>
 <p>注意：关于Emacs的一些快捷键使用方法可以参考<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC84YjRlMWY3N2I2ODY=" title="https://www.jianshu.com/p/8b4e1f77b686">vscode emacs 快捷键<i class="fa fa-external-link"></i></span>。<br>说明：上面的链接中不一定所有的快捷键都有效，但是可以参考他的设置方法来做一些设置。</p>
 </blockquote>
-<h2 id="3-3-CapsLock键改为Ctrl键"><a href="#3-3-CapsLock键改为Ctrl键" class="headerlink" title="3.3 CapsLock键改为Ctrl键"></a>3.3 CapsLock键改为Ctrl键</h2><p>打开一个终端，输入<code>sudo gedit ~/.Xmodmap</code>，打开后在文件中写入：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">remove Lock = Caps_Lock</span><br><span class="line">keysym Caps_Lock = Control_L</span><br><span class="line">add control = Control_L</span><br></pre></td></tr></table></figure><br>保存关闭后，在终端中执行<code>xmodmap ~/.Xmodmap</code>。</p>
+<h2 id="3-3-CapsLock键改为Ctrl键"><a href="#3-3-CapsLock键改为Ctrl键" class="headerlink" title="3.3 CapsLock键改为Ctrl键"></a>3.3 CapsLock键改为Ctrl键</h2><p>打开一个终端，输入<code>sudo gedit ~/.Xmodmap</code>，打开后在文件中写入：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">remove Lock = Caps_Lock</span><br><span class="line">keysym Caps_Lock = Control_L</span><br><span class="line">add control = Control_L</span><br></pre></td></tr></table></figure><br>保存关闭后，在终端中执行<code>xmodmap ~/.Xmodmap</code>。</p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
 <li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjY4OTE0Ny9hcnRpY2xlL2RldGFpbHMvODczNjYwMDQ=" title="https://blog.csdn.net/weixin_42689147/article/details/87366004">vsCode中如何根据屏幕宽度自动换行<i class="fa fa-external-link"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM0NTI0NTI4L2FydGljbGUvZGV0YWlscy84NTg3ODU5Mg==" title="https://blog.csdn.net/sinat_34524528/article/details/85878592">更改 VS Code C++ 默认代码风格为 Google C++ Style<i class="fa fa-external-link"></i></span></li>
@@ -377,6 +424,12 @@
   <div class="popular-posts-header">推荐阅读</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/456588d2.html" rel="bookmark">Linux 多内核切换和设置默认开启内核</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/4347a04c.html" rel="bookmark">两台Ubuntu系统文件共享</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/1efdabd.html" rel="bookmark">Ubuntu系统备份</a></div>
     </li>
     <li class="popular-posts-item">
@@ -384,12 +437,6 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/3ea3bdaa.html" rel="bookmark">PCL库的安装</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/423d18b1.html" rel="bookmark">使用deeplab训练自己的数据集</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/42db6ec5.html" rel="bookmark">Ubuntu终端科学上网的方法</a></div>
     </li>
   </ul>
 
@@ -527,20 +574,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -615,12 +662,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">194k</span>
+    <span title="站点总字数">207k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:57</span>
+    <span title="站点阅读时长">3:08</span>
 </div>
 
 

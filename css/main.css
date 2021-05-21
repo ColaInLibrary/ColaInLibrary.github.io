@@ -607,6 +607,12 @@ pre .javascript .function {
   float: left;
   margin-bottom: 10px;
 }
+.page-post-detail .post-body .group-picture-column {
+  margin-top: 10px;
+}
+.page-post-detail .post-body .group-picture-column img {
+  margin: 0 auto;
+}
 .post-body .label {
   display: inline;
   padding: 0 2px;
@@ -1192,7 +1198,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #28ff91;
+  background: #98939e;
   border-radius: 50%;
   content: ' ';
   display: inline-block;

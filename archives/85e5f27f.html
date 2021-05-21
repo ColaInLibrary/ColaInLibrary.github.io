@@ -59,7 +59,7 @@
 <meta property="og:image" content="https://colainlibrary.com/images/20200715/02.jpg">
 <meta property="og:image" content="https://colainlibrary.com/images/20200715/03.jpg">
 <meta property="article:published_time" content="2020-07-15T12:35:23.000Z">
-<meta property="article:modified_time" content="2020-07-26T09:44:33.248Z">
+<meta property="article:modified_time" content="2021-02-01T12:56:36.161Z">
 <meta property="article:author" content="Cola &amp; Library">
 <meta property="article:tag" content="Library">
 <meta property="article:tag" content="OpenCV">
@@ -323,7 +323,7 @@
         <p>介绍OpenCV_contrib的安装方法。</p>
 <a id="more"></a>
 <h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>在做基于深度学习的机器人无序分拣项目中，用到了Realsense，使用该相机做图像处理的相关工作还需要安装opencv_contrib。可以从GitHub上找到与opencv版本相对应的opencv_contrib库。</p>
-<h1 id="1-安装方法"><a href="#1-安装方法" class="headerlink" title="1 安装方法"></a>1 安装方法</h1><p>下载完源码后，将解压后的文件放在opencv3.4.1文件夹中，依次执行下列命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmake -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-3.4.1/modules ../../opencv-3.4.1 ..</span><br><span class="line">make -j4</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p>
+<h1 id="1-安装方法"><a href="#1-安装方法" class="headerlink" title="1 安装方法"></a>1 安装方法</h1><p>下载完源码后，将解压后的文件放在opencv3.4.1文件夹中，依次执行下列命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> opencv3.4.1文件夹</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">cmake -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-3.4.1/modules ../../opencv-3.4.1 ..</span><br><span class="line">make -j4</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p>
 <h1 id="2-可能遇到的一些问题"><a href="#2-可能遇到的一些问题" class="headerlink" title="2 可能遇到的一些问题"></a>2 可能遇到的一些问题</h1><p>不出意外的话，直接编译会出现一些问题，例如：<br><img src="/images/20200715/01.jpg" alt="01"></p>
 <p>在这里，直接给出我针对出现的问题进行的三步操作：</p>
 <ol>
@@ -365,16 +365,16 @@
       <div class="popular-posts-title"><a href="/archives/56535.html" rel="bookmark">Linux下OpenCV库的安装</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/1efdabd.html" rel="bookmark">Ubuntu系统备份</a></div>
+      <div class="popular-posts-title"><a href="/archives/22acf33e.html" rel="bookmark">一学就会的 SDH</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/ce622490.html" rel="bookmark">机场行李筐分拣项目环境安装汇总</a></div>
+      <div class="popular-posts-title"><a href="/archives/6d0d409.html" rel="bookmark">Ethercat 主站调试</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/3ea3bdaa.html" rel="bookmark">PCL库的安装</a></div>
+      <div class="popular-posts-title"><a href="/archives/456588d2.html" rel="bookmark">Linux 多内核切换和设置默认开启内核</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/423d18b1.html" rel="bookmark">使用deeplab训练自己的数据集</a></div>
+      <div class="popular-posts-title"><a href="/archives/e5d7cd24.html" rel="bookmark">Ethercat 主站搭建</a></div>
     </li>
   </ul>
 
@@ -512,20 +512,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -600,12 +600,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">194k</span>
+    <span title="站点总字数">207k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:57</span>
+    <span title="站点阅读时长">3:08</span>
 </div>
 
 
