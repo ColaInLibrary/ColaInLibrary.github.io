@@ -1,6 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>SDH，一变就通</title>
+    <url>/archives/1a88a2b6.html</url>
+    <content><![CDATA[<p>介绍标准DH(SDH)确定坐标系间的齐次变换矩阵</p>
+<a id="more"></a>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>上篇已经介绍过 SDH 建立坐标系的过程，本篇来介绍下 SDH 参数表示坐标系间的齐次变换矩阵。</p>
+<p>用 $R_x$ 表示绕 $x$ 轴的三维旋转矩阵，用 $\mathcal{R}_x$ 表示绕 $x$ 轴旋转的齐次变换矩阵。</p>
+<script type="math/tex; mode=display">
+R_{x}(\theta)=\begin{bmatrix}
+1 & 0 & 0 \\
+0 & \cos\theta & -\sin\theta \\
+0 & \sin\theta & \cos\theta \\
+\end{bmatrix}
+\in
+\mathbb{R}^{3\times 3}</script><script type="math/tex; mode=display">
+R_{y}(\theta)=\begin{bmatrix}
+\cos\theta & 0 & \sin\theta \\
+0 & 1 & 0 \\
+-\sin\theta & 0 & \cos\theta \\
+\end{bmatrix}
+\in
+\mathbb{R}^{3\times 3}</script><script type="math/tex; mode=display">
+R_{z}(\theta)=\begin{bmatrix}
+\cos\theta & -\sin\theta & 0 \\
+\sin\theta & \cos\theta & 0\\
+0 & 0 & 1 \\
+\end{bmatrix}
+\in
+\mathbb{R}^{3\times 3}</script><script type="math/tex; mode=display">
+\mathcal{R}_x(\theta)=\begin{bmatrix}
+R_x(\theta) & 1 \\
+0_{1\times 3} & 1 \\
+\end{bmatrix}
+\in
+\mathbb{R}^{4\times 4}</script><p>用 $t_x = \begin{bmatrix}<br>  d &amp; 0 &amp;0<br>\end{bmatrix}^T$表示沿 $x$ 方向平移 $d$，用$\mathcal{T}_x(d)$ 表示平移 $t$ 的齐次变换矩阵。即：</p>
+<script type="math/tex; mode=display">
+\mathcal{T}_x(d)=\begin{bmatrix}
+I_{3\times 3} & t_x \\
+0_{1\times 3} & 1 \\
+\end{bmatrix}
+\in
+\mathbb{R}^{4\times 4}</script><p>接下来用一个示例说明旋转矩阵的两种含义：</p>
+<p><img src="/images/20210520/demo.jpg" alt="demo"></p>
+<p>上图中的两种含义会决定旋转矩阵的左乘还是右乘。当表示第一种含义的时候，用的右乘；第二种含义，旋转矩阵则应左乘。</p>
+<h1 id="2-用-SDH-参数表示坐标系见的齐次变换矩阵"><a href="#2-用-SDH-参数表示坐标系见的齐次变换矩阵" class="headerlink" title="2 用 SDH 参数表示坐标系见的齐次变换矩阵"></a>2 用 SDH 参数表示坐标系见的齐次变换矩阵</h1><p><img src="/images/20210519/rvc_SDH.png" alt="SDH"></p>
+<p>上图清晰地展示了从 $j-1$ 系如何变换到 $j$ 系，其过程如下：</p>
+<ol>
+<li>沿 $z_{j-1}$ 轴移动 $d_j$</li>
+<li>沿 $z_{j-1}$ 轴转动 $\theta_j$</li>
+<li>沿 $x_{j}$ 轴移动 $a_j$</li>
+<li>沿 $x_{j}$ 轴转动 $\alpha_j$</li>
+</ol>
+<p>因此，从 $j-1$ 系到 $j$ 系的变换矩阵 $^{j-1}\xi_j$ 就可以表示为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+^{j-1}\xi_j & = \mathcal{T}_z(d_j)\mathcal{R}_z(\theta_j)\mathcal{T}_x(a_j)\mathcal{R}_x(\alpha_j)\\
+& = \begin{bmatrix}
+\cos\theta_j & -\cos\alpha_j\sin\theta_j & \sin\alpha_j\sin\theta_j & a_j\cos\theta_j \\
+\sin\theta_j & \cos\alpha_j\cos\theta_j & -\sin\alpha_j\cos\theta_j & a_j\sin\theta_j \\
+0 & \sin\alpha_j & \cos\alpha_j & d_j \\
+0 & 0 & 0 & 1\\
+\end{bmatrix}
+\end{aligned}\tag{1}</script><p>于是，对于 UR10 这样的 6 轴机器人，从基座开始到末端的变换矩阵为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+^0\xi_6 &= ^0\xi_1\cdot^1\xi_2\cdot^2\xi_3\cdot^3\xi_4\cdot^4\xi_5\cdot^5\xi_6\\
+&=\begin{bmatrix}
+  ^0\mathbf{R}_6 & ^0\mathbf{p}_6\\
+  0 & 1\\
+\end{bmatrix}
+\end{aligned}\tag{2}</script><p>对于机器人而言，更直观的是用末端位姿来表示式(2)所示的齐次变换矩阵。机器人末端在空间中的位置即用式(2)中的 $^0\mathbf{p}_6 = \begin{bmatrix}<br>  x&amp;y&amp;z<br>\end{bmatrix}^T$ 表示，姿态矩阵 $^0\mathbf{R}_6$ 则用三个变量来表示。<br>这里介绍用X-Y-Z固定角坐标系来描述的方法<sup>[1]</sup>：</p>
+<p>首先将坐标系 {$B$} 和一个已知参考坐标系 {$A$} 重合。先将 {$B$} 绕 {$A$} 系的 $X$ 轴旋转 $r$ 角度(roll)，再绕 $A$ 系的 $Y$ 轴旋转 $p$ 角度(pitch)，最后绕 $A$ 的 $Z$ 轴旋转 $y$ 角度(yaw)。每个旋转轴都是绕着固定参考系{$A$}的轴，规定这种姿态的表示法为X-Y-Z固定角坐标系。有的地方也把它们定义为回转角、俯仰角和偏航角。这样定义的原因是，对于机械臂而言，基座标系是固定的，认为它最终的姿态是绕 $Z$ 轴滚转。因此，上述旋转顺序是 $X-Y-Z$。假定基座标系中的一点为 $^BP$，$B$ 表示基座标系。<br>先绕 $X_B$ 轴转 $\theta_y = r$，旋转后的点在基座标系中的表示用 $^B P_1$ 表示，有：</p>
+<script type="math/tex; mode=display">
+^B P_1 = Rx_B(r)\cdot^BP \tag{3}</script><p>再绕 $Y_B$ 轴转 $\theta_p =  p$，旋转后的点在基座标系中的用 $^B P_2$ 表示，有：</p>
+<script type="math/tex; mode=display">
+^B P_2 = Ry_B( p)\cdot^BP_1  \tag{4}</script><p>最后绕 $Z_B$ 轴转 $\theta_r =  y$，旋转后的点在基座标系中的用 $^B P_3$ 表示，有：</p>
+<script type="math/tex; mode=display">
+^B P_3 = Rz_B( y)\cdot^BP_2 \tag{5}</script><p>将上式三式整合，得基座标系中最终点的坐标和初始点坐标之间的关系为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+^BP_3 & = Rz_B( y)\cdot^BP_2 \\
+&= Rz_B( y)\cdot Ry_B( p)\cdot^BP_1 \\
+&= Rz_B( y)\cdot Ry_B( p)\cdot Rx_B(r)\cdot^BP \\
+&= 
+\begin{bmatrix}
+\cos y & -\sin y & 0 \\
+\sin y & \cos y & 0\\
+0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+\cos p & 0 & \sin p \\
+0 & 1 & 0\\
+-\sin p & 0 & \cos p \\
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 &\cos r & -\sin r \\
+0 &\sin r & \cos r \\
+\end{bmatrix}\cdot ^BP
+\\
+&= \begin{bmatrix}
+  \cos y \cos p & -\sin y\cos r+\cos y\sin p\sin r & \sin y\sin r+\cos y\sin p\cos r\\
+  \sin y\cos p & \cos y\cos r+\sin y\sin p\sin r & -\cos y\sin r + \sin y\sin p\cos r\\
+  -\sin p & \cos p\sin r & \cos p\cos r\\
+\end{bmatrix}\cdot ^BP\\
+& = \begin{bmatrix}
+  r_{11} & r_{12} & r_{13}\\
+  r_{21} & r_{22} & r_{23}\\
+  r_{31} & r_{32} & r_{33}\\
+\end{bmatrix}\cdot {^{B}}P
+\end{aligned}\tag{6}</script><font color="#dd0000" size=4>注意：上述每一步的旋转都是相对于基座标系（固定坐标系）旋转的。因此，最终的旋转矩阵是左乘。</font>
+
+<p>依据式(6)进行求解 $y, p, r$：</p>
+<ol>
+<li>当 $| p| \neq 90°$ 时，<script type="math/tex; mode=display">
+\left\{\begin{aligned}
+p &=  atan2(-r_{31},\sqrt{r_{11}^2 + r_{21}^2})\\
+y &=  atan2(\frac{r_{21}}{\cos p},\frac{r_{11}}{\cos p})\\
+r &=  atan2(\frac{r_{32}}{\cos p},\frac{r_{33}}{\cos p})\\
+\end{aligned}\right. \tag{7}</script></li>
+<li>当 $p = 90°$ 时，$r_{12} = -\sin y\cos r+\cos y\sin r = \sin(r-y)$, $r_{13} = \sin y\sin r + \cos y\cos r = \cos(r-y)$, 无法直接解算出，直接设定此时 $r = 0$，此时 $r_{12} = -\sin y$，$r_{13} = \cos y$，因此，解为<script type="math/tex; mode=display">
+\left\{\begin{aligned}
+r &= 0°\\
+y &= - atan2(r_{12},r_{13})\\
+\end{aligned}\right. \tag{8}</script></li>
+<li>同理，当 $p = -90°$ 时， $r_{12} = -\sin y\cos r - \cos y\sin r = -\sin(r+y)$， $r_{13} = \sin y\sin r - \cos y\cos r = -\cos(y+r)$，指定 $r = 0$，此时 $r_{12} = -\sin y$，$r_{13} = -\cos y$，因此，解为<script type="math/tex; mode=display">
+\left\{\begin{aligned}
+r &= 0°\\
+y &=  atan2(-r_{12},-r_{13})\\
+\end{aligned}\right. \tag{9}</script></li>
+</ol>
+<blockquote>
+<p>atan2 是 MATLAB 自带的函数。</p>
+</blockquote>
+<h1 id="3-验证"><a href="#3-验证" class="headerlink" title="3 验证"></a>3 验证</h1><h2 id="3-1-rpy-验证"><a href="#3-1-rpy-验证" class="headerlink" title="3.1 rpy 验证"></a>3.1 rpy 验证</h2><p>装完PeterCoke的 rcv_tools 工具箱后，运行 <em>tripleangle</em>， 如下所示：</p>
+<p><img src="/images/20210520/rpy.png" alt="20210520"></p>
+<p>图中，Rz 表示绕世界坐标系的 Z 轴旋转，Ry 表示绕世界坐标系的 Y 轴旋转，Rx表示绕世界坐标系的 X 轴旋转。在PeterCoke的工具箱中，使用 <strong>rpy2r</strong> 可以将 rpy 转为旋转矩阵，程序实例如下：</p>
+<p><img src="/images/20210520/verify.png" alt="xyz"></p>
+<p>通过运行 <em>open rpy2r</em> 打开函数的源码如下所示：</p>
+<p><img src="/images/20210520/rpy-xyz.png" alt="xyz"></p>
+<p>使用时该函数的输入参数是 <em>roll,pitch,yaw</em>，工具箱的默认旋转顺序是 $ZYX$，从第 96 行可以看出采用的旋转顺序是 $R_z(yaw)R_y(pitch)R_x(roll)$，与式 (6) 一致。因此，<font color="#dd0000" size=4>工具箱的旋转顺序命名是按照旋转矩阵从左至右命名的，与实际的旋转顺序正好相反。</font></p>
+<h2 id="3-2-机器人末端位姿验证"><a href="#3-2-机器人末端位姿验证" class="headerlink" title="3.2 机器人末端位姿验证"></a>3.2 机器人末端位姿验证</h2><p>零位时的 UR10 和关节 3 转 $90°$ 后的位姿计算结果如下所示：</p>
+<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/20210520/ur10_0.png" height = "300" /></div><div class="group-picture-column" style="width: 50%;"><img src="/images/20210520/ur10_1.png" height = "300"/></div></div></div></div>
+<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/20210520/ur10_0_1.png" height = "220" /></div><div class="group-picture-column" style="width: 50%;"><img src="/images/20210520/ur10_1_1.png" height = "220"/></div></div></div></div>
+<p>以第二组结果为例，反算出来的 $roll = 0, pitch = -\pi/2, yaw = \pi /2$，即末端姿态绕<font color="#dd0000">基座标系</font> $x$ 轴旋转了 $0°$，再绕<font color="#dd0000">基座标系</font>的 $y$ 轴旋转了 $-90°$，最后绕<font color="#dd0000">基座标系</font>的 $z$ 轴旋转了 $90°$，与图示末端姿态一致。</p>
+<p>简单计算，即可得到由旋转矩阵求 rpy 的公式 (7)~(9) 与用工具箱得到的结果一致。</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
+<li>机器人建模和控制[M]</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzY0MDY1L2FydGljbGUvZGV0YWlscy8xMDcyMDc0MDQ=" title="https://blog.csdn.net/m0_37764065/article/details/107207404">【机器人运动学/姿态角】欧拉角和RPY角<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC85MzU2MzgwNQ==" title="https://zhuanlan.zhihu.com/p/93563805">机器人运动控制算法——位姿<i class="fa fa-external-link"></i></span></li>
+</ol>
+]]></content>
+      <categories>
+        <category>机器人控制</category>
+        <category>专栏——机器人动力学</category>
+      </categories>
+      <tags>
+        <tag>Library</tag>
+        <tag>机器人</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一学就会的 SDH</title>
     <url>/archives/22acf33e.html</url>
     <content><![CDATA[<p>介绍标准 DH(SDH) 机器人建系方法。</p>
@@ -3369,33 +3530,6 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
       </tags>
   </entry>
   <entry>
-    <title>Win10下完美安装MathType的方法</title>
-    <url>/archives/56794.html</url>
-    <content><![CDATA[<p>请注意：因为Mathtype7.4的方法有时间限制，过了之后就不再完美，只好退而求其次用6.9的版本。</p>
-<a id="more"></a>
-<h1 id="MathType6-9安装方法："><a href="#MathType6-9安装方法：" class="headerlink" title="MathType6.9安装方法："></a>MathType6.9安装方法：</h1><p>下载地址：</p>
-<p><span class="exturl" data-url="aHR0cDovL3d3dy5tYXRodHlwZS5jbi94aWF6YWkuaHRtbA==" title="http://www.mathtype.cn/xiazai.html">MathType 6.9b 简体中文版官方下载<i class="fa fa-external-link"></i></span></p>
-<p>这个安装后无法使用输入注册码的方法进行激活，需要在试用期到期后删除注册表以延长试用期，方法如下：</p>
-<p>1.按<code>Win+R</code>键，打开运行；</p>
-<p>2.输入regedit，打开注册表；</p>
-<p>3.依次找到 <code>HKEY_CURRENT_USER</code> -&gt; <code>Software</code> -&gt; <code>Install Options</code>，右侧显示<code>Options6.9</code>，将其删除。如下图所示。<br><img src="/images/20190621/DeleteMathTypeRegedit.PNG" alt="DeleteMathTypeRegedit"></p>
-<p>4.重新打开MathType。</p>
-<p>————————————————————————-分割线————————————————————————-</p>
-<h1 id="MathType7-4主要参考以下内容："><a href="#MathType7-4主要参考以下内容：" class="headerlink" title="MathType7.4主要参考以下内容："></a>MathType7.4主要参考以下内容：</h1><p><strong>7.4的方法已经不再实用，注册码在2019-6-30到期了，而一旦到期就无法再次使用</strong></p>
-<p><span class="exturl" data-url="aHR0cDovL3d3dy5pdHhpYW96aG9uZy5jb20vMTk2My5odG1s" title="http://www.itxiaozhong.com/1963.html">数学公式编辑器 MathType 7.4.2.480 for Windows<i class="fa fa-external-link"></i></span>(重点看蓝色字部分)<br><img src="/images/20190621/InstallMathType.PNG" alt="InstallMathType"></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9qaW5neWFuLmJhaWR1LmNvbS9hcnRpY2xlL2RjYTFmYTZmMWE3NWFhZjFhNDQwNTJmMS5odG1s" title="https://jingyan.baidu.com/article/dca1fa6f1a75aaf1a44052f1.html">win10系统怎么禁用某个程序联网，阻止软件联网<i class="fa fa-external-link"></i></span></p>
-<p>软件安装包已保存至网盘，相关链接和操作方法已在微信中收藏(标签为MathType7.4的安装方法)</p>
-]]></content>
-      <categories>
-        <category>工科生的基本功</category>
-        <category>软件技术</category>
-      </categories>
-      <tags>
-        <tag>Library</tag>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Win10下安装Linux双系统的方法</title>
     <url>/archives/22360.html</url>
     <content><![CDATA[<blockquote>
@@ -3443,6 +3577,33 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
       <tags>
         <tag>Library</tag>
         <tag>Linux</tag>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Win10下完美安装MathType的方法</title>
+    <url>/archives/56794.html</url>
+    <content><![CDATA[<p>请注意：因为Mathtype7.4的方法有时间限制，过了之后就不再完美，只好退而求其次用6.9的版本。</p>
+<a id="more"></a>
+<h1 id="MathType6-9安装方法："><a href="#MathType6-9安装方法：" class="headerlink" title="MathType6.9安装方法："></a>MathType6.9安装方法：</h1><p>下载地址：</p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5tYXRodHlwZS5jbi94aWF6YWkuaHRtbA==" title="http://www.mathtype.cn/xiazai.html">MathType 6.9b 简体中文版官方下载<i class="fa fa-external-link"></i></span></p>
+<p>这个安装后无法使用输入注册码的方法进行激活，需要在试用期到期后删除注册表以延长试用期，方法如下：</p>
+<p>1.按<code>Win+R</code>键，打开运行；</p>
+<p>2.输入regedit，打开注册表；</p>
+<p>3.依次找到 <code>HKEY_CURRENT_USER</code> -&gt; <code>Software</code> -&gt; <code>Install Options</code>，右侧显示<code>Options6.9</code>，将其删除。如下图所示。<br><img src="/images/20190621/DeleteMathTypeRegedit.PNG" alt="DeleteMathTypeRegedit"></p>
+<p>4.重新打开MathType。</p>
+<p>————————————————————————-分割线————————————————————————-</p>
+<h1 id="MathType7-4主要参考以下内容："><a href="#MathType7-4主要参考以下内容：" class="headerlink" title="MathType7.4主要参考以下内容："></a>MathType7.4主要参考以下内容：</h1><p><strong>7.4的方法已经不再实用，注册码在2019-6-30到期了，而一旦到期就无法再次使用</strong></p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5pdHhpYW96aG9uZy5jb20vMTk2My5odG1s" title="http://www.itxiaozhong.com/1963.html">数学公式编辑器 MathType 7.4.2.480 for Windows<i class="fa fa-external-link"></i></span>(重点看蓝色字部分)<br><img src="/images/20190621/InstallMathType.PNG" alt="InstallMathType"></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9qaW5neWFuLmJhaWR1LmNvbS9hcnRpY2xlL2RjYTFmYTZmMWE3NWFhZjFhNDQwNTJmMS5odG1s" title="https://jingyan.baidu.com/article/dca1fa6f1a75aaf1a44052f1.html">win10系统怎么禁用某个程序联网，阻止软件联网<i class="fa fa-external-link"></i></span></p>
+<p>软件安装包已保存至网盘，相关链接和操作方法已在微信中收藏(标签为MathType7.4的安装方法)</p>
+]]></content>
+      <categories>
+        <category>工科生的基本功</category>
+        <category>软件技术</category>
+      </categories>
+      <tags>
+        <tag>Library</tag>
         <tag>Windows</tag>
       </tags>
   </entry>
