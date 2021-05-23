@@ -71,7 +71,7 @@ I_{3\times 3} & t_x \\
   0 & 1\\
 \end{bmatrix}
 \end{aligned}\tag{2}</script><p>对于机器人而言，更直观的是用末端位姿来表示式(2)所示的齐次变换矩阵。机器人末端在空间中的位置即用式(2)中的 $^0\mathbf{p}_6 = \begin{bmatrix}<br>  x&amp;y&amp;z<br>\end{bmatrix}^T$ 表示，姿态矩阵 $^0\mathbf{R}_6$ 则用三个变量来表示。<br>这里介绍用X-Y-Z固定角坐标系来描述的方法<sup>[1]</sup>：</p>
-<p>首先将坐标系 {$B$} 和一个已知参考坐标系 {$A$} 重合。先将 {$B$} 绕 {$A$} 系的 $X$ 轴旋转 $r$ 角度(roll)，再绕 $A$ 系的 $Y$ 轴旋转 $p$ 角度(pitch)，最后绕 $A$ 的 $Z$ 轴旋转 $y$ 角度(yaw)。每个旋转轴都是绕着固定参考系{$A$}的轴，规定这种姿态的表示法为X-Y-Z固定角坐标系。有的地方也把它们定义为回转角、俯仰角和偏航角。这样定义的原因是，对于机械臂而言，基座标系是固定的，认为它最终的姿态是绕 $Z$ 轴滚转。因此，上述旋转顺序是 $X-Y-Z$。假定基座标系中的一点为 $^BP$，$B$ 表示基座标系。<br>先绕 $X_B$ 轴转 $\theta_y = r$，旋转后的点在基座标系中的表示用 $^B P_1$ 表示，有：</p>
+<p>首先将坐标系 {$B$} 和一个已知参考坐标系 {$A$} 重合。先将 {$B$} 绕 {$A$} 系的 $X$ 轴旋转 $r$ 角度(roll)，再绕 $A$ 系的 $Y$ 轴旋转 $p$ 角度(pitch)，最后绕 $A$ 的 $Z$ 轴旋转 $y$ 角度(yaw)。每个旋转轴都是绕着固定参考系{$A$}的轴，规定这种姿态的表示法为X-Y-Z固定角坐标系。有的地方也把它们定义为回转角、俯仰角和偏航角。因此，上述旋转顺序是 $X-Y-Z$。假定基座标系中的一点为 $^BP$，$B$ 表示基座标系。<br>先绕 $X_B$ 轴转 $\theta_y = r$，旋转后的点在基座标系中的表示用 $^B P_1$ 表示，有：</p>
 <script type="math/tex; mode=display">
 ^B P_1 = Rx_B(r)\cdot^BP \tag{3}</script><p>再绕 $Y_B$ 轴转 $\theta_p =  p$，旋转后的点在基座标系中的用 $^B P_2$ 表示，有：</p>
 <script type="math/tex; mode=display">
@@ -162,7 +162,7 @@ y &=  atan2(-r_{12},-r_{13})\\
       </tags>
   </entry>
   <entry>
-    <title>一学就会的 SDH</title>
+    <title>SDH，一学就会</title>
     <url>/archives/22acf33e.html</url>
     <content><![CDATA[<p>介绍标准 DH(SDH) 机器人建系方法。</p>
 <a id="more"></a>
@@ -703,8 +703,8 @@ y &=  atan2(-r_{12},-r_{13})\\
       </categories>
       <tags>
         <tag>Library</tag>
-        <tag>Ethercat</tag>
         <tag>Preempt</tag>
+        <tag>Ethercat</tag>
       </tags>
   </entry>
   <entry>

@@ -65,7 +65,7 @@
 <meta property="og:image" content="https://colainlibrary.com/images/20210520/ur10_0_1.png">
 <meta property="og:image" content="https://colainlibrary.com/images/20210520/ur10_1_1.png">
 <meta property="article:published_time" content="2021-05-20T11:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-23T08:58:46.763Z">
+<meta property="article:modified_time" content="2021-05-23T09:16:16.886Z">
 <meta property="article:author" content="Cola &amp; Library">
 <meta property="article:tag" content="Library">
 <meta property="article:tag" content="机器人">
@@ -393,7 +393,7 @@ I_{3\times 3} & t_x \\
   0 & 1\\
 \end{bmatrix}
 \end{aligned}\tag{2}</script><p>对于机器人而言，更直观的是用末端位姿来表示式(2)所示的齐次变换矩阵。机器人末端在空间中的位置即用式(2)中的 $^0\mathbf{p}_6 = \begin{bmatrix}<br>  x&amp;y&amp;z<br>\end{bmatrix}^T$ 表示，姿态矩阵 $^0\mathbf{R}_6$ 则用三个变量来表示。<br>这里介绍用X-Y-Z固定角坐标系来描述的方法<sup>[1]</sup>：</p>
-<p>首先将坐标系 {$B$} 和一个已知参考坐标系 {$A$} 重合。先将 {$B$} 绕 {$A$} 系的 $X$ 轴旋转 $r$ 角度(roll)，再绕 $A$ 系的 $Y$ 轴旋转 $p$ 角度(pitch)，最后绕 $A$ 的 $Z$ 轴旋转 $y$ 角度(yaw)。每个旋转轴都是绕着固定参考系{$A$}的轴，规定这种姿态的表示法为X-Y-Z固定角坐标系。有的地方也把它们定义为回转角、俯仰角和偏航角。这样定义的原因是，对于机械臂而言，基座标系是固定的，认为它最终的姿态是绕 $Z$ 轴滚转。因此，上述旋转顺序是 $X-Y-Z$。假定基座标系中的一点为 $^BP$，$B$ 表示基座标系。<br>先绕 $X_B$ 轴转 $\theta_y = r$，旋转后的点在基座标系中的表示用 $^B P_1$ 表示，有：</p>
+<p>首先将坐标系 {$B$} 和一个已知参考坐标系 {$A$} 重合。先将 {$B$} 绕 {$A$} 系的 $X$ 轴旋转 $r$ 角度(roll)，再绕 $A$ 系的 $Y$ 轴旋转 $p$ 角度(pitch)，最后绕 $A$ 的 $Z$ 轴旋转 $y$ 角度(yaw)。每个旋转轴都是绕着固定参考系{$A$}的轴，规定这种姿态的表示法为X-Y-Z固定角坐标系。有的地方也把它们定义为回转角、俯仰角和偏航角。因此，上述旋转顺序是 $X-Y-Z$。假定基座标系中的一点为 $^BP$，$B$ 表示基座标系。<br>先绕 $X_B$ 轴转 $\theta_y = r$，旋转后的点在基座标系中的表示用 $^B P_1$ 表示，有：</p>
 <script type="math/tex; mode=display">
 ^B P_1 = Rx_B(r)\cdot^BP \tag{3}</script><p>再绕 $Y_B$ 轴转 $\theta_p =  p$，旋转后的点在基座标系中的用 $^B P_2$ 表示，有：</p>
 <script type="math/tex; mode=display">
@@ -492,7 +492,7 @@ y &=  atan2(-r_{12},-r_{13})\\
   <div class="popular-posts-header">推荐阅读</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/22acf33e.html" rel="bookmark">一学就会的 SDH</a></div>
+      <div class="popular-posts-title"><a href="/archives/22acf33e.html" rel="bookmark">SDH，一学就会</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/e5d7cd24.html" rel="bookmark">Ethercat 主站搭建</a></div>
@@ -559,8 +559,8 @@ y &=  atan2(-r_{12},-r_{13})\\
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/archives/22acf33e.html" rel="prev" title="一学就会的 SDH">
-      <i class="fa fa-chevron-left"></i> 一学就会的 SDH
+    <a href="/archives/22acf33e.html" rel="prev" title="SDH，一学就会">
+      <i class="fa fa-chevron-left"></i> SDH，一学就会
     </a></div>
       <div class="post-nav-item"></div>
     </div>
@@ -727,7 +727,7 @@ y &=  atan2(-r_{12},-r_{13})\\
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">212k</span>
+    <span title="站点总字数">211k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

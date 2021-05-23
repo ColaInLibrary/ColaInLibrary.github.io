@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://colainlibrary.com/"/>
-  <updated>2021-05-23T08:58:46.763Z</updated>
+  <updated>2021-05-23T09:16:16.886Z</updated>
   <id>https://colainlibrary.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://colainlibrary.com/archives/1a88a2b6.html"/>
     <id>https://colainlibrary.com/archives/1a88a2b6.html</id>
     <published>2021-05-20T11:00:00.000Z</published>
-    <updated>2021-05-23T08:58:46.763Z</updated>
+    <updated>2021-05-23T09:16:16.886Z</updated>
     
     <summary type="html">
     
@@ -42,11 +42,11 @@
   </entry>
   
   <entry>
-    <title>一学就会的 SDH</title>
+    <title>SDH，一学就会</title>
     <link href="https://colainlibrary.com/archives/22acf33e.html"/>
     <id>https://colainlibrary.com/archives/22acf33e.html</id>
     <published>2021-05-19T11:00:00.000Z</published>
-    <updated>2021-05-21T09:15:12.775Z</updated>
+    <updated>2021-05-23T09:16:12.182Z</updated>
     
     <summary type="html">
     
@@ -164,9 +164,9 @@
     
       <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
     
-      <category term="Ethercat" scheme="https://colainlibrary.com/tags/Ethercat/"/>
-    
       <category term="Preempt" scheme="https://colainlibrary.com/tags/Preempt/"/>
+    
+      <category term="Ethercat" scheme="https://colainlibrary.com/tags/Ethercat/"/>
     
   </entry>
   
