@@ -703,8 +703,8 @@ y &=  atan2(-r_{12},-r_{13})\\
       </categories>
       <tags>
         <tag>Library</tag>
-        <tag>Preempt</tag>
         <tag>Ethercat</tag>
+        <tag>Preempt</tag>
       </tags>
   </entry>
   <entry>
@@ -3530,6 +3530,33 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
       </tags>
   </entry>
   <entry>
+    <title>Win10下完美安装MathType的方法</title>
+    <url>/archives/56794.html</url>
+    <content><![CDATA[<p>请注意：因为Mathtype7.4的方法有时间限制，过了之后就不再完美，只好退而求其次用6.9的版本。</p>
+<a id="more"></a>
+<h1 id="MathType6-9安装方法："><a href="#MathType6-9安装方法：" class="headerlink" title="MathType6.9安装方法："></a>MathType6.9安装方法：</h1><p>下载地址：</p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5tYXRodHlwZS5jbi94aWF6YWkuaHRtbA==" title="http://www.mathtype.cn/xiazai.html">MathType 6.9b 简体中文版官方下载<i class="fa fa-external-link"></i></span></p>
+<p>这个安装后无法使用输入注册码的方法进行激活，需要在试用期到期后删除注册表以延长试用期，方法如下：</p>
+<p>1.按<code>Win+R</code>键，打开运行；</p>
+<p>2.输入regedit，打开注册表；</p>
+<p>3.依次找到 <code>HKEY_CURRENT_USER</code> -&gt; <code>Software</code> -&gt; <code>Install Options</code>，右侧显示<code>Options6.9</code>，将其删除。如下图所示。<br><img src="/images/20190621/DeleteMathTypeRegedit.PNG" alt="DeleteMathTypeRegedit"></p>
+<p>4.重新打开MathType。</p>
+<p>————————————————————————-分割线————————————————————————-</p>
+<h1 id="MathType7-4主要参考以下内容："><a href="#MathType7-4主要参考以下内容：" class="headerlink" title="MathType7.4主要参考以下内容："></a>MathType7.4主要参考以下内容：</h1><p><strong>7.4的方法已经不再实用，注册码在2019-6-30到期了，而一旦到期就无法再次使用</strong></p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5pdHhpYW96aG9uZy5jb20vMTk2My5odG1s" title="http://www.itxiaozhong.com/1963.html">数学公式编辑器 MathType 7.4.2.480 for Windows<i class="fa fa-external-link"></i></span>(重点看蓝色字部分)<br><img src="/images/20190621/InstallMathType.PNG" alt="InstallMathType"></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9qaW5neWFuLmJhaWR1LmNvbS9hcnRpY2xlL2RjYTFmYTZmMWE3NWFhZjFhNDQwNTJmMS5odG1s" title="https://jingyan.baidu.com/article/dca1fa6f1a75aaf1a44052f1.html">win10系统怎么禁用某个程序联网，阻止软件联网<i class="fa fa-external-link"></i></span></p>
+<p>软件安装包已保存至网盘，相关链接和操作方法已在微信中收藏(标签为MathType7.4的安装方法)</p>
+]]></content>
+      <categories>
+        <category>工科生的基本功</category>
+        <category>软件技术</category>
+      </categories>
+      <tags>
+        <tag>Library</tag>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Win10下安装Linux双系统的方法</title>
     <url>/archives/22360.html</url>
     <content><![CDATA[<blockquote>
@@ -3577,33 +3604,6 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
       <tags>
         <tag>Library</tag>
         <tag>Linux</tag>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Win10下完美安装MathType的方法</title>
-    <url>/archives/56794.html</url>
-    <content><![CDATA[<p>请注意：因为Mathtype7.4的方法有时间限制，过了之后就不再完美，只好退而求其次用6.9的版本。</p>
-<a id="more"></a>
-<h1 id="MathType6-9安装方法："><a href="#MathType6-9安装方法：" class="headerlink" title="MathType6.9安装方法："></a>MathType6.9安装方法：</h1><p>下载地址：</p>
-<p><span class="exturl" data-url="aHR0cDovL3d3dy5tYXRodHlwZS5jbi94aWF6YWkuaHRtbA==" title="http://www.mathtype.cn/xiazai.html">MathType 6.9b 简体中文版官方下载<i class="fa fa-external-link"></i></span></p>
-<p>这个安装后无法使用输入注册码的方法进行激活，需要在试用期到期后删除注册表以延长试用期，方法如下：</p>
-<p>1.按<code>Win+R</code>键，打开运行；</p>
-<p>2.输入regedit，打开注册表；</p>
-<p>3.依次找到 <code>HKEY_CURRENT_USER</code> -&gt; <code>Software</code> -&gt; <code>Install Options</code>，右侧显示<code>Options6.9</code>，将其删除。如下图所示。<br><img src="/images/20190621/DeleteMathTypeRegedit.PNG" alt="DeleteMathTypeRegedit"></p>
-<p>4.重新打开MathType。</p>
-<p>————————————————————————-分割线————————————————————————-</p>
-<h1 id="MathType7-4主要参考以下内容："><a href="#MathType7-4主要参考以下内容：" class="headerlink" title="MathType7.4主要参考以下内容："></a>MathType7.4主要参考以下内容：</h1><p><strong>7.4的方法已经不再实用，注册码在2019-6-30到期了，而一旦到期就无法再次使用</strong></p>
-<p><span class="exturl" data-url="aHR0cDovL3d3dy5pdHhpYW96aG9uZy5jb20vMTk2My5odG1s" title="http://www.itxiaozhong.com/1963.html">数学公式编辑器 MathType 7.4.2.480 for Windows<i class="fa fa-external-link"></i></span>(重点看蓝色字部分)<br><img src="/images/20190621/InstallMathType.PNG" alt="InstallMathType"></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9qaW5neWFuLmJhaWR1LmNvbS9hcnRpY2xlL2RjYTFmYTZmMWE3NWFhZjFhNDQwNTJmMS5odG1s" title="https://jingyan.baidu.com/article/dca1fa6f1a75aaf1a44052f1.html">win10系统怎么禁用某个程序联网，阻止软件联网<i class="fa fa-external-link"></i></span></p>
-<p>软件安装包已保存至网盘，相关链接和操作方法已在微信中收藏(标签为MathType7.4的安装方法)</p>
-]]></content>
-      <categories>
-        <category>工科生的基本功</category>
-        <category>软件技术</category>
-      </categories>
-      <tags>
-        <tag>Library</tag>
         <tag>Windows</tag>
       </tags>
   </entry>
