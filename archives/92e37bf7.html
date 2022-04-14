@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
+  <meta name="baidu-site-verification" content="aHT7NgajBz">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://colainlibrary.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="聊一聊ROS的通讯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROS节点之间基本的通讯方式介绍">
+<meta property="og:url" content="https://colainlibrary.com/archives/92e37bf7.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="聊一聊ROS的通讯">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/00.jpg">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/01.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/02.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/03.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/04.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/05.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/06.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/07.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/08.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/09.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/10.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200220/11.png">
+<meta property="article:published_time" content="2020-02-20T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-12T15:12:34.000Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="Library">
+<meta property="article:tag" content="机器人">
+<meta property="article:tag" content="ROS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://colainlibrary.com/images/20200220/00.jpg">
+
+<link rel="canonical" href="https://colainlibrary.com/archives/92e37bf7.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>ROS节点之间基本的通讯方式介绍 | Cola In Library</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cola In Library</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/92e37bf7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Cola & Library">
+      <meta itemprop="description" content="Understand, don't memorize.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cola In Library">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          ROS节点之间基本的通讯方式介绍
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+			
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-20 11:00:00" itemprop="dateCreated datePublished" datetime="2020-02-20T11:00:00Z">2020-02-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">机器人控制</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/92e37bf7.html" class="post-meta-item leancloud_visitors" data-flag-title="ROS节点之间基本的通讯方式介绍" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/92e37bf7.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/92e37bf7.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+            <div class="post-description">聊一聊ROS的通讯</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src=" /images/20200220/00.jpg" width=50% /><br>这一篇我们来聊一聊ROS的通讯方式。<br><span id="more"></span></p>
+<h1 id="1-Understanding-the-ROS-computation-graph-level"><a href="#1-Understanding-the-ROS-computation-graph-level" class="headerlink" title="1 Understanding the ROS computation graph level"></a>1 Understanding the ROS computation graph level</h1><p>这篇我们来理解一下ROS中的Nodes、Master、Parameter server、Messages、Topics、Services，以及Bags。不理解这些ros的基本概念，后面没有办法继续给ROS盖楼。我理解的这个是ROS的通讯方式，但是为什么在书中叫做computation graph(计算图)？Anyway，与ROS通信相关的软件包包括核心客户端库（例如roscpp和rospython）以及概念的实现（例如topics，nodes，parameters和services），都包含在称为<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NfY29tbQ==" title="http://wiki.ros.org/ros_comm">ros_comm<i class="fa fa-external-link"></i></span>的堆栈中。该堆栈还包含rostopic，rosparam，rosservice和rosnode之类的工具。ros_comm堆栈包含ROS通信中间件程序包，这些程序包统称为ROS Graph层：<br><img src="/images/20200220/01.png" alt="01"></p>
+<p>接下来对上图中的这些概念予以说明。</p>
+<ul>
+<li>Nodes：节点是执行计算的过程。每个ROS节点都是使用ROS客户端库编写的。使用客户端库API，我们可以实现不同的ROS功能，例如节点之间的通信方法，当我们的机器人的不同节点必须在它们之间交换信息时，该功能特别有用。使用ROS通信方法，它们可以相互通信并交换数据。 ROS节点的目的之一是构建简单的过程，而不是具有所有功能的大型过程。 ROS节点结构简单，易于调试。</li>
+<li>Master：ROS主机为其余节点提供名称注册和查找。没有ROS Master，节点将无法找到彼此，交换消息或调用服务。在分布式系统中，我们应该在一台计算机上运行主机，其他远程节点可以通过与该主机进行通信来找到彼此。</li>
+<li>Parameter server：参数服务器使您可以将数据存储在中央位置。所有节点都可以访问和修改这些值。参数服务器是ROS Master的一部分。</li>
+<li>Messages：节点之间通过消息进行通信。消息只是包含类型字段的数据结构，该字段可以保存一组数据，并且可以发送到另一个节点。有标准的基本类型（整数，浮点型，布尔型等），ROS消息支持这些类型。我们还可以使用这些标准类型构建自己的消息类型。</li>
+<li>Topics：主题。ROS中的每个消息都是使用称为主题的命名总线传输的。当节点通过主题发送消息时，可以说该节点正在发布主题。当节点通过主题接收消息时，可以说该节点正在订阅主题。发布节点和订阅节点不知道彼此的存在。我们甚至可以订阅可能没有任何发布者的主题。简而言之，信息的产生和信息的消耗是分离的。每个主题都有一个唯一的名称，只要节点具有正确的消息类型，任何节点都可以访问该主题并通过该主题发送数据。</li>
+<li>Services：在某些机器人应用程序中，发布/订阅通信模型可能不合适。 例如，在某些情况下，我们需要一种请求/响应交互，其中一个节点可以要求对另一个节点执行快速过程(例如，要求快速计算)。 ROS service交互就像一个远程过程调用。</li>
+<li>Logging：ROS提供了一个日志记录系统，用于存储数据（例如传感器数据），这些数据可能很难收集，但是对于开发和测试机器人算法（bagfile）是必需的。 当我们使用复杂的机器人机制时，bagfile是非常有用的功能。</li>
+</ul>
+<p>OK，上述是直接从《Mastering ROS for Robotics Programming-Second Edition》翻译过来的。咱们还是说点人话吧<sup>1</sup>。</p>
+<ul>
+<li>Nodes几乎是无处不在，这个东西相当于可执行文件，目前我更愿意把它当做cpp文件，通过catkin_make之后生成可执行文件。</li>
+<li>Messages就像是血液一样，将Nodes连接起来，没有Messages，就成了哑巴，是无法建立起传递机制的。</li>
+<li>Topics就像是QQ群一样，提供一个平台。当有人发了一条消息后，QQ群告诉任何一个加群的人，有没有红包啥的。显然这是一种通过第三方传递的方式，也就是间接传递。发红包的人就是publisher，看群消息的人就是subscriber，然后是MESSAGE传递，这就很简单了，就是水群。Topics适用于流式传输连续的数据流，例如传感器数据。 例如，播放游戏手柄数据以遥控机器人，发布机器人测距法，发布来自摄像机的视频流。</li>
+<li>Services有点像两人私聊的意思，或者是很多人找一个人私聊。跳过了Topics平台，它与Topics区别就在于是消息直接传递还是间接传递。水群就是间接传递，多对多传递。私聊就是直接传递，一对一。Services适用于使得执行程序快速终止。 例如，保存传感器的校准参数，保存机器人在导航过程中生成的地图或加载参数文件。</li>
+</ul>
+<h1 id="2-ROS-computation-graph-实战"><a href="#2-ROS-computation-graph-实战" class="headerlink" title="2 ROS computation graph 实战"></a>2 ROS computation graph 实战</h1><p>了解了通讯的基本构建后，不来点实际的怎么能过瘾呢？</p>
+<h2 id="2-1-Topics实战"><a href="#2-1-Topics实战" class="headerlink" title="2.1 Topics实战"></a>2.1 Topics实战</h2><h3 id="2-1-1-创建ros-package"><a href="#2-1-1-创建ros-package" class="headerlink" title="2.1.1 创建ros package"></a>2.1.1 创建ros package</h3><p>Topics是两个nodes间最基本的通讯方式。本节我们来聊聊Topics的工作方式。首先，自行创建一个示例包<code>demo_pkg</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/src</span><br><span class="line">catkin_create_pkg demo_pkg roscpp std_msgs actionlib actionlib_msgs</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure><br>新包创建完成后的目录如下图所示：</p>
+<p><img src="/images/20200220/02.png" alt="02"></p>
+<p>因为在创建<code>demo_pkg</code>时，添加了依赖项<code>roscpp</code>，因此会有一个<code>src</code>文件，用来存放cpp源文件。我们创建的这个ros package，它的功能是：一个Publisher node通过名为<code>/numbers</code>的topic来传递一个整型值，Subscriber node将这个值打印在屏幕上。</p>
+<h3 id="2-1-2-创建源文件"><a href="#2-1-2-创建源文件" class="headerlink" title="2.1.2 创建源文件"></a>2.1.2 创建源文件</h3><h4 id="2-1-2-1-Publisher-node"><a href="#2-1-2-1-Publisher-node" class="headerlink" title="2.1.2.1 Publisher node"></a>2.1.2.1 Publisher node</h4><p>在<code>src</code>文件夹下新建一个名为<code>demo_topic_publisher.cpp</code>的文件(该文件即为<em>Publisher node</em>)，其内容为：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//roscpp Core header</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="comment">//Header of Int32 standard message</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/Int32.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//Initializing ROS node with a name of demo_topic_publisher</span></span><br><span class="line">	ros::<span class="built_in">init</span>(argc, argv,<span class="string">&quot;demo_topic_publisher&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Created a node handle object</span></span><br><span class="line">	ros::NodeHandle node_obj;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Created a publisher objec and named the topic /numbers with a message type std_msgs::Int32. The second argument is the buffer size.</span></span><br><span class="line"></span><br><span class="line">	ros::Publisher number_publisher = node_obj.<span class="built_in">advertise</span>&lt;std_msgs::Int32&gt;(<span class="string">&quot;/numbers&quot;</span>,<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Created a rate object</span></span><br><span class="line">	<span class="function">ros::Rate <span class="title">loop_rate</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Variable of the number initializing as zero</span></span><br><span class="line">	<span class="type">int</span> number_count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//While loop for incrementing number and publishing to topic /numbers</span></span><br><span class="line">	<span class="keyword">while</span> (ros::<span class="built_in">ok</span>())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//Created a Int32 message</span></span><br><span class="line">		std_msgs::Int32 msg;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//Inserted data to message header</span></span><br><span class="line">		msg.data = number_count;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//Printing message data</span></span><br><span class="line">		<span class="built_in">ROS_INFO</span>(<span class="string">&quot;%d&quot;</span>,msg.data);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//Publishing the msg to topic /numbers</span></span><br><span class="line">		number_publisher.<span class="built_in">publish</span>(msg);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//Spinning once for doing the  all operation once</span></span><br><span class="line">		ros::<span class="built_in">spinOnce</span>();</span><br><span class="line"></span><br><span class="line">		<span class="comment">//Sleeping for sometime</span></span><br><span class="line">		loop_rate.<span class="built_in">sleep</span>();</span><br><span class="line"></span><br><span class="line">		<span class="comment">//Incrementing the count</span></span><br><span class="line">		++number_count;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-1-2-2-Subscriber-node"><a href="#2-1-2-2-Subscriber-node" class="headerlink" title="2.1.2.2 Subscriber node"></a>2.1.2.2 Subscriber node</h4><p>在<code>src</code>文件夹下新建一个名为<code>demo_topic_subscriber.cpp</code>的文件(该文件即为<em>Subscriber node</em>)，其内容为：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/Int32.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Callback of the topic /numbers</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">number_callback</span><span class="params">(<span class="type">const</span> std_msgs::Int32::ConstPtr&amp; msg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">ROS_INFO</span>(<span class="string">&quot;Recieved  [%d]&quot;</span>,msg-&gt;data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//Initializing ROS node with a name of demo_topic_subscriber</span></span><br><span class="line">	ros::<span class="built_in">init</span>(argc, argv,<span class="string">&quot;demo_topic_subscriber&quot;</span>);</span><br><span class="line">	<span class="comment">//Created a nodehandle object</span></span><br><span class="line">	ros::NodeHandle node_obj;</span><br><span class="line">	<span class="comment">//Create a publisher object</span></span><br><span class="line">	ros::Subscriber number_subscriber = node_obj.<span class="built_in">subscribe</span>(<span class="string">&quot;/numbers&quot;</span>,<span class="number">10</span>,number_callback);</span><br><span class="line">	<span class="comment">//Spinning the node</span></span><br><span class="line">	ros::<span class="built_in">spin</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><em>Subscriber node</em>通过<em>number_callback</em>将数字打印出来。</p>
+<h3 id="2-1-3-编译"><a href="#2-1-3-编译" class="headerlink" title="2.1.3 编译"></a>2.1.3 编译</h3><p>首先，将ROS package中的<code>CMakeLists.txt</code>文件内容修改为：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 2.8.3)</span><br><span class="line">project(demo_pkg)</span><br><span class="line"></span><br><span class="line">find_package(catkin REQUIRED COMPONENTS</span><br><span class="line">  roscpp</span><br><span class="line">  rospy</span><br><span class="line">  std_msgs</span><br><span class="line">	actionlib</span><br><span class="line">  actionlib_msgs</span><br><span class="line">  message_generation</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">## System dependencies are found with CMake&#x27;s conventions</span></span><br><span class="line">find_package(Boost REQUIRED COMPONENTS system)</span><br><span class="line"></span><br><span class="line">catkin_package(</span><br><span class="line">  CATKIN_DEPENDS roscpp std_msgs actionlib actionlib_msgs</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># This will create executables of the nodes</span></span><br><span class="line">include_directories( include <span class="variable">$&#123;catkin_INCLUDE_DIRS&#125;</span> <span class="variable">$&#123;Boost_INCLUDE_DIRS&#125;</span> )</span><br><span class="line"></span><br><span class="line"><span class="comment"># This will generate message header file before building the target</span></span><br><span class="line">add_executable(test_topic_publisher src/demo_topic_publisher.cpp)</span><br><span class="line">add_executable(test_topic_subscriber src/demo_topic_subscriber.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># This will link executables to the appropriate libraries</span></span><br><span class="line">add_dependencies(test_topic_publisher demo_pkg_generate_messages_cpp)</span><br><span class="line">add_dependencies(test_topic_subscriber demo_pkg_generate_messages_cpp)</span><br><span class="line"></span><br><span class="line">target_link_libraries(test_topic_publisher <span class="variable">$&#123;catkin_LIBRARIES&#125;</span>)</span><br><span class="line">target_link_libraries(test_topic_subscriber <span class="variable">$&#123;catkin_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure></p>
+<p>编写好<code>CMakeLists.txt</code>文件后，回到Terminal，执行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-1-4-运行程序"><a href="#2-1-4-运行程序" class="headerlink" title="2.1.4 运行程序"></a>2.1.4 运行程序</h3><ol>
+<li>打开一个Terminal，执行<code>roscore</code>；</li>
+<li>再开一个Terminal，执行：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/</span><br><span class="line"><span class="built_in">source</span> devel/setup.bash</span><br><span class="line">rosrun demo_pkg test_topic_publisher</span><br></pre></td></tr></table></figure></li>
+<li>打开第三个Terminal，执行：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/</span><br><span class="line"><span class="built_in">source</span> devel/setup.bash</span><br><span class="line">rosrun demo_pkg test_topic_subscriber</span><br></pre></td></tr></table></figure></li>
+<li>程序运行结果如下：<br><img src="/images/20200220/03.png" alt="03"></li>
+</ol>
+<h3 id="2-1-4-查看节点信息"><a href="#2-1-4-查看节点信息" class="headerlink" title="2.1.4 查看节点信息"></a>2.1.4 查看节点信息</h3><ol>
+<li><code>rosnode list</code>：列出活动节点<br><img src="/images/20200220/04.png" alt="04"></li>
+<li><code>rosnode info demo_topic_publisher</code>：获取publisher node的信息<br><img src="/images/20200220/05.png" alt="05"></li>
+<li><code>rostopic echo /numbers</code>：获取通过topic /numbers传递的数值<br><img src="/images/20200220/06.png" alt="06"></li>
+<li><code>rostopic type /numbers</code>：获取通过topic /numbers传递的数据类型<br><img src="/images/20200220/07.png" alt="07"></li>
+</ol>
+<h2 id="2-2-添加message"><a href="#2-2-添加message" class="headerlink" title="2.2 添加message"></a>2.2 添加message</h2><p>本节来聊聊如何向现有的ROS package中添加messages(.msg文件)。这种格式的文件可以告知ROS从node传来的数据类型。当一个message被添加时，ROS会将其定义转为等效的C++代码，这样我们可以将它包含在nodes中。</p>
+<h3 id="2-2-1-创建源文件"><a href="#2-2-1-创建源文件" class="headerlink" title="2.2.1 创建源文件"></a>2.2.1 创建源文件</h3><h4 id="2-2-1-1-定义message"><a href="#2-2-1-1-定义message" class="headerlink" title="2.2.1.1 定义message"></a>2.2.1.1 定义message</h4><p>假定我们要通过message传递一个字符串，一个整型数据。首先，在现有的ROS包中创建一个文件夹<code>msg</code>，在其中新建一个文件<code>demo_msg.msg</code>，并在其中写入以下内容：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string greeting</span><br><span class="line">int32 number</span><br></pre></td></tr></table></figure></p>
+<p>这样，我们就定义好了message。接下来，要把这个message包含在nodes中。需要做的是将它在ROS package中申明。怎么做呢？打开<code>package.xml文件</code>，添加依赖项：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;build_depend&gt;message_generation&lt;/build_depend&gt;</span><br><span class="line">&lt;exec_depend&gt;message_runtime&lt;/exec_depend&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-2-1-2-创建message-publisher"><a href="#2-2-1-2-创建message-publisher" class="headerlink" title="2.2.1.2 创建message publisher"></a>2.2.1.2 创建message publisher</h4><p>在<code>demo_pkg</code>中打开<code>src</code>文件夹，新建一个<code>demo_msg_publisher.cpp</code>文件用来发布我们自定义的message。其内容如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/Int32.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;demo_pkg/demo_msg.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Defining namespace using in this code</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">//using namespace ros;</span></span><br><span class="line"><span class="comment">//using namespace std_msgs;</span></span><br><span class="line"><span class="comment">//using namespace demo_pkg;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//Initializing ROS node with a name of demo_topic_publisher</span></span><br><span class="line">	ros::<span class="built_in">init</span>(argc, argv,<span class="string">&quot;demo_msg_publisher&quot;</span>);</span><br><span class="line">	<span class="comment">//Created a nodehandle object</span></span><br><span class="line">	ros::NodeHandle node_obj;</span><br><span class="line">	<span class="comment">//Create a publisher object</span></span><br><span class="line">	ros::Publisher number_publisher = node_obj.<span class="built_in">advertise</span>&lt;demo_pkg::demo_msg&gt;(<span class="string">&quot;/demo_msg_topic&quot;</span>,<span class="number">10</span>);</span><br><span class="line">	<span class="comment">//Create a rate object</span></span><br><span class="line">	<span class="function">ros::Rate <span class="title">loop_rate</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">	<span class="comment">//Variable of the number initializing as zero</span></span><br><span class="line">	<span class="type">int</span> number_count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//While loop for incrementing number and publishing to topic /numbers</span></span><br><span class="line">	<span class="keyword">while</span> (ros::<span class="built_in">ok</span>())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//Created a Int32 message</span></span><br><span class="line">		demo_pkg::demo_msg msg;</span><br><span class="line">		<span class="comment">//Inserted data to message header</span></span><br><span class="line"></span><br><span class="line">        std::stringstream ss;</span><br><span class="line">	    ss &lt;&lt; <span class="string">&quot;hello world &quot;</span>;</span><br><span class="line">	    msg.greeting = ss.<span class="built_in">str</span>();</span><br><span class="line"></span><br><span class="line">		msg.number = number_count;</span><br><span class="line">		<span class="comment">//Printing message data</span></span><br><span class="line">		<span class="built_in">ROS_INFO</span>(<span class="string">&quot;%d&quot;</span>,msg.number);</span><br><span class="line">		<span class="built_in">ROS_INFO</span>(<span class="string">&quot;%s&quot;</span>,msg.greeting.<span class="built_in">c_str</span>());</span><br><span class="line"></span><br><span class="line">		<span class="comment">//Publishing the message</span></span><br><span class="line">		number_publisher.<span class="built_in">publish</span>(msg);</span><br><span class="line">		<span class="comment">//Spining once for doing the  all operation once</span></span><br><span class="line">		ros::<span class="built_in">spinOnce</span>();</span><br><span class="line">		<span class="comment">//Setting the loop rate</span></span><br><span class="line">		loop_rate.<span class="built_in">sleep</span>();</span><br><span class="line">		<span class="comment">//Increamenting the count</span></span><br><span class="line">		++number_count;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-2-1-3-创建message-subscriber"><a href="#2-2-1-3-创建message-subscriber" class="headerlink" title="2.2.1.3 创建message subscriber"></a>2.2.1.3 创建message subscriber</h4><p>在<code>demo_pkg</code>中打开<code>src</code>文件夹，新建一个<code>demo_msg_subscriber.cpp</code>文件用来接收我们自定义的message。其内容如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;demo_pkg/demo_msg.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">number_callback</span><span class="params">(<span class="type">const</span> demo_pkg::demo_msg::ConstPtr&amp; msg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">ROS_INFO</span>(<span class="string">&quot;Recieved  greeting [%s]&quot;</span>,msg-&gt;greeting.<span class="built_in">c_str</span>());</span><br><span class="line">	<span class="built_in">ROS_INFO</span>(<span class="string">&quot;Recieved  [%d]&quot;</span>,msg-&gt;number);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//Initializing ROS node with a name of demo_topic_subscriber</span></span><br><span class="line">	ros::<span class="built_in">init</span>(argc, argv,<span class="string">&quot;demo_msg_subscriber&quot;</span>);</span><br><span class="line">	<span class="comment">//Created a nodehandle object</span></span><br><span class="line">	ros::NodeHandle node_obj;</span><br><span class="line">	<span class="comment">//Create a publisher object</span></span><br><span class="line">	ros::Subscriber number_subscriber = node_obj.<span class="built_in">subscribe</span>(<span class="string">&quot;/demo_msg_topic&quot;</span>,<span class="number">10</span>,number_callback);</span><br><span class="line">	<span class="comment">//Spinning the node</span></span><br><span class="line">	ros::<span class="built_in">spin</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时候的文件目录如下所示：</p>
+<p><img src="/images/20200220/08.png" alt="08"></p>
+<h3 id="2-2-2-编译"><a href="#2-2-2-编译" class="headerlink" title="2.2.2 编译"></a>2.2.2 编译</h3><ol>
+<li>打开<code>CMakeLists.txt</code>，添加自定义的message，如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">add_message_files(</span><br><span class="line">	FILES</span><br><span class="line">	demo_msg.msg</span><br><span class="line">)</span><br><span class="line"><span class="comment"># Generate added messages and services with any dependencies listed here</span></span><br><span class="line">generate_messages(</span><br><span class="line">	DEPENDENCIES</span><br><span class="line">	std_msgs</span><br><span class="line">	actionlib_msgs</span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+<li><p>打开<code>CMakeLists.txt</code>，添加依赖项及生成项：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">add_executable(test_msg_publisher src/demo_msg_publisher.cpp)</span><br><span class="line">add_executable(test_msg_subscriber src/demo_msg_subscriber.cpp)</span><br><span class="line">add_dependencies(test_msg_publisher demo_pkg_generate_messages_cpp)</span><br><span class="line">add_dependencies(test_msg_subscriber demo_pkg_generate_messages_cpp)</span><br><span class="line">target_link_libraries(test_msg_publisher <span class="variable">$&#123;catkin_LIBRARIES&#125;</span>)</span><br><span class="line">target_link_libraries(test_msg_subscriber <span class="variable">$&#123;catkin_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="2-2-3-运行"><a href="#2-2-3-运行" class="headerlink" title="2.2.3 运行"></a>2.2.3 运行</h3><ol>
+<li><p>打开一个Terminal，执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roscore</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再开一个Terminal，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/</span><br><span class="line"><span class="built_in">source</span> devel/setup.bash</span><br><span class="line">rosrun demo_pkg test_msg_publisher</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开第三个Terminal，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/</span><br><span class="line"><span class="built_in">source</span> devel/setup.bash</span><br><span class="line">rosrun demo_pkg test_msg_subscriber</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>程序运行结果如下：<br><img src="/images/20200220/09.png" alt="09"></p>
+</li>
+</ol>
+<h2 id="2-3-Service实战"><a href="#2-3-Service实战" class="headerlink" title="2.3 Service实战"></a>2.3 Service实战</h2><h3 id="2-3-1-创建源文件"><a href="#2-3-1-创建源文件" class="headerlink" title="2.3.1 创建源文件"></a>2.3.1 创建源文件</h3><h4 id="2-3-1-1-定义service"><a href="#2-3-1-1-定义service" class="headerlink" title="2.3.1.1 定义service"></a>2.3.1.1 定义service</h4><p>类似于第2.2.1.1节定义message，这里也在现有的ROS package中创建一个文件夹<code>srv</code>，在其中新建一个文件<code>demo_srv.srv</code>，并在其中写入以下内容：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string in</span><br><span class="line">---</span><br><span class="line">string out</span><br></pre></td></tr></table></figure></p>
+<p>这样定义了通过service传递的是两个字符串。同时，也需要将它包含在ROS package中。做法同message一样。打开<code>package.xml文件</code>，添加依赖项：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;build_depend&gt;message_generation&lt;/build_depend&gt;</span><br><span class="line">&lt;exec_depend&gt;message_runtime&lt;/exec_depend&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-3-1-2-创建service-server"><a href="#2-3-1-2-创建service-server" class="headerlink" title="2.3.1.2 创建service server"></a>2.3.1.2 创建service server</h4><p>在<code>demo_pkg</code>中打开<code>src</code>文件夹，新建一个<code>demo_service_server.cpp</code>文件用来发布我们自定义的service。其内容如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;demo_pkg/demo_srv.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Defining namespace using in this code</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">//using namespace ros;</span></span><br><span class="line"><span class="comment">//using namespace std_msgs;</span></span><br><span class="line"><span class="comment">//using namespace demo_pkg;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">demo_service_callback</span><span class="params">(demo_pkg::demo_srv::Request  &amp;req,</span></span></span><br><span class="line"><span class="params"><span class="function">         demo_pkg::demo_srv::Response &amp;res)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">//  ROS_INFO(&quot;From Client  [%s], Server says [%s]&quot;,req.in.c_str(),ss.c_str());</span></span><br><span class="line"></span><br><span class="line">  std::stringstream ss;</span><br><span class="line">  ss &lt;&lt; <span class="string">&quot;Received  Here&quot;</span>;</span><br><span class="line">  res.out = ss.<span class="built_in">str</span>();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;From Client  [%s], Server says [%s]&quot;</span>,req.in.<span class="built_in">c_str</span>(),res.out.<span class="built_in">c_str</span>());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;demo_service_server&quot;</span>);</span><br><span class="line">  ros::NodeHandle n;</span><br><span class="line"></span><br><span class="line">  ros::ServiceServer service = n.<span class="built_in">advertiseService</span>(<span class="string">&quot;demo_service&quot;</span>, demo_service_callback);</span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Ready to receive from client.&quot;</span>);</span><br><span class="line">  ros::<span class="built_in">spin</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-3-1-3-创建service-client"><a href="#2-3-1-3-创建service-client" class="headerlink" title="2.3.1.3 创建service client"></a>2.3.1.3 创建service client</h4><p>在<code>demo_pkg</code>中打开<code>src</code>文件夹，新建一个<code>demo_service_client.cpp</code>文件用来接收我们自定义的service。其内容如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/Int32.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;demo_pkg/demo_srv.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Defining namespace using in this code</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;demo_service_client&quot;</span>);</span><br><span class="line">  ros::NodeHandle n;</span><br><span class="line">  <span class="function">ros::Rate <span class="title">loop_rate</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  ros::ServiceClient client = n.<span class="built_in">serviceClient</span>&lt;demo_pkg::demo_srv&gt;(<span class="string">&quot;demo_service&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (ros::<span class="built_in">ok</span>())</span><br><span class="line">	&#123;</span><br><span class="line">	  demo_pkg::demo_srv srv;</span><br><span class="line">	  std::stringstream ss;</span><br><span class="line">	  ss &lt;&lt; <span class="string">&quot;Sending from Here&quot;</span>;</span><br><span class="line">	  srv.request.in = ss.<span class="built_in">str</span>();</span><br><span class="line"></span><br><span class="line">	  <span class="keyword">if</span> (client.<span class="built_in">call</span>(srv))</span><br><span class="line">	  &#123;</span><br><span class="line">	    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;From Client  [%s], Server says [%s]&quot;</span>,srv.request.in.<span class="built_in">c_str</span>(),srv.response.out.<span class="built_in">c_str</span>());</span><br><span class="line">	  &#125;</span><br><span class="line">	  <span class="keyword">else</span></span><br><span class="line">	  &#123;</span><br><span class="line">	    <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;Failed to call service&quot;</span>);</span><br><span class="line">	    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	  &#125;</span><br><span class="line"></span><br><span class="line">	ros::<span class="built_in">spinOnce</span>();</span><br><span class="line">	<span class="comment">//Setting the loop rate</span></span><br><span class="line">	loop_rate.<span class="built_in">sleep</span>();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此时的ROS package目录如下图所示：</p>
+<p><img src="/images/20200220/10.png" alt="10"></p>
+<h3 id="2-3-2-编译"><a href="#2-3-2-编译" class="headerlink" title="2.3.2 编译"></a>2.3.2 编译</h3><ol>
+<li>打开<code>CMakeLists.txt</code>，添加自定义的message，如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Generate services in the &#x27;srv&#x27; folder</span></span><br><span class="line">add_service_files(</span><br><span class="line">	FILES</span><br><span class="line">	demo_srv.srv</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">catkin_package(CATKIN_DEPENDS roscpp std_msgs actionlib actionlib_msgs message_runtime)</span><br></pre></td></tr></table></figure></li>
+<li><p>打开<code>CMakeLists.txt</code>，添加依赖项及生成项：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">add_executable(test_service_server src/demo_service_server.cpp)</span><br><span class="line">add_executable(test_service_client src/demo_service_client.cpp)</span><br><span class="line">add_dependencies(test_service_server demo_pkg_generate_messages_cpp)</span><br><span class="line">add_dependencies(test_service_client demo_pkg_generate_messages_cpp)</span><br><span class="line">target_link_libraries(test_service_server <span class="variable">$&#123;catkin_LIBRARIES&#125;</span>)</span><br><span class="line">target_link_libraries(test_service_client <span class="variable">$&#123;catkin_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="2-3-3-运行"><a href="#2-3-3-运行" class="headerlink" title="2.3.3 运行"></a>2.3.3 运行</h3><ol>
+<li><p>打开一个Terminal，执行:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roscore</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再开一个Terminal，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/</span><br><span class="line"><span class="built_in">source</span> devel/setup.bash</span><br><span class="line">rosrun demo_pkg test_service_server</span><br></pre></td></tr></table></figure></li>
+<li><p>打开第三个Terminal，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/</span><br><span class="line"><span class="built_in">source</span> devel/setup.bash</span><br><span class="line">rosrun demo_pkg test_service_client</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>程序运行结果如下：<br><img src="/images/20200220/11.png" alt="11"></p>
+</li>
+<li><p>通过<code>rosservice list</code>可以查看当前ROS services。</p>
+</li>
+</ol>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3MTkzNjAzL2FydGljbGUvZGV0YWlscy83MjkwMTcxNg==" title="https://blog.csdn.net/qq_37193603/article/details/72901716">ROS节点，消息，话题，服务的介绍<i class="fa fa-external-link"></i></span></li>
+</ol>
+
+    </div>
+
+	<div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
+    
+</div>
+    
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐阅读</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/5258b4f6.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(五)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/54f3e38b.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(四)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/634af183.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(三)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/d0432caf.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(二)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/cf0a378a.html" rel="bookmark">ros_control介绍</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>Donate a cup of cola?</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cola & Library
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://colainlibrary.com/archives/92e37bf7.html" title="ROS节点之间基本的通讯方式介绍">https://colainlibrary.com/archives/92e37bf7.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Library/" rel="tag"><i class="fa fa-tag"></i> Library</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" rel="tag"><i class="fa fa-tag"></i> 机器人</a>
+              <a href="/tags/ROS/" rel="tag"><i class="fa fa-tag"></i> ROS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/93ffe1ad.html" rel="prev" title="ROS文件系统概述">
+      <i class="fa fa-chevron-left"></i> ROS文件系统概述
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/cf0a378a.html" rel="next" title="ros_control介绍">
+      ros_control介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Understanding-the-ROS-computation-graph-level"><span class="nav-text">1 Understanding the ROS computation graph level</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-ROS-computation-graph-%E5%AE%9E%E6%88%98"><span class="nav-text">2 ROS computation graph 实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Topics%E5%AE%9E%E6%88%98"><span class="nav-text">2.1 Topics实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-%E5%88%9B%E5%BB%BAros-package"><span class="nav-text">2.1.1 创建ros package</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-%E5%88%9B%E5%BB%BA%E6%BA%90%E6%96%87%E4%BB%B6"><span class="nav-text">2.1.2 创建源文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-1-Publisher-node"><span class="nav-text">2.1.2.1 Publisher node</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-2-Subscriber-node"><span class="nav-text">2.1.2.2 Subscriber node</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-%E7%BC%96%E8%AF%91"><span class="nav-text">2.1.3 编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="nav-text">2.1.4 运行程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-%E6%9F%A5%E7%9C%8B%E8%8A%82%E7%82%B9%E4%BF%A1%E6%81%AF"><span class="nav-text">2.1.4 查看节点信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%B7%BB%E5%8A%A0message"><span class="nav-text">2.2 添加message</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E5%88%9B%E5%BB%BA%E6%BA%90%E6%96%87%E4%BB%B6"><span class="nav-text">2.2.1 创建源文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-1-%E5%AE%9A%E4%B9%89message"><span class="nav-text">2.2.1.1 定义message</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-2-%E5%88%9B%E5%BB%BAmessage-publisher"><span class="nav-text">2.2.1.2 创建message publisher</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-3-%E5%88%9B%E5%BB%BAmessage-subscriber"><span class="nav-text">2.2.1.3 创建message subscriber</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E7%BC%96%E8%AF%91"><span class="nav-text">2.2.2 编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E8%BF%90%E8%A1%8C"><span class="nav-text">2.2.3 运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Service%E5%AE%9E%E6%88%98"><span class="nav-text">2.3 Service实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E5%88%9B%E5%BB%BA%E6%BA%90%E6%96%87%E4%BB%B6"><span class="nav-text">2.3.1 创建源文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-1-%E5%AE%9A%E4%B9%89service"><span class="nav-text">2.3.1.1 定义service</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-2-%E5%88%9B%E5%BB%BAservice-server"><span class="nav-text">2.3.1.2 创建service server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-3-%E5%88%9B%E5%BB%BAservice-client"><span class="nav-text">2.3.1.3 创建service client</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-%E7%BC%96%E8%AF%91"><span class="nav-text">2.3.2 编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-%E8%BF%90%E8%A1%8C"><span class="nav-text">2.3.3 运行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cola & Library"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Cola & Library</p>
+  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">251k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:48</span>
+</div>
+
+
+<!-- 网站运行时间的设置 -->
+<div>
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+</div>
+
+<!-- 网站底部统计本站访问数量 -->
+<!--
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+    <span class="post-meta-divider">|</span>
+已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
+</div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+       	<i class="fa fa-"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        共观看 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+	
+</body>
+</html>

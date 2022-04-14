@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
+  <meta name="baidu-site-verification" content="aHT7NgajBz">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://colainlibrary.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="七自由度机器人文件系统及.launch解读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROS仿真揭秘——七自由度机器人(二)">
+<meta property="og:url" content="https://colainlibrary.com/archives/d0432caf.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="七自由度机器人文件系统及.launch解读">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://colainlibrary.com/images/20200224/00.gif">
+<meta property="og:image" content="https://colainlibrary.com/images/20200224/01.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200224/02.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200224/05.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200224/06.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200224/03.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200224/04.png">
+<meta property="article:published_time" content="2020-02-24T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-13T16:12:10.000Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="Library">
+<meta property="article:tag" content="机器人">
+<meta property="article:tag" content="ROS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://colainlibrary.com/images/20200224/00.gif">
+
+<link rel="canonical" href="https://colainlibrary.com/archives/d0432caf.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>ROS仿真揭秘——七自由度机器人(二) | Cola In Library</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cola In Library</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/d0432caf.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Cola & Library">
+      <meta itemprop="description" content="Understand, don't memorize.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cola In Library">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          ROS仿真揭秘——七自由度机器人(二)
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+			
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-24 11:00:00" itemprop="dateCreated datePublished" datetime="2020-02-24T11:00:00Z">2020-02-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">机器人控制</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94ROS%E4%B8%8B%E4%B8%83%E8%87%AA%E7%94%B1%E5%BA%A6%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">专栏——ROS下七自由度机器人仿真的实现</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/d0432caf.html" class="post-meta-item leancloud_visitors" data-flag-title="ROS仿真揭秘——七自由度机器人(二)" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/d0432caf.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/d0432caf.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+            <div class="post-description">七自由度机器人文件系统及.launch解读</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src=" /images/20200224/00.gif" width=30% /><br>这一篇我们来了解一下组成七自由度机器人的文件系统，并对launch文件做一个解读。<br><span id="more"></span></p>
+<h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>如果你对ROS的基础知识有所欠缺，可以参考：</p>
+<ul>
+<li><a href="https://colainlibrary.com/93ffe1ad.html">ROS文件系统概述</a></li>
+<li><a href="https://colainlibrary.com/92e37bf7.html">ROS节点之间的基本通讯方式</a></li>
+</ul>
+<p>如果你不清楚七自由度机器人机器人仿真的运行方式，可以参考：</p>
+<ul>
+<li><a href="https://colainlibrary.com/7f72b7cd.html">ROS仿真揭秘——七自由度机器人(一)</a></li>
+</ul>
+<h1 id="1-组成模型的文件"><a href="#1-组成模型的文件" class="headerlink" title="1 组成模型的文件"></a>1 组成模型的文件</h1><p>关于工作空间建立好后有的文件，因为都是统一的格式，这里不予过多介绍。我们关注的是，每一个仿真模型的文件组成。依据上一篇的介绍，我们在下载模型时从github上下载了两个文件，一个是机器人3D模型，另一个是机器人控制器。</p>
+<h2 id="1-1-3D模型的文件组成"><a href="#1-1-3D模型的文件组成" class="headerlink" title="1.1 3D模型的文件组成"></a>1.1 3D模型的文件组成</h2><p>3D模型<code>mastering_ros_robot_description_pkg</code>的组成如下图所示。<br><img src="/images/20200224/01.png" alt="01"></p>
+<h2 id="1-2-控制器的文件组成"><a href="#1-2-控制器的文件组成" class="headerlink" title="1.2 控制器的文件组成"></a>1.2 控制器的文件组成</h2><p>七自由度机器人控制器<code>seven_dof_arm_gazebo</code>的组成如下图所示。<br><img src="/images/20200224/02.png" alt="02"></p>
+<h1 id="2-launch文件解读"><a href="#2-launch文件解读" class="headerlink" title="2 launch文件解读"></a>2 launch文件解读</h1><p>从上面的两组文件以及在上一篇第3节运行程序的过程中，可以看出，二者从文件组成方面似乎没有一个直观的交集。莫急，我们顺着它程序运行的流程做一个探究。从上一篇博客中，我们知道通过两条<em>roslaunch</em>的命令分别启动了Rviz和Gazebo，我们就从这里开始研究吧！</p>
+<h2 id="2-1-launch文件的使用方法"><a href="#2-1-launch文件的使用方法" class="headerlink" title="2.1 launch文件的使用方法"></a>2.1 launch文件的使用方法</h2><p>launch文件的使用格式是：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ roslaunch package_name launch_file_name</span><br></pre></td></tr></table></figure><br>launch文件是XML文件，所有内容都包含在<code>&lt;launch&gt;....&lt;/launch&gt;</code>这一对标签之内。对于七自由度机器人，首先是只在Rviz下显示的程序，我们在上节直接通过执行<code>roslaunch mastering_ros_robot_description_pkg view_arm.launch</code>这一条指令将程序跑了起来。从这条指令中可以看到，它运行的是<strong>mastering_ros_robot_descripion_pkg</strong>中的<strong>launch/view_arm.launch</strong>文件。其次，在上节通过<code>roslaunch seven_dof_arm_gazebo seven_dof_arm_gazebo_control.launch</code>这一条指令在Gazebo中将模型显示了出来。这条指令运行的是<strong>seven_dof_arm_gazebo</strong>中的<strong>launch/seven_dof_arm_gazebo_control.launch</strong>文件。</p>
+<blockquote>
+<p>说明：对于上一篇中将机器人运动的那条指令在这里先不介绍，后面到控制机器人运动的时候再做介绍。</p>
+</blockquote>
+<h2 id="2-2-view-arm-launch文件解读"><a href="#2-2-view-arm-launch文件解读" class="headerlink" title="2.2 view_arm.launch文件解读"></a>2.2 view_arm.launch文件解读</h2><h3 id="2-2-1-源码"><a href="#2-2-1-源码" class="headerlink" title="2.2.1 源码"></a>2.2.1 源码</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;model&quot;</span> /&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- Parsing xacro and setting robot_description parameter --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">command</span>=<span class="string">&quot;$(find xacro)/xacro --inorder $(find mastering_ros_robot_description_pkg)/urdf/seven_dof_arm.xacro&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Setting gui parameter to true for display joint slider --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;use_gui&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Starting Joint state publisher node which will publish the joint values --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;joint_state_publisher&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Starting robot state publish which will publish tf --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;state_publisher&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Launch visualization in rviz --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">type</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">args</span>=<span class="string">&quot;-d $(find mastering_ros_robot_description_pkg)/urdf.rviz&quot;</span> <span class="attr">required</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2-2-view-arm-launch文件释义"><a href="#2-2-2-view-arm-launch文件释义" class="headerlink" title="2.2.2 view_arm.launch文件释义"></a>2.2.2 view_arm.launch文件释义</h3><h4 id="2-2-2-1-arg标签"><a href="#2-2-2-1-arg标签" class="headerlink" title="2.2.2.1 arg标签"></a>2.2.2.1 arg标签</h4><p>argument类似于launch文件内部的局部变量，仅限于launch文件使用，便于launch文件的重构，和ROS节点内部的实现没有关系。</p>
+<p>设置argument使用<code>&lt;arg&gt;</code>标签元素，语法如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">”arg-name”</span> <span class="attr">default</span>=<span class="string">”arg-value”/</span>&gt;</span></span><br></pre></td></tr></table></figure><br>name是参数的名称，还可以在后面添加参数value或者default。value是参数的值，default设定预设值，命令行方式可以覆盖default的值，但是不能覆盖value。</p>
+<p>launch文件中需要使用到argument时，可以使用如下方式调用：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;paramname=&quot;foo&quot; value=&quot;$(argarg-name)&quot; /&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;node&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;package&quot;</span> <span class="attr">type</span>=<span class="string">&quot;type &quot;</span><span class="attr">args</span>=<span class="string">&quot;$(arg arg-name)&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>回到<em>view_arm.launch</em>文件中：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;model&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这里定义了一个名为model的参数。</p>
+<h4 id="2-2-2-2-param标签"><a href="#2-2-2-2-param标签" class="headerlink" title="2.2.2.2 param标签"></a>2.2.2.2 param标签</h4><p>parameter是ROS系统运行中的参数，存储在参数服务器中。在launch文件中通过<code>&lt;param&gt;</code>元素加载parameter；launch文件执行后，parameter就加载到ROS的参数服务器上了。每个活跃的节点都可以通过 ros::param::get()接口来获取parameter的值，用户也可以在终端中通过rosparam命令获得parameter的值。</p>
+<p><code>&lt;param&gt;</code>的使用方法如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;output_frame&quot;</span> <span class="attr">value</span>=<span class="string">&quot;odom&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure><br>运行launch文件后，output_frame这个parameter的值就设置为odom，并且加载到ROS参数服务器上了。但是在很多复杂的系统中，参数的数量很多，如果这样一个一个的设置会非常麻烦，ROS也为我们提供了另外一种类似的参数加载方式——<code>&lt;rosparam&gt;</code>：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;rosparamfile=&quot;$(find 2dnav_pr2)/config/costmap_common_params.yaml&quot; command=&quot;load&quot; ns=&quot;local_costmap&quot; /&gt;</span><br></pre></td></tr></table></figure><br><code>&lt;rosparam&gt;</code>可以帮助我们将一个yaml格式文件中的参数全部加载到ROS参数服务器中，需要设置command属性为“load”，还可以选择设置命名空间“ns”。</p>
+<p>回到view_arm.launch文件中：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">command</span>=<span class="string">&quot;$(find xacro)/xacro --inorder $(find mastering_ros_robot_description_pkg)/urdf/seven_dof_arm.xacro&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;use_gui&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>依据上述原理，我们知道第一句话的意思是<em>robot_description</em>这个参数，会加载在<strong>mastering_ros_robot_description</strong>中的<strong>urdf/seven<em>dof_arm</em>.xacro</strong>文件，该文件即为七自由度机器人的模型描述文件。第二句话的意思是设置一个GUI参数，从效果上来说就是会出现上一篇博客3.1节中的GUI界面。</p>
+<h4 id="2-2-2-3-node标签"><a href="#2-2-2-3-node标签" class="headerlink" title="2.2.2.3 node标签"></a>2.2.2.3 node标签</h4><p>启动文件的核心是启动ROS节点，采用<code>&lt;node&gt;</code>标签定义，语法如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;package-name&quot;</span><span class="attr">type</span>=<span class="string">&quot;executable-name&quot;</span> <span class="attr">name</span>=<span class="string">&quot;node-name&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>从上边的定义规则可以看出，在启动文件中启动一个节点需要三个属性：pkg、type和name。其中pkg定义节点所在的功能包名称，type定义节点的可执行文件名称，这两个属性等同于在终端中使用rosrun命令执行节点时的输入参数。name属性用来定义节点运行的名称，将覆盖节点中init()赋予节点的名称。这是三个最常用的属性，在某些情况下，我们还有可能用到以下属性：</p>
+<ul>
+<li>output = “screen”：将节点的标准输出打印到终端屏幕，默认输出为日志文档；</li>
+<li>respawn = “true”：复位属性，该节点停止时，会自动重启，默认为false；</li>
+<li>required = “true”：必要节点，当该节点终止时，launch文件中的其他节点也被终止；</li>
+<li>ns = “namespace”：命名空间，为节点内的相对名称添加命名空间前缀；</li>
+<li>args = “arguments”：节点需要的输入参数。</li>
+</ul>
+<p>在<em>view_arm.launch</em>文件中：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;joint_state_publisher&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;state_publisher&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">type</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">args</span>=<span class="string">&quot;-d $(find mastering_ros_robot_description_pkg)/urdf.rviz&quot;</span> <span class="attr">required</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>最后的这三个node：第一个node是<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9qb2ludF9zdGF0ZV9wdWJsaXNoZXI=" title="http://wiki.ros.org/joint_state_publisher">joint_state_publisher<i class="fa fa-external-link"></i></span>，它和GUI关联在一起；第二个是<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb2JvdF9zdGF0ZV9wdWJsaXNoZXI=" title="http://wiki.ros.org/robot_state_publisher">robot_state_publisher<i class="fa fa-external-link"></i></span>；第三个是rviz，它来启动Rviz，并且输入<em>urdf.rviz</em>这个参数，以使模型正常显示。</p>
+<p>在一个新终端中输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun rqt_graph rqt_graph</span><br></pre></td></tr></table></figure></p>
+<p>可以看到：<br><img src="/images/20200224/05.png" alt="05"></p>
+<h2 id="2-3-seven-dof-arm-gazebo-control-launch文件解读"><a href="#2-3-seven-dof-arm-gazebo-control-launch文件解读" class="headerlink" title="2.3 seven_dof_arm_gazebo_control.launch文件解读"></a>2.3 seven_dof_arm_gazebo_control.launch文件解读</h2><h3 id="2-3-1-源码"><a href="#2-3-1-源码" class="headerlink" title="2.3.1 源码"></a>2.3.1 源码</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Launch Gazebo  --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find seven_dof_arm_gazebo)/launch/seven_dof_arm_world.launch&quot;</span> /&gt;</span>   </span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Load joint controller configurations from YAML file to parameter server --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find seven_dof_arm_gazebo)/config/seven_dof_arm_gazebo_control.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- load the controllers --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;/seven_dof_arm&quot;</span> <span class="attr">args</span>=<span class="string">&quot;joint_state_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">					  joint1_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">					  joint2_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">					  joint3_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">					  joint4_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">					  joint5_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">					  joint6_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">					  joint7_position_controller&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- convert joint states to TF transforms for rviz, etc --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;robot_state_publisher&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">remap</span> <span class="attr">from</span>=<span class="string">&quot;/joint_states&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/seven_dof_arm/joint_states&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="2-3-2-解读"><a href="#2-3-2-解读" class="headerlink" title="2.3.2 解读"></a>2.3.2 解读</h3><h4 id="2-3-2-1-include标签"><a href="#2-3-2-1-include标签" class="headerlink" title="2.3.2.1 include标签"></a>2.3.2.1 include标签</h4><p>复杂系统有很多launch文件，它们之间存在依赖关系，可以复用已经有的launch文件。<br>大多数时候，include 使用find命令来搜索程序包，代替一个明确的完整路径：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find package-name)/launch-file-name&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure><br>include 也支持 ns 属性，可以让这个文件里的内容推送到一个命名空间里面：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;...&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;namespace&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>example：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find realsense2_camera)/launch/rs_camera.launch&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;align_depth&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;unite_imu_method&quot;</span> <span class="attr">value</span>=<span class="string">&quot;linear_interpolation&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在<em>seven_dof_arm_gazebo_control.launch</em>文件中：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find seven_dof_arm_gazebo)/launch/seven_dof_arm_world.launch&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>通过加载<em>seven_dof_arm_world.launch</em>文件，启动了Gazebo。</p>
+<h4 id="2-3-2-2-控制器节点"><a href="#2-3-2-2-控制器节点" class="headerlink" title="2.3.2.2 控制器节点"></a>2.3.2.2 控制器节点</h4><p>中间的两句：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find seven_dof_arm_gazebo)/config/seven_dof_arm_gazebo_control.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;/seven_dof_arm&quot;</span> <span class="attr">args</span>=<span class="string">&quot;joint_state_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">				  joint1_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">				  joint2_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">				  joint3_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">				  joint4_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">				  joint5_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">				  joint6_position_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">				  joint7_position_controller&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>第一句加载了<em>seven_dof_arm_gazebo_control.yaml</em>文件，该文件包含了七自由度机器人控制器的一些配置，我们之后再做介绍。第二句是控制器的节点，对应的pkg是<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jb250cm9sbGVyX21hbmFnZXI=" title="http://wiki.ros.org/controller_manager">controller_manager<i class="fa fa-external-link"></i></span>，type是spawner，还包含了joint_state_controller与7个关节对应的位置控制器，这些名字是怎么来的，我们以后再讲。</p>
+<h4 id="2-3-2-3-remap标签"><a href="#2-3-2-3-remap标签" class="headerlink" title="2.3.2.3 remap标签"></a>2.3.2.3 remap标签</h4><p>ROS的设计目标是提高代码的复用率，所以ROS社区中的很多功能包我们都可以拿来直接使用，而不需要关注功能包的内部实现。那么问题就来了，别人功能包的接口不一定和我们的系统兼容呀？</p>
+<p>ROS提供一种重映射的机制，简单来说就是取别名，类似于C++中的别名机制，我们不需要修改别人功能包的接口，只需要将接口名称重映射一下，取个别名，我们的系统就认识了（接口的数据类型必须相同）。launch文件中的<code>&lt;remap&gt;</code>标签可以帮我们实现这个重映射的功能。</p>
+<p>在<em>seven_dof_arm_gazebo_control.launch</em>文件中的最后一个节点：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;robot_state_publisher&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">remap</span> <span class="attr">from</span>=<span class="string">&quot;/joint_states&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/seven_dof_arm/joint_states&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>上述robot_state_publisher节点中，将ROS自带的joint_states映射到了/seven_dof_arm/joint_states。<br><img src="/images/20200224/06.png" alt="06"></p>
+<h2 id="2-4-seven-dof-arm-world-launch解读"><a href="#2-4-seven-dof-arm-world-launch解读" class="headerlink" title="2.4 seven_dof_arm_world.launch解读"></a>2.4 seven_dof_arm_world.launch解读</h2><h3 id="2-4-1-源码"><a href="#2-4-1-源码" class="headerlink" title="2.4.1 源码"></a>2.4.1 源码</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Part 1: --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- these are the arguments you can pass this launch file, for example paused:=true --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;paused&quot;</span> <span class="attr">default</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;use_sim_time&quot;</span> <span class="attr">default</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;gui&quot;</span> <span class="attr">default</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;headless&quot;</span> <span class="attr">default</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;debug&quot;</span> <span class="attr">default</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Part 2: --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- We resume the logic in empty_world.launch --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find gazebo_ros)/launch/empty_world.launch&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;debug&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg debug)&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;gui&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg gui)&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;paused&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg paused)&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;use_sim_time&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg use_sim_time)&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;headless&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg headless)&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Part 3: --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Load the URDF into the ROS Parameter Server --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">command</span>=<span class="string">&quot;$(find xacro)/xacro --inorder &#x27;$(find mastering_ros_robot_description_pkg)/urdf/seven_dof_arm.xacro&#x27;&quot;</span> /&gt;</span> </span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Part 4: --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;urdf_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;gazebo_ros&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawn_model&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">args</span>=<span class="string">&quot;-urdf -model seven_dof_arm -param robot_description&quot;</span>/&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-4-2-解读"><a href="#2-4-2-解读" class="headerlink" title="2.4.2 解读"></a>2.4.2 解读</h3><p>从源码中可以看出，可以将该文件分为四块来解读。Part1是一部分针对仿真环境的默认参数设置；Part2是启动Gazebo的world模型及相关参数设置；Part3是设置一个名为robot_description的参数，对应的正是<em>mastering_ros_robot_description_pkg/urdf/seven_dof_arm.xacro</em>文件，因此这里将<strong>mastering_ros_robot_description_pkg</strong>和<strong>seven_dof_arm_gazebo</strong>两个ROS Package联系了起来；Part4则是通过节点urdf_spawner加载Part3中的参数robot_description。</p>
+<h2 id="2-5-launch文件的其他语法格式"><a href="#2-5-launch文件的其他语法格式" class="headerlink" title="2.5 launch文件的其他语法格式"></a>2.5 launch文件的其他语法格式</h2><p>因为我们主要是依据七自由度机器人来介绍，所以这里只介绍了目前用到launch文件中的已有标签，但是launch文件的语法格式除了这些外，还有其他的标签，比如remap、group等标签，请自行查阅相关的参考链接。</p>
+<h1 id="3-七自由度机器人文件流程图"><a href="#3-七自由度机器人文件流程图" class="headerlink" title="3 七自由度机器人文件流程图"></a>3 七自由度机器人文件流程图</h1><p>在第2节我们从roslaunch命令入手，一窥七自由度机器人的第一步运行过程。我将两个ROS Package的运行过程分别做了一个简单的流程图，如下所示：</p>
+<p><img src="/images/20200224/03.png" alt="03"><br><img src="/images/20200224/04.png" alt="04"></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxOTUwNjcxL2FydGljbGUvZGV0YWlscy8xMDE3MDM0NTE=" title="https://blog.csdn.net/qq_21950671/article/details/101703451">ROS Launch 文件语法和例子讲解<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuZ3V5dWVob21lLmNvbS8yMTk1" title="https://www.guyuehome.com/2195">ROS探索总结（五十六）—— launch文件<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9qb2ludF9zdGF0ZV9wdWJsaXNoZXI=" title="http://wiki.ros.org/joint_state_publisher">joint_state_publisher<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb2JvdF9zdGF0ZV9wdWJsaXNoZXI=" title="http://wiki.ros.org/robot_state_publisher">robot_state_publisher<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jb250cm9sbGVyX21hbmFnZXI=" title="http://wiki.ros.org/controller_manager">controller_manager<i class="fa fa-external-link"></i></span></li>
+</ol>
+
+    </div>
+
+	<div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
+    
+</div>
+    
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐阅读</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/5258b4f6.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(五)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/54f3e38b.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(四)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/634af183.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(三)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/cf0a378a.html" rel="bookmark">ros_control介绍</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/92e37bf7.html" rel="bookmark">ROS节点之间基本的通讯方式介绍</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>Donate a cup of cola?</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cola & Library
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://colainlibrary.com/archives/d0432caf.html" title="ROS仿真揭秘——七自由度机器人(二)">https://colainlibrary.com/archives/d0432caf.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Library/" rel="tag"><i class="fa fa-tag"></i> Library</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" rel="tag"><i class="fa fa-tag"></i> 机器人</a>
+              <a href="/tags/ROS/" rel="tag"><i class="fa fa-tag"></i> ROS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/7f72b7cd.html" rel="prev" title="ROS仿真揭秘——七自由度机器人(一)">
+      <i class="fa fa-chevron-left"></i> ROS仿真揭秘——七自由度机器人(一)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/634af183.html" rel="next" title="ROS仿真揭秘——七自由度机器人(三)">
+      ROS仿真揭秘——七自由度机器人(三) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-%E5%89%8D%E8%A8%80"><span class="nav-text">0 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%BB%84%E6%88%90%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-text">1 组成模型的文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-3D%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%84%E6%88%90"><span class="nav-text">1.1 3D模型的文件组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%84%E6%88%90"><span class="nav-text">1.2 控制器的文件组成</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-launch%E6%96%87%E4%BB%B6%E8%A7%A3%E8%AF%BB"><span class="nav-text">2 launch文件解读</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-launch%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">2.1 launch文件的使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-view-arm-launch%E6%96%87%E4%BB%B6%E8%A7%A3%E8%AF%BB"><span class="nav-text">2.2 view_arm.launch文件解读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E6%BA%90%E7%A0%81"><span class="nav-text">2.2.1 源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-view-arm-launch%E6%96%87%E4%BB%B6%E9%87%8A%E4%B9%89"><span class="nav-text">2.2.2 view_arm.launch文件释义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-1-arg%E6%A0%87%E7%AD%BE"><span class="nav-text">2.2.2.1 arg标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-2-param%E6%A0%87%E7%AD%BE"><span class="nav-text">2.2.2.2 param标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-3-node%E6%A0%87%E7%AD%BE"><span class="nav-text">2.2.2.3 node标签</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-seven-dof-arm-gazebo-control-launch%E6%96%87%E4%BB%B6%E8%A7%A3%E8%AF%BB"><span class="nav-text">2.3 seven_dof_arm_gazebo_control.launch文件解读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E6%BA%90%E7%A0%81"><span class="nav-text">2.3.1 源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-%E8%A7%A3%E8%AF%BB"><span class="nav-text">2.3.2 解读</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-1-include%E6%A0%87%E7%AD%BE"><span class="nav-text">2.3.2.1 include标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-2-%E6%8E%A7%E5%88%B6%E5%99%A8%E8%8A%82%E7%82%B9"><span class="nav-text">2.3.2.2 控制器节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-3-remap%E6%A0%87%E7%AD%BE"><span class="nav-text">2.3.2.3 remap标签</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-seven-dof-arm-world-launch%E8%A7%A3%E8%AF%BB"><span class="nav-text">2.4 seven_dof_arm_world.launch解读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-%E6%BA%90%E7%A0%81"><span class="nav-text">2.4.1 源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-%E8%A7%A3%E8%AF%BB"><span class="nav-text">2.4.2 解读</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-launch%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E6%A0%BC%E5%BC%8F"><span class="nav-text">2.5 launch文件的其他语法格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E4%B8%83%E8%87%AA%E7%94%B1%E5%BA%A6%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%96%87%E4%BB%B6%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-text">3 七自由度机器人文件流程图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cola & Library"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Cola & Library</p>
+  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">251k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:48</span>
+</div>
+
+
+<!-- 网站运行时间的设置 -->
+<div>
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+</div>
+
+<!-- 网站底部统计本站访问数量 -->
+<!--
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+    <span class="post-meta-divider">|</span>
+已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
+</div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+       	<i class="fa fa-"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        共观看 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+	
+</body>
+</html>

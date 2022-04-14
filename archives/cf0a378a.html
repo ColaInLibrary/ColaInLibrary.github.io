@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
+  <meta name="baidu-site-verification" content="aHT7NgajBz">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://colainlibrary.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="谈一谈ros_control">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ros_control介绍">
+<meta property="og:url" content="https://colainlibrary.com/archives/cf0a378a.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="谈一谈ros_control">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://colainlibrary.com/images/20200221/00.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200221/01.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200221/03.png">
+<meta property="article:published_time" content="2020-02-21T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-12T15:07:12.000Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="Library">
+<meta property="article:tag" content="机器人">
+<meta property="article:tag" content="ROS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://colainlibrary.com/images/20200221/00.png">
+
+<link rel="canonical" href="https://colainlibrary.com/archives/cf0a378a.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>ros_control介绍 | Cola In Library</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cola In Library</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/cf0a378a.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Cola & Library">
+      <meta itemprop="description" content="Understand, don't memorize.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cola In Library">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          ros_control介绍
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+			
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-21 11:00:00" itemprop="dateCreated datePublished" datetime="2020-02-21T11:00:00Z">2020-02-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">机器人控制</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/cf0a378a.html" class="post-meta-item leancloud_visitors" data-flag-title="ros_control介绍" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/cf0a378a.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/cf0a378a.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+            <div class="post-description">谈一谈ros_control</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src=" /images/20200221/00.png" width=50% /><br>仿真模型究竟是怎么样控制的呢？这一节我们来谈一谈用ros_control来控制gazebo中的仿真模型吧。<br><span id="more"></span></p>
+<blockquote>
+<p>本篇内容主要转自<span class="exturl" data-url="aHR0cHM6Ly93d3cuZ3V5dWVob21lLmNvbS84OTA=" title="https://www.guyuehome.com/890">古月居ROS探索总结（三十一）——ros_control<i class="fa fa-external-link"></i></span>。</p>
+</blockquote>
+<h1 id="1-ros-control概述"><a href="#1-ros-control概述" class="headerlink" title="1.ros_control概述"></a>1.ros_control概述</h1><p>ROS中提供了丰富的机器人应用：SLAM、导航、MoveIt……但是你可能一直有一个疑问，这些功能包到底应该怎么样用到我们的机器人上，也就是说在应用和实际机器人或者机器人仿真器之间，缺少一个连接两者的东西。这个可以形象地用上图中的！！！部分描述。</p>
+<p>ros_control就是ROS为用户提供的应用与机器人之间的中间件，包含一系列控制器接口、传动装置接口、硬件接口、控制器工具箱等等，可以帮助机器人应用快速落地，提高开发效率。我们将上图填充完整后，是如下效果：<br><img src="/images/20200221/01.png" alt="01"></p>
+<p>从上图中可以看出，ros确实是一个框架。ros_control可以提供多种类型的控制器(底盘、机械臂等)，但是这些控制器的接口各不相同，为了提高代码的复用率，ros_control还提供一个硬件的抽象层(Robot hardware abstraction)。硬件抽象层负责机器人硬件资源的管理;而controller从抽象层请求资源即可，并不直接接触硬件。<br><img src="/images/20200221/03.png" alt="03"></p>
+<p>上图是ros_control的数据流图，可以更加清晰的看到每个层次包含的功能：</p>
+<ul>
+<li>Controller Manager：每个机器人可能有多个controller，所以这里有一个控制器管理器的概念，提供一种通用的接口来管理不同的controller。controller manager的输入就是ROS上层应用的输出。</li>
+<li>Controller：controller可以完成每个joint的控制，请求下层的硬件资源，并且提供了PID控制器，读取硬件资源接口中的状态，在发布控制命令。</li>
+<li>Hardware Rescource：为上下两层提供硬件资源的接口。</li>
+<li>RobotHW：硬件抽象层和硬件直接打交道，通过write和read方法来完成硬件的操作，这一层也包含关节限位、力矩转换、状态转换等功能。</li>
+<li>Real Robot：实际的机器人上也需要有自己的嵌入式控制器，接收到命令后需要反映到执行器上，比如接收到位置1的命令后，那就需要让执行器快速、稳定的到达位置1。</li>
+</ul>
+<h1 id="2-Controllers"><a href="#2-Controllers" class="headerlink" title="2. Controllers:"></a>2. Controllers:</h1><p>ros_controllers这个功能包提供了已有的一些controllers：</p>
+<ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Jvcy1jb250cm9scy9yb3NfY29udHJvbGxlcnMvdHJlZS9tZWxvZGljLWRldmVsL2VmZm9ydF9jb250cm9sbGVycy9pbmNsdWRlL2VmZm9ydF9jb250cm9sbGVycw==" title="https://github.com/ros-controls/ros_controllers/tree/melodic-devel/effort_controllers/include/effort_controllers">effort_controllers<i class="fa fa-external-link"></i></span> - Command a desired force/torque to joints.<ul>
+<li>joint_effort_controller</li>
+<li>joint_position_controller</li>
+<li>joint_velocity_controller</li>
+</ul>
+</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Jvcy1jb250cm9scy9yb3NfY29udHJvbGxlcnMvdHJlZS9tZWxvZGljLWRldmVsL2pvaW50X3N0YXRlX2NvbnRyb2xsZXIvaW5jbHVkZS9qb2ludF9zdGF0ZV9jb250cm9sbGVy" title="https://github.com/ros-controls/ros_controllers/tree/melodic-devel/joint_state_controller/include/joint_state_controller">joint_state_controller<i class="fa fa-external-link"></i></span> - Read all joint positions.<ul>
+<li>joint_state_controller</li>
+</ul>
+</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Jvcy1jb250cm9scy9yb3NfY29udHJvbGxlcnMvdHJlZS9tZWxvZGljLWRldmVsL3Bvc2l0aW9uX2NvbnRyb2xsZXJzL2luY2x1ZGUvcG9zaXRpb25fY29udHJvbGxlcnM=" title="https://github.com/ros-controls/ros_controllers/tree/melodic-devel/position_controllers/include/position_controllers">position_controllers<i class="fa fa-external-link"></i></span> - Set one or multiple joint positions at once.<ul>
+<li>joint_position_controller</li>
+<li>joint_group_position_controller</li>
+</ul>
+</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Jvcy1jb250cm9scy9yb3NfY29udHJvbGxlcnMvdHJlZS9tZWxvZGljLWRldmVsL3ZlbG9jaXR5X2NvbnRyb2xsZXJzL2luY2x1ZGUvdmVsb2NpdHlfY29udHJvbGxlcnM=" title="https://github.com/ros-controls/ros_controllers/tree/melodic-devel/velocity_controllers/include/velocity_controllers">velocity_controllers<i class="fa fa-external-link"></i></span> - Set one or multiple joint velocities at once.<ul>
+<li>joint_velocity_controller</li>
+<li>joint_group_velocity_controller</li>
+</ul>
+</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Jvcy1jb250cm9scy9yb3NfY29udHJvbGxlcnMvdHJlZS9tZWxvZGljLWRldmVsL2pvaW50X3RyYWplY3RvcnlfY29udHJvbGxlcg==" title="https://github.com/ros-controls/ros_controllers/tree/melodic-devel/joint_trajectory_controller">joint_trajectory_controllers<i class="fa fa-external-link"></i></span> - Extra functionality for splining an entire trajectory.<ul>
+<li>position_controller</li>
+<li>velocity_controller</li>
+<li>effort_controller</li>
+<li>position_velocity_controller</li>
+<li>position_velocity_acceleration_controller</li>
+</ul>
+</li>
+</ol>
+<p>当然，我们也可以根据自己的需求，创建需要的controller，然后通过controller来管理自己创建的controller，可以参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Jvcy1jb250cm9scy9yb3NfY29udHJvbC93aWtpL2NvbnRyb2xsZXJfaW50ZXJmYWNl" title="https://github.com/ros-controls/ros_control/wiki/controller_interface">https://github.com/ros-controls/ros_control/wiki/controller_interface<i class="fa fa-external-link"></i></span>.</p>
+<h1 id="3-Hardware-Interface"><a href="#3-Hardware-Interface" class="headerlink" title="3.Hardware Interface"></a>3.Hardware Interface</h1><p>Hardware Interface是controller和RobotHw沟通的接口，基本上和controllers的种类是对应的，同样可以自己创建需要的接口，可以参考：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Jvcy1jb250cm9scy9yb3NfY29udHJvbC93aWtpL2hhcmR3YXJlX2ludGVyZmFjZQ==" title="https://github.com/ros-controls/ros_control/wiki/hardware_interface">https://github.com/ros-controls/ros_control/wiki/hardware_interface<i class="fa fa-external-link"></i></span>.</p>
+<ol>
+<li>Joint Command Interfaces<ul>
+<li>Effort Joint Interface</li>
+<li>Velocity Joint Interface</li>
+<li>Position Joint Interface</li>
+</ul>
+</li>
+<li>Joint State Interfaces</li>
+<li>Actuator State Interfaces</li>
+<li>Actuator Command Interfaces<ul>
+<li>Effort Actuator Interface</li>
+<li>Velocity Actuator Interface</li>
+<li>Position Actuator Interface</li>
+</ul>
+</li>
+<li>Force-torque sensor Interface</li>
+<li>IMU sensor Interface</li>
+</ol>
+<h1 id="4-Transmissions"><a href="#4-Transmissions" class="headerlink" title="4. Transmissions"></a>4. Transmissions</h1><p>Transmissions就是机器人的传动系统，机器人每个需要运动的关节都需要配置相应的Transmission，可以通过代码完成<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Jvcy1jb250cm9scy9yb3NfY29udHJvbC93aWtpL3RyYW5zbWlzc2lvbl9pbnRlcmZhY2U=" title="https://github.com/ros-controls/ros_control/wiki/transmission_interface">https://github.com/ros-controls/ros_control/wiki/transmission_interface<i class="fa fa-external-link"></i></span>，但大部分情况下，都会在URDF文件中直接添加<span class="exturl" data-url="aHR0cDovL3Jvcy5vcmcvd2lraS91cmRmL1hNTC9UcmFuc21pc3Npb24=" title="http://ros.org/wiki/urdf/XML/Transmission">http://ros.org/wiki/urdf/XML/Transmission<i class="fa fa-external-link"></i></span>。关于Transmissions的更多介绍可以参考<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bmJpYmVpL2FydGljbGUvZGV0YWlscy81MzI4Nzk3NQ==" title="https://blog.csdn.net/sunbibei/article/details/53287975">ROS Control之Transmission<i class="fa fa-external-link"></i></span></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuZ3V5dWVob21lLmNvbS84OTA=" title="https://www.guyuehome.com/890">古月居ROS探索总结（三十一）——ros_control<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NfY29udHJvbA==" title="http://wiki.ros.org/ros_control">ros_control官网<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL2dhemVib3NpbS5vcmcvdHV0b3JpYWxzLz90dXQ9cm9zX2NvbnRyb2w=" title="http://gazebosim.org/tutorials/?tut=ros_control">Gazebo: ros_control官网<i class="fa fa-external-link"></i></span></li>
+</ol>
+
+    </div>
+
+	<div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
+    
+</div>
+    
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐阅读</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/5258b4f6.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(五)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/54f3e38b.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(四)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/634af183.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(三)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/d0432caf.html" rel="bookmark">ROS仿真揭秘——七自由度机器人(二)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/92e37bf7.html" rel="bookmark">ROS节点之间基本的通讯方式介绍</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>Donate a cup of cola?</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cola & Library
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://colainlibrary.com/archives/cf0a378a.html" title="ros_control介绍">https://colainlibrary.com/archives/cf0a378a.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Library/" rel="tag"><i class="fa fa-tag"></i> Library</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" rel="tag"><i class="fa fa-tag"></i> 机器人</a>
+              <a href="/tags/ROS/" rel="tag"><i class="fa fa-tag"></i> ROS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/92e37bf7.html" rel="prev" title="ROS节点之间基本的通讯方式介绍">
+      <i class="fa fa-chevron-left"></i> ROS节点之间基本的通讯方式介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/7f72b7cd.html" rel="next" title="ROS仿真揭秘——七自由度机器人(一)">
+      ROS仿真揭秘——七自由度机器人(一) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-ros-control%E6%A6%82%E8%BF%B0"><span class="nav-text">1.ros_control概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Controllers"><span class="nav-text">2. Controllers:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Hardware-Interface"><span class="nav-text">3.Hardware Interface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Transmissions"><span class="nav-text">4. Transmissions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cola & Library"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Cola & Library</p>
+  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">251k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:48</span>
+</div>
+
+
+<!-- 网站运行时间的设置 -->
+<div>
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+</div>
+
+<!-- 网站底部统计本站访问数量 -->
+<!--
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+    <span class="post-meta-divider">|</span>
+已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
+</div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+       	<i class="fa fa-"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        共观看 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+	
+</body>
+</html>

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
+  <meta name="baidu-site-verification" content="aHT7NgajBz">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://colainlibrary.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="介绍QT环境的安装和CMake的联合使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下QT环境的配置">
+<meta property="og:url" content="https://colainlibrary.com/archives/24574.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="介绍QT环境的安装和CMake的联合使用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/01.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/02.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/03.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/04.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/05.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/06.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/07.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/08.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/09.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/10.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/11.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/12.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/13.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/14.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/15.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/16.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20190716QT/08.png">
+<meta property="article:published_time" content="2019-07-11T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-01-29T13:57:52.000Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="Library">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="QT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://colainlibrary.com/images/20190716QT/01.png">
+
+<link rel="canonical" href="https://colainlibrary.com/archives/24574.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Linux下QT环境的配置 | Cola In Library</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cola In Library</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/24574.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Cola & Library">
+      <meta itemprop="description" content="Understand, don't memorize.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cola In Library">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Linux下QT环境的配置
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+			
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-11 11:00:00" itemprop="dateCreated datePublished" datetime="2019-07-11T11:00:00Z">2019-07-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">工科生的基本功</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/" itemprop="url" rel="index">
+                    <span itemprop="name">快乐码农</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/24574.html" class="post-meta-item leancloud_visitors" data-flag-title="Linux下QT环境的配置" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/24574.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/24574.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+            <div class="post-description">介绍QT环境的安装和CMake的联合使用。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>开发环境：Ubuntu16.04 LTS、 QT Creator 5.8。 </p>
+</blockquote>
+<span id="more"></span>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>QT Creator是一款可以用来编写界面的IDE，而QT则是库。本文旨在说明QT Creator 5.8的安装方法，以及用cmake来编译创建的QT工程。用cmake的原因是，当开发的<br>程序是包含了大量的第三方库时，QT自带的qmake并不实用，还是跨平台编译工具cmake好用。</p>
+<h1 id="QT-Creator-5-8-及其他库的安装"><a href="#QT-Creator-5-8-及其他库的安装" class="headerlink" title="QT Creator 5.8 及其他库的安装"></a>QT Creator 5.8 及其他库的安装</h1><h2 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h2><p>不知道为啥QT官方的安装过程整的很麻烦，需要用户注册，嗯，注册完还不能直接下载，各(zhen)种(ma)绕(fan)。下载QT的安装包可以从<span class="exturl" data-url="aHR0cDovL2Rvd25sb2FkLnF0LmlvLw==" title="http://download.qt.io/">QT镜像下载<i class="fa fa-external-link"></i></span>。下面直接给出下载过程，关于整个下载页面的说明，请参考<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA5MDQyNy9hcnRpY2xlL2RldGFpbHMvODM4Mjc2Nzg=" title="https://blog.csdn.net/weixin_38090427/article/details/83827678">Qt Creator的下载和安装<i class="fa fa-external-link"></i></span>。</p>
+<p>打开网页后，依次点击<code>archive/</code> -&gt; <code>qt/</code> -&gt; <code>5.8/</code> -&gt; <code>qt-opensource-linux-x64-5.8.0.run</code>，下载安装包。</p>
+<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><p>在Terminal中，打开安装包存放路径，执行下列语句进行安装。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x qt-opensource-linux-x64<span class="number">-5.8</span><span class="number">.0</span>.run</span><br><span class="line">./qt-opensource-linux-x64<span class="number">-5.8</span><span class="number">.0</span>.run</span><br></pre></td></tr></table></figure>
+<p>执行完上述语句后，会弹出QT Creator的安装界面，如下图。<br><img src="/images/20190716QT/01.png" alt="01.png"></p>
+<p>点击Next，在下面的输入登录信息点击Skip即可。<br><img src="/images/20190716QT/02.png" alt="02.png"></p>
+<p>继续点击Next。<br><img src="/images/20190716QT/03.png" alt="03.png"></p>
+<p>在下面的页面中，选择自己要安装的位置，再点Next。<br><img src="/images/20190716QT/04.png" alt="04.png"></p>
+<p>在下面的页面中，默认是不安装<code>Sources</code>的，由于笔者第一次使用，不明白这里不安装会有什么问题，故而选择了安装。<br><img src="/images/20190716QT/05.png" alt="05.png"></p>
+<p>同意协议。<br><img src="/images/20190716QT/06.png" alt="06.png"></p>
+<p>在下面的页面中，点击Install，开始安装，等待安装完成即可。<br><img src="/images/20190716QT/07.png" alt="07.png"></p>
+<h2 id="其他库的安装"><a href="#其他库的安装" class="headerlink" title="其他库的安装"></a>其他库的安装</h2><p>以上过程只是安装了QT Creator 5.8，为了能正常使用，还需要安装一些其他的库，依次执行下列语句即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install g++</span><br><span class="line">sudo apt-get install libx11-dev libxext-dev libxtst-dev</span><br><span class="line">sudo apt-get install libgl1-mesa-dev</span><br><span class="line">sudo apt-get install build-essential</span><br><span class="line">sudo apt-get install libqt4-dev</span><br><span class="line">sudo apt-get install git build-essential cmake qt5-<span class="keyword">default</span> qtscript5-dev libssl-dev qttools5-dev qttools5-dev-tools qtmultimedia5-dev libqt5svg5-dev libqt5webkit5-dev libsdl2-dev libasound2 libxmu-dev libxi-dev freeglut3-dev libasound2-dev libjack-jackd2-dev libxrandr-dev libqt5xmlpatterns5-dev libqt5xmlpatterns5 libqt5xmlpatterns5-<span class="keyword">private</span>-dev</span><br></pre></td></tr></table></figure>
+<p>说明：上述的命令是通过参考一些帖子得来的，前5条命令笔者并不知道是否为必须，最后一条命令是必须要安装的。事实上，最后一条是包含了前面部分的库的。</p>
+<h1 id="HelloWorld案例介绍"><a href="#HelloWorld案例介绍" class="headerlink" title="HelloWorld案例介绍"></a>HelloWorld案例介绍</h1><p>本节介绍使用QT来创建一个例子HelloWorld，首先使用QT Creator来编写程序，弹出如下的页面，再介绍添加cmake来实现同样的功能。<br><img src="/images/20190716QT/08.png" alt="08.png"></p>
+<h2 id="QT-Creator的创建过程"><a href="#QT-Creator的创建过程" class="headerlink" title="QT Creator的创建过程"></a>QT Creator的创建过程</h2><h3 id="工程的创建"><a href="#工程的创建" class="headerlink" title="工程的创建"></a>工程的创建</h3><p>打开QT Creator，创建一个新的工程，选择相应的存放路径。如下图所示。<br><img src="/images/20190716QT/09.png" alt="09.png"><br><img src="/images/20190716QT/10.png" alt="10.png"><br><img src="/images/20190716QT/11.png" alt="11.png"></p>
+<p>选择默认的Kits。<br><img src="/images/20190716QT/12.png" alt="12.png"></p>
+<p>在<code>Class Information</code>中的<code>Base Class</code>中选择<code>QWidget</code>，如下图所示。<br><img src="/images/20190716QT/13.png" alt="13.png"></p>
+<p>点击<code>Finish</code>完成工程创建。<br><img src="/images/20190716QT/14.png" alt="14.png"></p>
+<p>创建完工程后，QT Creator中的目录如下：<br><img src="/images/20190716QT/15.png" alt="15.png"></p>
+<h3 id="程序的编写"><a href="#程序的编写" class="headerlink" title="程序的编写"></a>程序的编写</h3><p>在上图中，<code>widget.ui</code>是整个的显示页面程序，<code>widget.cpp</code>是页面程序中的处理方法，<code>main.cpp</code>包含了主函数。</p>
+<p>双击<code>widget.ui</code>，打开如下界面，找到<code>Display Widgets</code>下的<code>Label</code>，用鼠标左键按住拖动至右面的框中，将显示文本修改为“Hello QT and CMAKE!”。</p>
+<p>双击<code>widget.cpp</code>，修改程序如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;widget.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ui_widget.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">Widget::<span class="built_in">Widget</span>(QWidget *parent) :</span><br><span class="line">    <span class="built_in">QWidget</span>(parent),</span><br><span class="line">    <span class="built_in">ui</span>(<span class="keyword">new</span> Ui::Widget)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;<span class="built_in">setupUi</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//窗体标题</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;<span class="built_in">setWindowTitle</span>(<span class="string">&quot;Qt5.1 窗体应用&quot;</span>);</span><br><span class="line">    <span class="comment">//窗体 ICO 图片,如图不起别名,后缀直接写图片全名。</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;<span class="built_in">setWindowIcon</span>(<span class="built_in">QIcon</span>(<span class="string">&quot;:/new/prefix1/ico.png&quot;</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget::~<span class="built_in">Widget</span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">delete</span> ui;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>点击上图中左下角的第一个绿色三角，即可运行程序。至此，使用QT Creator创建了第一个界面程序。</p>
+<h3 id="使用cmake对程序进行编译"><a href="#使用cmake对程序进行编译" class="headerlink" title="使用cmake对程序进行编译"></a>使用cmake对程序进行编译</h3><p>在HelloWorld工程中右键，添加新文件，选择<code>General</code> -&gt; <code>Empty File</code>，命名为<code>CMakeLists.txt</code>，如图所示。<br><img src="/images/20190716QT/16.png" alt="16.png"></p>
+<p>并在<code>CMakeLists.txt</code>中添加如下内容：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">2.8</span><span class="number">.11</span> FATAL_ERROR)</span><br><span class="line"><span class="built_in">project</span>(QtHelloWorld)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_INCLUDE_CURRENT_DIR ON)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_AUTOMOC ON)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_AUTOUIC ON)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_AUTORCC ON)</span><br><span class="line"></span><br><span class="line"><span class="built_in">find_package</span>(Qt5 REQUIRED Widgets)</span><br><span class="line"> <span class="built_in">qt5_wrap_cpp</span>( MOC widget.h)</span><br><span class="line"><span class="built_in">qt5_wrap_ui</span>( UIC widget.ui)</span><br><span class="line"><span class="built_in">add_executable</span>(QtHelloWorld main.cpp widget.cpp widget.h widget.ui $&#123;RESOURCE_DIR&#125;)</span><br><span class="line"><span class="built_in">target_link_libraries</span>(QtHelloWorld Qt5::Widgets)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>接下来尝试使用cmake对工程进行编译。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd 工程所在目录</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">make -j2</span><br><span class="line">./QtHelloWorld</span><br></pre></td></tr></table></figure>
+<h1 id="程序运行结果"><a href="#程序运行结果" class="headerlink" title="程序运行结果"></a>程序运行结果</h1><p><img src="/images/20190716QT/08.png" alt="08.png"></p>
+<p>至此，完成了通过QT Creator创建工程并通过IDE直接运行或者使用cmake来编译运行工程的示例。</p>
+
+    </div>
+
+	<div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
+    
+</div>
+    
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐阅读</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/30969.html" rel="bookmark">C++中作用域符号的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/56535.html" rel="bookmark">Linux下OpenCV库的安装</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/10600.html" rel="bookmark">Linux下共享内存的使用方法</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/22984.html" rel="bookmark">C++中配置文件的读取</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/20080.html" rel="bookmark">C++中vector的用法</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>Donate a cup of cola?</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cola & Library
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://colainlibrary.com/archives/24574.html" title="Linux下QT环境的配置">https://colainlibrary.com/archives/24574.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Library/" rel="tag"><i class="fa fa-tag"></i> Library</a>
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
+              <a href="/tags/QT/" rel="tag"><i class="fa fa-tag"></i> QT</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/22984.html" rel="prev" title="C++中配置文件的读取">
+      <i class="fa fa-chevron-left"></i> C++中配置文件的读取
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/45371.html" rel="next" title="Linux下boost库的安装">
+      Linux下boost库的安装 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QT-Creator-5-8-%E5%8F%8A%E5%85%B6%E4%BB%96%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-text">QT Creator 5.8 及其他库的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-text">下载安装包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="nav-text">安装过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-text">其他库的安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HelloWorld%E6%A1%88%E4%BE%8B%E4%BB%8B%E7%BB%8D"><span class="nav-text">HelloWorld案例介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#QT-Creator%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="nav-text">QT Creator的创建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-text">工程的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BC%96%E5%86%99"><span class="nav-text">程序的编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8cmake%E5%AF%B9%E7%A8%8B%E5%BA%8F%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%AF%91"><span class="nav-text">使用cmake对程序进行编译</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-text">程序运行结果</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cola & Library"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Cola & Library</p>
+  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">251k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:48</span>
+</div>
+
+
+<!-- 网站运行时间的设置 -->
+<div>
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+</div>
+
+<!-- 网站底部统计本站访问数量 -->
+<!--
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+    <span class="post-meta-divider">|</span>
+已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
+</div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+       	<i class="fa fa-"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        共观看 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+	
+</body>
+</html>

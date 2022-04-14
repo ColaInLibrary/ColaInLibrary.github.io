@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
+  <meta name="baidu-site-verification" content="aHT7NgajBz">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://colainlibrary.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="记录利用 Seaborn 中关于类别变量的分析方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Seaborn绘图——catplot 类别变量的分析">
+<meta property="og:url" content="https://colainlibrary.com/archives/17259b03.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="记录利用 Seaborn 中关于类别变量的分析方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-1.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-2.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-2-1.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-3.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-4.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-5.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-6.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-7.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-8.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-9.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-10.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-11.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-12.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-13.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-14.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-15.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-16.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-17.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-18.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-19.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-20.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-21.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-22.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220406/6-23.png">
+<meta property="article:published_time" content="2022-04-06T21:00:00.000Z">
+<meta property="article:modified_time" content="2022-04-06T14:45:18.000Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://colainlibrary.com/images/20220406/6-1.png">
+
+<link rel="canonical" href="https://colainlibrary.com/archives/17259b03.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Seaborn绘图——catplot 类别变量的分析 | Cola In Library</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cola In Library</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/17259b03.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Cola & Library">
+      <meta itemprop="description" content="Understand, don't memorize.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cola In Library">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Seaborn绘图——catplot 类别变量的分析
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+			
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-06 21:00:00" itemprop="dateCreated datePublished" datetime="2022-04-06T21:00:00Z">2022-04-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">工科生的基本功</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94seaborn%E7%BB%98%E5%9B%BE/" itemprop="url" rel="index">
+                    <span itemprop="name">专栏——seaborn绘图</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/17259b03.html" class="post-meta-item leancloud_visitors" data-flag-title="Seaborn绘图——catplot 类别变量的分析" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/17259b03.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/17259b03.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>记录利用 Seaborn 中关于类别变量的分析方法。<br><span id="more"></span></p>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>因为需要用到seaborn相关的绘图工具，因此记录一下学习笔记，方便后续自己查阅。<br>前期代码：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">tip_df = sns.load_dataset(<span class="string">&quot;tips&quot;</span>)</span><br><span class="line">penguin_df = sns.load_dataset(<span class="string">&quot;penguins&quot;</span>)</span><br><span class="line">diamond_df = sns.load_dataset(<span class="string">&quot;diamonds&quot;</span>)</span><br><span class="line">car_df = sns.load_dataset(<span class="string">&quot;car_crashes&quot;</span>)</span><br></pre></td></tr></table></figure></p>
+<h1 id="2-catplot-绘制类别变量"><a href="#2-catplot-绘制类别变量" class="headerlink" title="2 catplot() 绘制类别变量"></a>2 catplot() 绘制类别变量</h1><h2 id="2-1-类别变量的分布"><a href="#2-1-类别变量的分布" class="headerlink" title="2.1 类别变量的分布"></a>2.1 类别变量的分布</h2><p>绘制类别变量的分布可以用countplot() 或者 histplot() 两种函数。histplot() 在专栏的前述文章已经介绍过。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.catplot(data=tip_df, x=<span class="string">&quot;time&quot;</span>, kind=<span class="string">&quot;count&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure><br><img src="/images/20220406/6-1.png" alt="01"></p>
+<h2 id="2-2-不同类别中数值变量的均值、中值估计"><a href="#2-2-不同类别中数值变量的均值、中值估计" class="headerlink" title="2.2 不同类别中数值变量的均值、中值估计"></a>2.2 不同类别中数值变量的均值、中值估计</h2><p>barplot, pointplot<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绘制数值变量的中值估计，分别为柱状图或者点图，estimator默认是均值</span></span><br><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;bar&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;point&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;bar&quot;</span>, estimator=np.median)</span><br><span class="line">plt.show()</span><br><span class="line"><span class="comment"># 再加入类别</span></span><br><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;point&quot;</span>, hue=<span class="string">&quot;island&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure><br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/20220406/6-2.png" height = "400" alt="box-x" align=center /></div><div class="group-picture-column" style="width: 50%;"><img src="/images/20220406/6-2-1.png" height = "400" alt="box-y" align=center/></div></div></div></div><br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/20220406/6-3.png" height = "400" alt="box-x" align=center /></div><div class="group-picture-column" style="width: 50%;"><img src="/images/20220406/6-4.png" height = "400" alt="box-y" align=center/></div></div></div></div></p>
+<h2 id="2-3-catplot的FacetGrid特性"><a href="#2-3-catplot的FacetGrid特性" class="headerlink" title="2.3 catplot的FacetGrid特性"></a>2.3 catplot的FacetGrid特性</h2><p>不同人数对应均值的估计。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.catplot(data=tip_df, x=<span class="string">&quot;time&quot;</span>, y=<span class="string">&quot;tip&quot;</span>, kind=<span class="string">&quot;bar&quot;</span>, col=<span class="string">&quot;size&quot;</span>, col_wrap=<span class="number">3</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure><br><img src="/images/20220406/6-5.png" alt="5"></p>
+<h2 id="2-4-boxplot和boxenplot"><a href="#2-4-boxplot和boxenplot" class="headerlink" title="2.4 boxplot和boxenplot"></a>2.4 boxplot和boxenplot</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;box&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">sns.catplot(data=diamond_df, x=<span class="string">&quot;clarity&quot;</span>, y=<span class="string">&quot;price&quot;</span>, kind=<span class="string">&quot;box&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"><span class="comment"># boxen 适合大数据集，会逐级绘制</span></span><br><span class="line">sns.catplot(data=diamond_df, x=<span class="string">&quot;clarity&quot;</span>, y=<span class="string">&quot;price&quot;</span>, kind=<span class="string">&quot;boxen&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-6.png" height = "400" alt="box-x" align=center /></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-7.png" height = "400" alt="box-y" align=center/></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-8.png" height = "400" alt="box-y" align=center/></div></div></div></div>
+<p>对比上图中的后两幅图，可以看出用 boxenplot 会使得数据集中的异常值更少。</p>
+<h2 id="2-5-带状图、小提琴图"><a href="#2-5-带状图、小提琴图" class="headerlink" title="2.5 带状图、小提琴图"></a>2.5 带状图、小提琴图</h2><p>stripplot, swarmplot, violinplot 用带状图、小提琴图来对不同类别中数值变量的分布进行刻画。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;strip&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;strip&quot;</span>, jitter=<span class="literal">False</span>)</span><br><span class="line">plt.show()</span><br><span class="line"><span class="comment"># jitter 在0~1之间，False的时候不会散开</span></span><br><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;strip&quot;</span>, jitter=<span class="number">0.3</span>)</span><br><span class="line">plt.show()</span><br><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;swarm&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;violin&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"><span class="comment"># 第一个用catplot，第二个用swarmplot，可以将它们绘制在一起，并指定大小为3的白色圆点</span></span><br><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, kind=<span class="string">&quot;violin&quot;</span>)</span><br><span class="line">sns.swarmplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, color=<span class="string">&quot;w&quot;</span>, size=<span class="number">3</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure><br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-9.png" height = "400" alt="box-x" align=center /></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-10.png" height = "400" alt="box-y" align=center/></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-11.png" height = "400" alt="box-y" align=center/></div></div></div></div><br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-12.png" height = "400" alt="box-x" align=center /></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-13.png" height = "400" alt="box-y" align=center/></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-14.png" height = "400" alt="box-y" align=center/></div></div></div></div></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, hue=<span class="string">&quot;sex&quot;</span>, kind=<span class="string">&quot;violin&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"><span class="comment"># 将上图两边各取一半合并绘制</span></span><br><span class="line">sns.catplot(data=penguin_df, x=<span class="string">&quot;species&quot;</span>, y=<span class="string">&quot;bill_length_mm&quot;</span>, hue=<span class="string">&quot;sex&quot;</span>, kind=<span class="string">&quot;violin&quot;</span>, split=<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/20220406/6-15.png" height = "400" alt="box-x" align=center /></div><div class="group-picture-column" style="width: 50%;"><img src="/images/20220406/6-16.png" height = "400" alt="box-y" align=center/></div></div></div></div>
+<h1 id="3-FacetGrid，PairGrid-中自定义绘制函数"><a href="#3-FacetGrid，PairGrid-中自定义绘制函数" class="headerlink" title="3 FacetGrid，PairGrid 中自定义绘制函数"></a>3 FacetGrid，PairGrid 中自定义绘制函数</h1><p>FacetGrid 是将数据集中的数据依据各类别变量划分为不同的子集，再在<strong>子集</strong>上进行分析。</p>
+<p>PairGrid 是在<strong>全部数据集</strong>上将所有的数值变量成对分析。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个空白的FacetGrid</span></span><br><span class="line">g = sns.FacetGrid(data=tip_df, row=<span class="string">&quot;time&quot;</span>, col=<span class="string">&quot;smoker&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"><span class="comment"># 依据smoker和time划分，并绘制其kde函数，row和col必须是类别变量</span></span><br><span class="line">g = sns.FacetGrid(data=tip_df, row=<span class="string">&quot;smoker&quot;</span>, col=<span class="string">&quot;time&quot;</span>)</span><br><span class="line">g.<span class="built_in">map</span>(sns.kdeplot, <span class="string">&quot;tip&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">g = sns.FacetGrid(data=tip_df, row=<span class="string">&quot;time&quot;</span>, col=<span class="string">&quot;smoker&quot;</span>)</span><br><span class="line"><span class="comment"># 错误：g.map(sns.scatterplot,data=tip_df,x=&quot;total_bill&quot;,y=&quot;tip&quot;)</span></span><br><span class="line">g.<span class="built_in">map</span>(sns.scatterplot, <span class="string">&quot;total_bill&quot;</span>, <span class="string">&quot;tip&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-17.png" height = "400" alt="box-x" align=center /></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-18.png" height = "400" alt="box-y" align=center/></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/20220406/6-19.png" height = "400" alt="box-y" align=center/></div></div></div></div>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">g = sns.PairGrid(data=penguin_df)  <span class="comment"># 创建一个空白的对象</span></span><br><span class="line">plt.show()</span><br><span class="line">g = sns.PairGrid(data=penguin_df, hue=<span class="string">&quot;species&quot;</span>)</span><br><span class="line">g.<span class="built_in">map</span>(sns.scatterplot)</span><br><span class="line">plt.show()</span><br><span class="line">g = sns.PairGrid(data=penguin_df, hue=<span class="string">&quot;species&quot;</span>)</span><br><span class="line">g.map_diag(sns.kdeplot)</span><br><span class="line">g.map_offdiag(sns.scatterplot)  <span class="comment"># 非对角线是散点图</span></span><br><span class="line">plt.show()</span><br><span class="line">g = sns.PairGrid(data=penguin_df)</span><br><span class="line">g.map_diag(sns.histplot)  <span class="comment"># 对角线上是直方图</span></span><br><span class="line">g.map_upper(sns.kdeplot)  <span class="comment"># 上三角是kde</span></span><br><span class="line">g.map_lower(sns.scatterplot)  <span class="comment"># 下三角是散点图</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/20220406/6-20.png" alt="20"><br><img src="/images/20220406/6-21.png" alt="20"><br><img src="/images/20220406/6-22.png" alt="20"><br><img src="/images/20220406/6-23.png" alt="20"></p>
+
+    </div>
+
+	<div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
+    
+</div>
+    
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐阅读</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/7cd1c910.html" rel="bookmark">用seaborn/matplot绘制误差带阴影图</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/feaf6c34.html" rel="bookmark">Seaborn绘图——绘制两个变量的联合分布</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/1bc7b37e.html" rel="bookmark">Seaborn绘图——lmplot(linear model plot)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/3617e253.html" rel="bookmark">Seaborn绘图——relplot(relative plot)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/b4c0319e.html" rel="bookmark">Seaborn绘图——displot(distribution plot)</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>Donate a cup of cola?</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cola & Library
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://colainlibrary.com/archives/17259b03.html" title="Seaborn绘图——catplot 类别变量的分析">https://colainlibrary.com/archives/17259b03.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/feaf6c34.html" rel="prev" title="Seaborn绘图——绘制两个变量的联合分布">
+      <i class="fa fa-chevron-left"></i> Seaborn绘图——绘制两个变量的联合分布
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/7cd1c910.html" rel="next" title="用seaborn/matplot绘制误差带阴影图">
+      用seaborn/matplot绘制误差带阴影图 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%89%8D%E8%A8%80"><span class="nav-text">1 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-catplot-%E7%BB%98%E5%88%B6%E7%B1%BB%E5%88%AB%E5%8F%98%E9%87%8F"><span class="nav-text">2 catplot() 绘制类别变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E7%B1%BB%E5%88%AB%E5%8F%98%E9%87%8F%E7%9A%84%E5%88%86%E5%B8%83"><span class="nav-text">2.1 类别变量的分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%88%AB%E4%B8%AD%E6%95%B0%E5%80%BC%E5%8F%98%E9%87%8F%E7%9A%84%E5%9D%87%E5%80%BC%E3%80%81%E4%B8%AD%E5%80%BC%E4%BC%B0%E8%AE%A1"><span class="nav-text">2.2 不同类别中数值变量的均值、中值估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-catplot%E7%9A%84FacetGrid%E7%89%B9%E6%80%A7"><span class="nav-text">2.3 catplot的FacetGrid特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-boxplot%E5%92%8Cboxenplot"><span class="nav-text">2.4 boxplot和boxenplot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-%E5%B8%A6%E7%8A%B6%E5%9B%BE%E3%80%81%E5%B0%8F%E6%8F%90%E7%90%B4%E5%9B%BE"><span class="nav-text">2.5 带状图、小提琴图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-FacetGrid%EF%BC%8CPairGrid-%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%98%E5%88%B6%E5%87%BD%E6%95%B0"><span class="nav-text">3 FacetGrid，PairGrid 中自定义绘制函数</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cola & Library"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Cola & Library</p>
+  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">251k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:48</span>
+</div>
+
+
+<!-- 网站运行时间的设置 -->
+<div>
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+</div>
+
+<!-- 网站底部统计本站访问数量 -->
+<!--
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+    <span class="post-meta-divider">|</span>
+已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
+</div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+       	<i class="fa fa-"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        共观看 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+	
+</body>
+</html>

@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
+  <meta name="baidu-site-verification" content="aHT7NgajBz">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://colainlibrary.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="介绍Windows环境下使用VS Code加LaTeX的配置方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="科研利器—— VS Code + LaTeX">
+<meta property="og:url" content="https://colainlibrary.com/archives/f7fcf26c.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="介绍Windows环境下使用VS Code加LaTeX的配置方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/00.jpeg">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/01.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/02.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/02-1.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/02-2.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/02-3.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/02-4.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/03.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/04.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/05.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/17.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/07.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/08-0.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/08.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/18.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/09.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/10.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/12.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/13.gif">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/16.gif">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/14.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200529/15.png">
+<meta property="article:published_time" content="2020-05-29T12:35:23.000Z">
+<meta property="article:modified_time" content="2020-06-11T13:14:38.000Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="Library">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://colainlibrary.com/images/20200529/00.jpeg">
+
+<link rel="canonical" href="https://colainlibrary.com/archives/f7fcf26c.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>科研利器—— VS Code + LaTeX | Cola In Library</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cola In Library</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/f7fcf26c.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Cola & Library">
+      <meta itemprop="description" content="Understand, don't memorize.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cola In Library">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          科研利器—— VS Code + LaTeX
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+			
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-29 12:35:23" itemprop="dateCreated datePublished" datetime="2020-05-29T12:35:23Z">2020-05-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">工科生的基本功</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">软件技术</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/f7fcf26c.html" class="post-meta-item leancloud_visitors" data-flag-title="科研利器—— VS Code + LaTeX" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/f7fcf26c.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/f7fcf26c.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src=" /images/20200529/00.jpeg" width=50% /><br>介绍Windows环境下使用VS Code加LaTeX的配置方法。</p>
+<span id="more"></span>
+<h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>对于要写论文的科研人员来说，LaTeX是必不可少的神兵利器，但是LaTeX自带的TeX编辑器界面不够美观，之前用过TeX Studio，个人感觉还比较好用。但对于已经深陷Emacs快捷键不能自拔的我来说，当然还是VS Code更香！本文所用软件环境为：Windows + VS Code + LaTeX Workshop8.9.0 + TeXLive2020 + SumatraPDF。</p>
+<p>哦，我还想说一点，对于一个新的VS Code用户来讲，如何打开VS Code的配置文件(settings.json)都是一个问题，好不容易打开了，照着网上好多的教程一顿操作，发现并不能用。（别问我怎么知道的，说多了都是泪…）Anyway，在这里，你可以学到最详细的配置方法。</p>
+<h1 id="1-软件安装"><a href="#1-软件安装" class="headerlink" title="1 软件安装"></a>1 软件安装</h1><h2 id="1-1-VS-Code安装"><a href="#1-1-VS-Code安装" class="headerlink" title="1.1 VS Code安装"></a>1.1 VS Code安装</h2><p>这个直接从官网上下载就好，比较简单，就不介绍啦~</p>
+<h2 id="1-2-TeXLive2020安装"><a href="#1-2-TeXLive2020安装" class="headerlink" title="1.2 TeXLive2020安装"></a>1.2 TeXLive2020安装</h2><h3 id="1-2-1-下载"><a href="#1-2-1-下载" class="headerlink" title="1.2.1 下载"></a>1.2.1 下载</h3><p>如果说你还不明白CTeX、LaTeX、TeXLive之间的关系，那我悄悄地告诉你，你装TeXLive就好了。如果你还想了解它们之间的关系，知乎上有大量的入门介绍，我就不再废话了。TeXLive已经更新到了2020版，为了高速下载TeXLive，可以从清华的镜像源下载，网址是<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLnR1bmEudHNpbmdodWEuZWR1LmNuL0NUQU4vc3lzdGVtcy90ZXhsaXZlL0ltYWdlcy8=" title="https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/">https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/<i class="fa fa-external-link"></i></span>。点进去之后下载下图中红色框圈出的版本即可。<br><img src="/images/20200529/01.png" alt="01"></p>
+<h3 id="1-2-2-安装"><a href="#1-2-2-安装" class="headerlink" title="1.2.2 安装"></a>1.2.2 安装</h3><p>TeXLive2020的安装，相较于我曾经用的旧版本来说，可以说是非常简单了。将安装包解压之后，双击下图中标出的<strong>install-tl-windows</strong>，一路点击<strong>下一步</strong>即可。<br><img src="/images/20200529/02.png" alt="02"></p>
+<h2 id="1-3-LaTeX-Workshop插件安装"><a href="#1-3-LaTeX-Workshop插件安装" class="headerlink" title="1.3 LaTeX Workshop插件安装"></a>1.3 LaTeX Workshop插件安装</h2><p>安装好TeXLive后，在VS Code的插件商店中搜索<em>latex</em>，安装出现的第一个插件<strong>LaTeX Workshop</strong>，当前版本是8.9.0。这个插件的作用是将<code>.tex</code>格式的文件语法高亮，并通过它来沟通LaTeX，完成相应的编译、预览等工作。</p>
+<h2 id="1-4-SumatraPDF安装"><a href="#1-4-SumatraPDF安装" class="headerlink" title="1.4 SumatraPDF安装"></a>1.4 SumatraPDF安装</h2><h3 id="1-4-1-介绍"><a href="#1-4-1-介绍" class="headerlink" title="1.4.1 介绍"></a>1.4.1 介绍</h3><p>SumatraPDF是一个非常迷你的PDF阅读器，安装包只有大约9M的大小。我们用它来干嘛呢？当然是预览LaTeX生产的PDF咯。为什么不用自带的呢？有两点原因：第一，因为笔记本屏幕小，用自带的，源码和PDF预览就会各占一半屏幕，无论调节哪个，都会让另一个显示不全；第二，使用这个小的PDF阅读器，可以实现从<code>.tex</code>文件中的光标跳转到PDF文件中，从PDF文件的位置双击鼠标回跳到源码处。</p>
+<h3 id="1-4-2-下载与安装"><a href="#1-4-2-下载与安装" class="headerlink" title="1.4.2 下载与安装"></a>1.4.2 下载与安装</h3><p>SumatraPDF可以从<span class="exturl" data-url="aHR0cHM6Ly93d3cuc3VtYXRyYXBkZnJlYWRlci5vcmcvZG93bmxvYWRhZnRlci5odG1s" title="https://www.sumatrapdfreader.org/downloadafter.html">官网<i class="fa fa-external-link"></i></span>下载，安装方式也很简单，不再赘述。</p>
+<h1 id="2-VS-Code的设置方法"><a href="#2-VS-Code的设置方法" class="headerlink" title="2 VS Code的设置方法"></a>2 VS Code的设置方法</h1><h2 id="2-1-已踩过的坑"><a href="#2-1-已踩过的坑" class="headerlink" title="2.1 已踩过的坑"></a>2.1 已踩过的坑</h2><p>LaTeX Workshop就是沟通VS Code与LaTeX的桥梁，与其说是VS Code的设置，不如说是LaTeX workshop的设置方法。网上有很多配置方法，上来就让修改settings.json这个配置文件，对于新用户来讲，他哪知道如何打开这个文件。有的说，通过<code>Ctrl+Shift+P</code>可以在VS Code中搜索，但是搜索到后，打开的是<strong>default settings.json</strong>文件，这个文件是只读文件。如果你从电脑中搜索到<strong>settings.json</strong>这个文件打开，将相应的配置代码复制进去，我不知道你们是什么结果，反正我的是不能使用，因为复制进去之后都会有黄线警告。那么究竟如何才能正确配置呢？赏杯咖啡就告诉你啊~</p>
+<h2 id="2-2-VS-Code编辑-tex初尝试"><a href="#2-2-VS-Code编辑-tex初尝试" class="headerlink" title="2.2 VS Code编辑.tex初尝试"></a>2.2 VS Code编辑.tex初尝试</h2><p>安装好软件后，我们打开<span class="exturl" data-url="aHR0cHM6Ly93d3cuZWxzZXZpZXIuY29tL2F1dGhvcnMvYXV0aG9yLXNjaGVtYXMvbGF0ZXgtaW5zdHJ1Y3Rpb25z" title="https://www.elsevier.com/authors/author-schemas/latex-instructions">Elsevier的模板<i class="fa fa-external-link"></i></span>，打开<em>cas-dc-template.tex</em>文件，<code>.tex</code>格式的文件即Latex的源码文件。如下所示：<br><img src="/images/20200529/02-1.png" alt="02-1"><br>在上图中，可以看到侧边栏多了<strong>TEX</strong>图标，点开，如下：<br><img src="/images/20200529/02-2.png" alt="02-2"></p>
+<p>如果你已经跃跃欲试，那就点击<strong>Recipe:pdflatex→bibtex→pdflatex x2</strong>进行编译吧，编译完后，再点击<strong>View in VSCode tab</strong>就可以看到编译好的PDF了。<br><img src="/images/20200529/02-3.png" alt="02-3"></p>
+<blockquote>
+<p>Tip: 在PDF页面中Ctrl+单击可以跳转到源文件相应的位置哦~</p>
+</blockquote>
+<p>一般来讲，LaTeX装好后默认的编译方式是<strong>pdflatex</strong>，但是这种方式不能编译中文源码。对于中文源码，采用的是<strong>xelatex</strong>的编译方式。对于编译中文文档有两种方式，第一种：在中文源文件首行添加：<code>% !TEX program = xelatex</code>，如果有参考文献，可以再添加<code>% !BIB options = &quot;%DOCFILE%&quot;</code>。显然，这个操作不够智能，因此，我们第一步是，添加<strong>xelatex</strong>的编译方式(2.3节)。</p>
+<blockquote>
+<p>上述编译的方法来自<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phbWVzLVl1L0xhVGVYLVdvcmtzaG9wL3dpa2kvQ29tcGlsZSNsYXRleC1yZWNpcGU=" title="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">官方Compile解释<i class="fa fa-external-link"></i></span>.<br><img src="/images/20200529/02-4.png" alt="02-4"></p>
+</blockquote>
+<p>从上面VS Code中预览PDF可以看到，整块屏幕被三分天下，左边的编译之类的提示可以再点一下<code>TEX</code>关掉，但是tex文档和PDF预览两个同时存在，无论调节哪一个，小小的笔记本屏幕都无法同时满足二者清晰呈现。因此我们需要在外面链接一个PDF阅读器(2.4节)。</p>
+<h2 id="2-3-编译方式的配置"><a href="#2-3-编译方式的配置" class="headerlink" title="2.3 编译方式的配置"></a>2.3 编译方式的配置</h2><p>从VS Code中左下角的齿轮，打开设置。</p>
+<p><img src="/images/20200529/03.png" alt="03"></p>
+<p>在打开设置后的页面中，搜索<em>tool</em>，找到<strong>Latex-workshop&gt;Latex:Tools</strong>，如下图所示。<br><img src="/images/20200529/04.png" alt="04"></p>
+<p>点击上图中的<strong>在settings.json</strong>中编辑，打开后如下图所示。<br><img src="/images/20200529/05.png" alt="05"></p>
+<p>OK，恭喜一下自己吧，终于成功打开了正确的<strong>settings.json</strong>文件。你可以看到，上图中的<strong>latex-workshop.latex.tools</strong>是没有黄色波浪线提示警告的，完美！</p>
+<p>事实上，从网上看到的各位大佬的settings.json配置文件源码都是Latex Workshop中的一个个配置的组合。这里建议，你从VS Code的设置页面中搜索到他们配置源码前的配置项名称，如果下方有<strong>编辑settings.json</strong>的选项，点进去就可以进入配置文件。如果没有，直接在下方的输入一些字符或者添加一两项，然后再点到配置文件settings.json中，会发现，这个配置项的名称已经加载到了配置文件中，这时可以对照着网上的一些教程修改这个配置项中的内容，不建议将配置项的文件名称复制进去，这样会有警告，无法使配置生效。这才是<strong>打开settings.json的正确姿势</strong>。</p>
+<p>上图中红框的代码就是用来编译中文源码的工具，具体如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;xelatex&quot;</span>,</span><br><span class="line">    <span class="string">&quot;command&quot;</span>: <span class="string">&quot;xelatex&quot;</span>,</span><br><span class="line">    <span class="string">&quot;args&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;-synctex=1&quot;</span>,</span><br><span class="line">        <span class="string">&quot;-interaction=nonstopmode&quot;</span>,</span><br><span class="line">        <span class="string">&quot;-file-line-error&quot;</span>,</span><br><span class="line">        <span class="string">&quot;%DOCFILE%&quot;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<p>添加上xelatex工具后，再从设置中搜索<code>recipe</code>，再次进入settings.json，在<code>latex-workshop.latex.recipes</code>中你可以看到Latex Workshop默认的四种编译方式，在第一种编译方式前面添加如下代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;xelatex&quot;</span>,</span><br><span class="line">    <span class="string">&quot;tools&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;xelatex&quot;</span></span><br><span class="line">    ],</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;xelatex ➞ bibtex ➞ xelatex × 2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;tools&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;xelatex&quot;</span>,</span><br><span class="line">        <span class="string">&quot;bibtex&quot;</span>,</span><br><span class="line">        <span class="string">&quot;xelatex&quot;</span>,</span><br><span class="line">        <span class="string">&quot;xelatex&quot;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<p>效果如下图所示：<br><img src="/images/20200529/17.png" alt="17"></p>
+<blockquote>
+<p>说明1：上述代码添加了两种编译方式，name可以自己定义，第一种是直接用xelatex来编译一次，适用于没有参考文献的简短论文；第二种是包含参考文献编译在内的复杂编译，先编译一次，再编译一次参考文献(bibtex)，再编译两次，防止有时候编译没有完美完成（例如图注显示不全的情况）。<br>说明2：同理，你可以屏蔽相应的编译方式。</p>
+</blockquote>
+<p>添加上述代码并屏蔽前三种Recipe方式后，保存<strong>settings.json</strong>文件，重启VS Code，可以看到新的编译方式如下所示：<br><img src="/images/20200529/07.png" alt="07"></p>
+<h2 id="2-4-PDF阅读器的设置"><a href="#2-4-PDF阅读器的设置" class="headerlink" title="2.4 PDF阅读器的设置"></a>2.4 PDF阅读器的设置</h2><h3 id="2-4-1-关联外部PDF阅读器"><a href="#2-4-1-关联外部PDF阅读器" class="headerlink" title="2.4.1 关联外部PDF阅读器"></a>2.4.1 关联外部PDF阅读器</h3><p>在2.2节已经解释过为什么要用外置的PDF阅读器，接下来，我们介绍如何配置。</p>
+<p>在设置页面搜索<strong>viewer</strong>，找到<strong>Latex-workshop→View→Pdf：Viewer</strong>，将其设置为<strong>external</strong>，这样默认的预览的时候是外部的PDF阅读器。<br><img src="/images/20200529/08-0.png" alt="08-0"></p>
+<p>接下来关联外部的PDF阅读器。同样在设置页面搜索<strong>viewer</strong>，找到<strong>Latex-workshop→View→Pdf→External→Viewer:Command</strong>，将SumatraPDF.exe的安装路径填在下方的方框里。<br><img src="/images/20200529/08.png" alt="08"></p>
+<h3 id="2-4-2-前向搜索与反向搜索设置"><a href="#2-4-2-前向搜索与反向搜索设置" class="headerlink" title="2.4.2 前向搜索与反向搜索设置"></a>2.4.2 前向搜索与反向搜索设置</h3><p>前向搜索，即在tex文档中找到某句话后，可以直接跳转到PDF阅读器中相应的位置。反向搜索，即从PDF文件的位置跳转到源码处。<br>在设置页面搜索<strong>viewer</strong>，找到<strong>Latex-workshop→View→Pdf：Viewer: Args</strong>。<br><img src="/images/20200529/18.png" alt="18"></p>
+<p>随意添加一项后(不需要照上图添加完全)，可以在<strong>settings.json</strong>文件中观察到自动添加了这一配置项，然后复制如下代码中[ ]中的内容：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;latex-workshop.view.pdf.external.viewer.args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-forward-search&quot;</span>,</span><br><span class="line">    <span class="string">&quot;%TEX%&quot;</span>,</span><br><span class="line">    <span class="string">&quot;%LINE%&quot;</span>,</span><br><span class="line">    <span class="string">&quot;-reuse-instance&quot;</span>,</span><br><span class="line">    <span class="string">&quot;-inverse-search&quot;</span>,</span><br><span class="line">    <span class="string">&quot;\&quot;C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/Code.exe\&quot; \&quot;C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/resources/app/out/cli.js\&quot; -r -g \&quot;%f:%l\&quot;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;%PDF%&quot;</span>,</span><br><span class="line">],</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：只需复制[ ]中的内容，并且注意不要随便打乱顺序，记得修改路径。保存后回到设置页面的对应配置项，就会发现配置项下面已经修改为和上图一样的配置。</p>
+</blockquote>
+<p>在设置页面搜索<strong>Synctex</strong>，再从设置页面里找到<strong>Latex-workshop→View→Pdf→External→Synctex:Command</strong>，同样填入SumatraPDF.exe的路径。<br><img src="/images/20200529/09.png" alt="09"></p>
+<p>在设置页中找到<strong>Latex-workshop→View→Pdf→External→Synctex:Args</strong>。<br><img src="/images/20200529/10.png" alt="10"></p>
+<p>随意添加一项后(不需要照上图添加完全)，可以在<strong>settings.json</strong>文件中观察到自动添加了这一配置项，然后复制如下代码中[ ]中的内容：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//下面这一行不用复制，只是说明修改Synctex:Command后会自动加入这一行</span></span><br><span class="line"><span class="string">&quot;latex-workshop.view.pdf.external.synctex.command&quot;</span>: <span class="string">&quot;C:\\Users\\&lt;YourName&gt;\\AppData\\Local\\SumatraPDF\\SumatraPDF.exe&quot;</span>,</span><br><span class="line"><span class="comment">//下面一行不用复制，自动生成的</span></span><br><span class="line"><span class="string">&quot;latex-workshop.view.pdf.external.synctex.args&quot;</span>: [</span><br><span class="line">    <span class="comment">//将下面内容复制到你的settings.json中，并修改路径</span></span><br><span class="line">    <span class="string">&quot;-forward-search&quot;</span>,</span><br><span class="line">    <span class="string">&quot;%TEX%&quot;</span>,</span><br><span class="line">    <span class="string">&quot;%LINE%&quot;</span>,</span><br><span class="line">    <span class="string">&quot;-reuse-instance&quot;</span>,</span><br><span class="line">    <span class="string">&quot;-inverse-search&quot;</span>,</span><br><span class="line">    <span class="string">&quot;\&quot;C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/Code.exe\&quot; \&quot;C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/resources/app/out/cli.js\&quot; -r -g \&quot;%f:%l\&quot;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;%PDF%&quot;</span>,</span><br><span class="line"><span class="comment">//下面一行不用复制    </span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></p>
+<p>实现前向搜索的方式可为：</p>
+<ol>
+<li>在光标处，选择<strong>Navigate, select, and edit</strong>-&gt;<strong>SyncTeX from cursor</strong>，如下图。<br><img src="/images/20200529/12.png" alt="12"></li>
+<li>按下<code>Ctrl+Alt+J</code>，直接跳转至PDF对应的地方。</li>
+</ol>
+<p>前向搜索的效果如下所示。</p>
+<p><img src="/images/20200529/13.gif" alt="13"></p>
+<blockquote>
+<p>说明：为了演示效果，我才将VS Code和PDF阅读器各占一半屏幕，下同。</p>
+</blockquote>
+<p>在PDF中<strong>双击即可跳转到源码位置</strong>。反向搜索的效果如下所示：<br><img src="/images/20200529/16.gif" alt="16"></p>
+<!-- 上面的设置方法来自[官方解释](https://github.com/James-Yu/LaTeX-Workshop/wiki/View#latex-workshopsynctexpath).
+![11]( /images/20200529/11.png) -->
+<h3 id="2-4-3-反向搜索的PDF阅读器设置"><a href="#2-4-3-反向搜索的PDF阅读器设置" class="headerlink" title="2.4.3 反向搜索的PDF阅读器设置"></a>2.4.3 反向搜索的PDF阅读器设置</h3><p>如果上述方法不能从PDF跳转至tex文档，还可以尝试下面的方法：<br>在这里，我们需要设置的是<strong>SumatraPDF.exe</strong>。打开SumatraPDF.exe，找到设置-&gt;选项：<br><img src="/images/20200529/14.png" alt="14"></p>
+<p>点开后如下图所示：</p>
+<p><img src="/images/20200529/15.png" alt="15"></p>
+<p>在反向搜索设置里填入下方的<strong>一行超长代码</strong>（不是两行，注意和你自己的路径要对应好）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;\&quot;C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/Code.exe\&quot; \&quot;C:/Users/YourName/AppData/Local/Programs/Microsoft VS Code/resources/app/out/cli.js\&quot; -r -g \&quot;%f:%l\&quot;&quot;</span></span><br></pre></td></tr></table></figure><br><!-- "C:\Users\YourName\AppData\Local\Programs\Microsoft VS Code\Code.exe" "C:\Users\YourName\AppData\Local\Programs\Microsoft VS Code\resources\app\out\cli.js" -r -g "%f:%l"
+ --></p>
+<h1 id="3-部分快捷键"><a href="#3-部分快捷键" class="headerlink" title="3 部分快捷键"></a>3 部分快捷键</h1><p>Ctrl+Alt+X：显示LaTeX面板(左侧编译命令面板和文档大纲)。<br>Ctrl+Alt+C：清除辅助文件<br>Ctrl+Alt+V：查看编译的pdf文件(预览)<br>Ctrl+Alt+J：正向搜索</p>
+<h1 id="4-一点感悟"><a href="#4-一点感悟" class="headerlink" title="4 一点感悟"></a>4 一点感悟</h1><p>OK，到这里，本篇博客主体就结束了。有一个小的感受，新手找settings.json这个配置文件是真的难。直接把网上各位大佬的配置源码粘贴进来，总是有问题，这可能是由于软件版本更新后不太适用了。当然，我的这个教程也可能会过时，所以我都写明了软件版本。我认为，从设置页面里打开的settings.json或许可以直接从网上的各位大佬的配置文件源码中复制，有兴趣的可以多多尝试~</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phbWVzLVl1L0xhVGVYLVdvcmtzaG9wL3dpa2kvQ29tcGlsZSNsYXRleC1yZWNpcGU=" title="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">编译的官方解释<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phbWVzLVl1L0xhVGVYLVdvcmtzaG9wL3dpa2kvQ29tcGlsZSNsYXRleC1yZWNpcGU=" title="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">正向搜索的官方解释<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC85MDUyNjIxOA==" title="https://zhuanlan.zhihu.com/p/90526218">配置VScode编辑LaTeX及正反向搜索等设置<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMUpFNDExSzdpaj9mcm9tPXNlYXJjaCZhbXA7c2VpZD0xNDc5MzIxMzUwODY3Nzk0NTc1Nw==" title="https://www.bilibili.com/video/BV1JE411K7ij?from=search&amp;seid=14793213508677945757">一个直观的VS Code+Latex视频简介<i class="fa fa-external-link"></i></span></li>
+</ol>
+
+    </div>
+
+	<div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
+    
+</div>
+    
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐阅读</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/4c622d61.html" rel="bookmark">Windows修改按键的方法</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/56794.html" rel="bookmark">Win10下完美安装MathType的方法</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/22360.html" rel="bookmark">Win10下安装Linux双系统的方法</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/dc5dd3f8.html" rel="bookmark">Motive 软件使用方法</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/d5db4349.html" rel="bookmark">机器人阻抗控制</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>Donate a cup of cola?</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cola & Library
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://colainlibrary.com/archives/f7fcf26c.html" title="科研利器—— VS Code + LaTeX">https://colainlibrary.com/archives/f7fcf26c.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Library/" rel="tag"><i class="fa fa-tag"></i> Library</a>
+              <a href="/tags/Windows/" rel="tag"><i class="fa fa-tag"></i> Windows</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/4c622d61.html" rel="prev" title="Windows修改按键的方法">
+      <i class="fa fa-chevron-left"></i> Windows修改按键的方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/85e5f27f.html" rel="next" title="opencv_contrib的安装方法">
+      opencv_contrib的安装方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-%E5%89%8D%E8%A8%80"><span class="nav-text">0 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">1 软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-VS-Code%E5%AE%89%E8%A3%85"><span class="nav-text">1.1 VS Code安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-TeXLive2020%E5%AE%89%E8%A3%85"><span class="nav-text">1.2 TeXLive2020安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E4%B8%8B%E8%BD%BD"><span class="nav-text">1.2.1 下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%AE%89%E8%A3%85"><span class="nav-text">1.2.2 安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-LaTeX-Workshop%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">1.3 LaTeX Workshop插件安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-SumatraPDF%E5%AE%89%E8%A3%85"><span class="nav-text">1.4 SumatraPDF安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-%E4%BB%8B%E7%BB%8D"><span class="nav-text">1.4.1 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="nav-text">1.4.2 下载与安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-VS-Code%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-text">2 VS Code的设置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%B7%B2%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91"><span class="nav-text">2.1 已踩过的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-VS-Code%E7%BC%96%E8%BE%91-tex%E5%88%9D%E5%B0%9D%E8%AF%95"><span class="nav-text">2.2 VS Code编辑.tex初尝试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E7%BC%96%E8%AF%91%E6%96%B9%E5%BC%8F%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">2.3 编译方式的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-PDF%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="nav-text">2.4 PDF阅读器的设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-%E5%85%B3%E8%81%94%E5%A4%96%E9%83%A8PDF%E9%98%85%E8%AF%BB%E5%99%A8"><span class="nav-text">2.4.1 关联外部PDF阅读器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-%E5%89%8D%E5%90%91%E6%90%9C%E7%B4%A2%E4%B8%8E%E5%8F%8D%E5%90%91%E6%90%9C%E7%B4%A2%E8%AE%BE%E7%BD%AE"><span class="nav-text">2.4.2 前向搜索与反向搜索设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-%E5%8F%8D%E5%90%91%E6%90%9C%E7%B4%A2%E7%9A%84PDF%E9%98%85%E8%AF%BB%E5%99%A8%E8%AE%BE%E7%BD%AE"><span class="nav-text">2.4.3 反向搜索的PDF阅读器设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E9%83%A8%E5%88%86%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-text">3 部分快捷键</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E4%B8%80%E7%82%B9%E6%84%9F%E6%82%9F"><span class="nav-text">4 一点感悟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cola & Library"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Cola & Library</p>
+  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">251k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:48</span>
+</div>
+
+
+<!-- 网站运行时间的设置 -->
+<div>
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+</div>
+
+<!-- 网站底部统计本站访问数量 -->
+<!--
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+    <span class="post-meta-divider">|</span>
+已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
+</div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+       	<i class="fa fa-"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        共观看 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+	
+</body>
+</html>

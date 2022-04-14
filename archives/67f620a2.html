@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
+  <meta name="baidu-site-verification" content="aHT7NgajBz">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://colainlibrary.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="介绍使用自定义PDF阅读器+Saladict+Quicker做文献翻译的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文献翻译利器——自定义PDF阅读器+Saladict+Quicker">
+<meta property="og:url" content="https://colainlibrary.com/archives/67f620a2.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="介绍使用自定义PDF阅读器+Saladict+Quicker做文献翻译的方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/00.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/01.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/02.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/03.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/04.gif">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/14.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/05.gif">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/06.gif">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/13.jpg">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/07.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/08.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/09.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/10.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/11.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/12.gif">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/15.gif">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/16.jpg">
+<meta property="og:image" content="https://colainlibrary.com/images/20200501/17.png">
+<meta property="article:published_time" content="2020-05-01T12:35:23.000Z">
+<meta property="article:modified_time" content="2020-05-16T06:02:22.000Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="Library">
+<meta property="article:tag" content="Saladict">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://colainlibrary.com/images/20200501/00.png">
+
+<link rel="canonical" href="https://colainlibrary.com/archives/67f620a2.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>文献翻译利器——自定义PDF阅读器+Saladict+Quicker | Cola In Library</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cola In Library</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/67f620a2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Cola & Library">
+      <meta itemprop="description" content="Understand, don't memorize.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cola In Library">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          文献翻译利器——自定义PDF阅读器+Saladict+Quicker
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+			
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-01 12:35:23" itemprop="dateCreated datePublished" datetime="2020-05-01T12:35:23Z">2020-05-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">工科生的基本功</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">软件技术</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/67f620a2.html" class="post-meta-item leancloud_visitors" data-flag-title="文献翻译利器——自定义PDF阅读器+Saladict+Quicker" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/67f620a2.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/67f620a2.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src=" /images/20200501/00.png" width=30% /><br>介绍使用自定义PDF阅读器+Saladict+Quicker做文献翻译的方法。</p>
+<span id="more"></span>
+<h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>我阅读英文文献，除去内容上的考量外，还有两个需求：</p>
+<ol>
+<li>准确、便捷地翻译；</li>
+<li>方便地注释。</li>
+</ol>
+<p>第1点需求是本文主要讨论的内容。第2点可以通过福昕PDF阅读器中自定义快捷键，实现快速划线、添加文字注释等。</p>
+<h1 id="1-翻译方式的对比"><a href="#1-翻译方式的对比" class="headerlink" title="1 翻译方式的对比"></a>1 翻译方式的对比</h1><p>在看英文论文的过程中，翻译一直都是一个痛点。这里将用过的翻译方法列出来做个比较。</p>
+<h2 id="1-1-在线翻译"><a href="#1-1-在线翻译" class="headerlink" title="1.1 在线翻译"></a>1.1 在线翻译</h2><p>用网页版的在线翻译。诸如谷歌翻译、必应翻译等。这种的有一些问题，例如：当自己复制pdf中的文字时，自动断行没有办法改掉。然而，自动断行对于段落翻译的准确度是有很大影响的。网页翻译的另一个问题就是只能选择这一个翻译引擎。网页翻译每次打开的时候还需要选择翻译成哪种语言，找一找简体中文挺麻烦的。<br><img src="/images/20200501/01.png" alt="01"><br><img src="/images/20200501/02.png" alt="02"></p>
+<h2 id="1-2-金山词霸"><a href="#1-2-金山词霸" class="headerlink" title="1.2 金山词霸"></a>1.2 金山词霸</h2><p>用金山词霸桌面版。该软件的一大优点是，可以将翻译的输入框在桌面侧边收起，通过快捷键隐藏与显示，在阅读pdf的时候也可以采用划译的方式。<br><img src="/images/20200501/03.png" alt="03"><br><img src="/images/20200501/04.gif" alt="04"></p>
+<p>翻译大段文字时，弹出的框会遮挡文字，在页面底部会存在显示不全的问题，需要手动调整翻译显示的位置；用桌面侧边的输入，需要自己复制和粘贴，不便捷；翻译引擎也存在只有一种的问题。</p>
+<h2 id="1-3-知云文献翻译"><a href="#1-3-知云文献翻译" class="headerlink" title="1.3 知云文献翻译"></a>1.3 知云文献翻译</h2><p>知云文献翻译。这个我也用过一段时间，下载知云后打开pdf，在选中后就直接翻译，对于翻译整篇文章很方便。但是需要微信关注公众号，通过转发朋友圈、邀请朋友使用等获取积分，像传销似的。目前使用不收费。因为目前我已经习惯了福昕PDF阅读器中的自定义快捷键，所以感觉用它做批注也不是很方便；它的翻译没有多种词典的聚合。<br><img src="/images/20200501/14.png" alt="14"></p>
+<h2 id="1-4-Chrome-Saladict"><a href="#1-4-Chrome-Saladict" class="headerlink" title="1.4 Chrome+Saladict"></a>1.4 Chrome+Saladict</h2><p>用Saladict。Saladict是Chrome的一个插件。使用这个插件，在Chrome中浏览网页的时候只要选中，就会出现Saladict的图标，点一下这个图标，就可以看到翻译。这是操作方式上的便捷之处。Saladict同时集成了多种词典，同时显示，同时具有选择多种模式的功能，在学术模式下，翻译的准确度还不错，而且可以多种词典做对比。这是准确度上的优势。但是，只用Saladict，需要通过Saladict从Chrome中打开相应的论文才能用，这意味着我们无法在pdf中做标注。这在我看来是不可接受的。</p>
+<h2 id="1-5-Saladict-Quicker"><a href="#1-5-Saladict-Quicker" class="headerlink" title="1.5 Saladict+Quicker"></a>1.5 Saladict+Quicker</h2><p>用Saladict+Quicker。看到Saladict的优势，怎么能不心动？因此，针对只能在Chrome中打开pdf的问题，就想如何能在pdf阅读器中使用Saladict？幸运地是，已经有大神给出了解决方案：Saladict+Quicker。Quicker是一个小软件，通过Quicker可以快速调出Saladict实现在Chrome浏览器外调用Saladict；Quicker还可以将pdf中的文字识别为文本文字（注意这种识别还是可以消除换行符的哦，其他功能自行了解叭）。此外，Quicker的调用方式也很简单，只需快速短暂地按一下<em>Ctrl</em>键就可以调出。因此，Quicker是一个非常好用的小软件。当它配合Saladict的时候简直是如虎添翼！复制翻译、截屏翻译的效果如下图所示。<br><img src="/images/20200501/05.gif" alt="05"><br><img src="/images/20200501/06.gif" alt="06"></p>
+<h2 id="1-6-总结"><a href="#1-6-总结" class="headerlink" title="1.6 总结"></a>1.6 总结</h2><p>总结一下：使用自定义PDF阅读器，就选用Saladict+Quicker，次选金山词霸；不介意阅读器，有批注需求但没有形成固定的批注习惯，Saladict+Quicker或者知云文献翻译，前者聚合了多种词典，后者我记得没有(如果有，请告诉我)；没有批注需求，Chrome+Saladict，在浏览器中阅读就可以快速翻译。</p>
+<h1 id="2-Saladict-Quicker的使用方法"><a href="#2-Saladict-Quicker的使用方法" class="headerlink" title="2 Saladict+Quicker的使用方法"></a>2 Saladict+Quicker的使用方法</h1><h2 id="2-1-Saladict的安装"><a href="#2-1-Saladict的安装" class="headerlink" title="2.1 Saladict的安装"></a>2.1 Saladict的安装</h2><p>关于Saladict的下载安装、以及使用方法，可以参考<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC84Mjc3Mzc2Mw==" title="https://zhuanlan.zhihu.com/p/82773763">别找了，这才是你要的英文文献翻译神器！<i class="fa fa-external-link"></i></span>。建议科学上网之后Google搜索<em>saladict</em>，第一个应该就是可以安装在Chrome的<span class="exturl" data-url="aHR0cHM6Ly9jaHJvbWUuZ29vZ2xlLmNvbS93ZWJzdG9yZS9kZXRhaWwvJUU2JUIyJTk5JUU2JThCJTg5JUU2JTlGJUE1JUU4JUFGJThELSVFOCU4MSU5QSVFNSU5MCU4OCVFOCVBRiU4RCVFNSU4NSVCOCVFNSU4OCU5MiVFOCVBRiU4RCVFNyVCRiVCQiVFOCVBRiU5MS9jZG9ubm1mZmtkYW9hamZrbm9lZWVjbWNoaWJwbWttZz9obD1lbg==" title="https://chrome.google.com/webstore/detail/%E6%B2%99%E6%8B%89%E6%9F%A5%E8%AF%8D-%E8%81%9A%E5%90%88%E8%AF%8D%E5%85%B8%E5%88%92%E8%AF%8D%E7%BF%BB%E8%AF%91/cdonnmffkdaoajfknoeeecmchibpmkmg?hl=en">链接<i class="fa fa-external-link"></i></span>。不建议下载插件到本地后再添加，因为下载下来的可能不是最新版本，而且本地添加的打开Chrome时会有一个烦人的弹窗。</p>
+<h2 id="2-2-Saladict设置"><a href="#2-2-Saladict设置" class="headerlink" title="2.2 Saladict设置"></a>2.2 Saladict设置</h2><p>在Chrome中打开【chrome://extensions/shortcuts】，找到【沙拉查词-聚合词典划词翻译扩展】设置，在【独立窗口中搜索剪贴板内容】设置快捷键 alt+L，右侧选择全局。这个设置就是为了使沙拉查词可以直接读取剪贴板的内容，避免复制粘贴到沙拉查词的繁琐操作。按下<code>Alt+L</code>键后，可以在桌面打开Saladict，如果没有，记得重启Chrome哦。<br><img src="/images/20200501/13.jpg" alt="13"></p>
+<h2 id="2-3-Quicker的安装"><a href="#2-3-Quicker的安装" class="headerlink" title="2.3 Quicker的安装"></a>2.3 Quicker的安装</h2><p>从<span class="exturl" data-url="aHR0cHM6Ly9nZXRxdWlja2VyLm5ldC8=" title="https://getquicker.net/">Quicker官网<i class="fa fa-external-link"></i></span>下载软件并安装。</p>
+<h2 id="2-4-Quicker添加沙拉查词"><a href="#2-4-Quicker添加沙拉查词" class="headerlink" title="2.4 Quicker添加沙拉查词"></a>2.4 Quicker添加沙拉查词</h2><ol>
+<li>从<span class="exturl" data-url="aHR0cHM6Ly9nZXRxdWlja2VyLm5ldC9TaGFyZQ==" title="https://getquicker.net/Share">Quicker动作库<i class="fa fa-external-link"></i></span>搜索<strong>Saladict</strong>，如图所示。<img src="/images/20200501/07.png" alt="07"></li>
+<li>点击该动作，并将它复制到剪贴板。<img src="/images/20200501/08.png" alt="08"></li>
+<li>安装好Quicker后，快速按下<em>Ctrl</em>键，调出Quicker，在第一排最后图标的空白位置点击<code>+</code>，注意这个符号不是很明显，比较费眼神，然后选择粘贴已复制的动作。<img src="/images/20200501/09.png" alt="09"><img src="/images/20200501/10.png" alt="10"></li>
+</ol>
+<h2 id="2-5-复制翻译"><a href="#2-5-复制翻译" class="headerlink" title="2.5 复制翻译"></a>2.5 复制翻译</h2><p>使用复制翻译时，有的PDF阅读器在选中文字后会出现可以复制的小图标。如果没有这种图标，在Quicker图标处点右键，打开文本悬浮窗功能。<br><img src="/images/20200501/11.png" alt="11"></p>
+<p>这样在选择文字后，会出现一个小图标，鼠标移动上去后点击一下沙拉查词的图标，在沙拉查词中就可以看到翻译结果啦。<br><img src="/images/20200501/12.gif" alt="12"></p>
+<h2 id="2-6-截屏翻译"><a href="#2-6-截屏翻译" class="headerlink" title="2.6 截屏翻译"></a>2.6 截屏翻译</h2><p>使用截屏翻译，快速按下<em>Ctrl</em>键，调出Quicker，点击沙拉查词图标，截屏选择文字即可。<br><img src="/images/20200501/15.gif" alt="15"></p>
+<blockquote>
+<p>关于Saladict+Quicker使用方法的更多介绍，可以参考<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xMDY2NTA3NDM=" title="https://zhuanlan.zhihu.com/p/106650743">文献翻译利器：沙拉查词 + Quicker，这或许是 Windows 上最强的聚合翻译方案<i class="fa fa-external-link"></i></span>。</p>
+</blockquote>
+<h1 id="3-福昕PDF阅读器自定义快捷键设置"><a href="#3-福昕PDF阅读器自定义快捷键设置" class="headerlink" title="3 福昕PDF阅读器自定义快捷键设置"></a>3 福昕PDF阅读器自定义快捷键设置</h1><p>翻译设置好后，剩下的就是阅读器的快捷键设置了。福昕PDF快捷键设置方法如下(以高亮为例)：<br>1.在标签栏空白处右键选择<code>定制功能区</code><br><img src="/images/20200501/16.jpg" alt="16"></p>
+<p>2.依次选择<code>键盘</code>-&gt;<code>注释</code>-&gt;<code>高亮</code>，在<code>输入新快捷键</code>那里按下<code>Alt+H</code>，点<code>指派</code>，再点<code>确定</code>即可。<br><img src="/images/20200501/17.png" alt="17"></p>
+<p>3.我的自定义快捷键设置如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>含义</th>
+<th>快捷键</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alt+H</td>
+<td>高亮</td>
+<td>Alt+C</td>
+<td>下划线</td>
+</tr>
+<tr>
+<td>Alt+T</td>
+<td>文本框</td>
+<td>Alt+R</td>
+<td>矩形框</td>
+</tr>
+<tr>
+<td>Alt+Z</td>
+<td>横线</td>
+<td>Alt+N</td>
+<td>注释框</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NyaW14L2V4dC1zYWxhZGljdC9pc3N1ZXMvNDkz" title="https://github.com/crimx/ext-saladict/issues/493">技巧分享：Quicker 调用 Saladict 实现全局『文本翻译、截图翻译、复制翻译、触边翻译』<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9wZW5jaWxxLmNvbS81NC8=" title="https://pencilq.com/54/">文献翻译利器：沙拉查词 + Quicker，这或许是 Windows 上最强的聚合翻译方案<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xMDY2NTA3NDM=" title="https://zhuanlan.zhihu.com/p/106650743">文献翻译利器：沙拉查词 + Quicker，这或许是 Windows 上最强的聚合翻译方案<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC84Mjc3Mzc2Mw==" title="https://zhuanlan.zhihu.com/p/82773763">别找了，这才是你要的英文文献翻译神器！<i class="fa fa-external-link"></i></span></li>
+</ol>
+
+    </div>
+
+	<div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
+    
+</div>
+    
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐阅读</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/dc5dd3f8.html" rel="bookmark">Motive 软件使用方法</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/d5db4349.html" rel="bookmark">机器人阻抗控制</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/1a88a2b6.html" rel="bookmark">SDH，一变就通</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/22acf33e.html" rel="bookmark">SDH，一学就会</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/6d0d409.html" rel="bookmark">Ethercat 主站调试</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>Donate a cup of cola?</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cola & Library
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://colainlibrary.com/archives/67f620a2.html" title="文献翻译利器——自定义PDF阅读器+Saladict+Quicker">https://colainlibrary.com/archives/67f620a2.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Library/" rel="tag"><i class="fa fa-tag"></i> Library</a>
+              <a href="/tags/Saladict/" rel="tag"><i class="fa fa-tag"></i> Saladict</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/828ce1d.html" rel="prev" title="科氏力与科式加速度介绍">
+      <i class="fa fa-chevron-left"></i> 科氏力与科式加速度介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/4c622d61.html" rel="next" title="Windows修改按键的方法">
+      Windows修改按键的方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-%E5%89%8D%E8%A8%80"><span class="nav-text">0 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%BF%BB%E8%AF%91%E6%96%B9%E5%BC%8F%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-text">1 翻译方式的对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%9C%A8%E7%BA%BF%E7%BF%BB%E8%AF%91"><span class="nav-text">1.1 在线翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E9%87%91%E5%B1%B1%E8%AF%8D%E9%9C%B8"><span class="nav-text">1.2 金山词霸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E7%9F%A5%E4%BA%91%E6%96%87%E7%8C%AE%E7%BF%BB%E8%AF%91"><span class="nav-text">1.3 知云文献翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-Chrome-Saladict"><span class="nav-text">1.4 Chrome+Saladict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-Saladict-Quicker"><span class="nav-text">1.5 Saladict+Quicker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-%E6%80%BB%E7%BB%93"><span class="nav-text">1.6 总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Saladict-Quicker%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">2 Saladict+Quicker的使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Saladict%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-text">2.1 Saladict的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Saladict%E8%AE%BE%E7%BD%AE"><span class="nav-text">2.2 Saladict设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Quicker%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-text">2.3 Quicker的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-Quicker%E6%B7%BB%E5%8A%A0%E6%B2%99%E6%8B%89%E6%9F%A5%E8%AF%8D"><span class="nav-text">2.4 Quicker添加沙拉查词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-%E5%A4%8D%E5%88%B6%E7%BF%BB%E8%AF%91"><span class="nav-text">2.5 复制翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-%E6%88%AA%E5%B1%8F%E7%BF%BB%E8%AF%91"><span class="nav-text">2.6 截屏翻译</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%A6%8F%E6%98%95PDF%E9%98%85%E8%AF%BB%E5%99%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BF%AB%E6%8D%B7%E9%94%AE%E8%AE%BE%E7%BD%AE"><span class="nav-text">3 福昕PDF阅读器自定义快捷键设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cola & Library"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Cola & Library</p>
+  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">251k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:48</span>
+</div>
+
+
+<!-- 网站运行时间的设置 -->
+<div>
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+</div>
+
+<!-- 网站底部统计本站访问数量 -->
+<!--
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+    <span class="post-meta-divider">|</span>
+已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
+</div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+       	<i class="fa fa-"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        共观看 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+	
+</body>
+</html>
