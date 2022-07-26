@@ -6,7 +6,7 @@
   <link href="https://colainlibrary.com/atom.xml" rel="self"/>
   
   <link href="https://colainlibrary.com/"/>
-  <updated>2022-04-07T10:10:23.000Z</updated>
+  <updated>2022-07-26T05:05:46.623Z</updated>
   <id>https://colainlibrary.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mujoco210安装</title>
+    <link href="https://colainlibrary.com/archives/undefined.html"/>
+    <id>https://colainlibrary.com/archives/undefined.html</id>
+    <published>2022-07-26T11:00:00.000Z</published>
+    <updated>2022-07-26T05:05:46.623Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文将介绍Mujoco210的安装过程。&lt;br&gt;</summary>
+    
+    
+    
+    <category term="人工智能" scheme="https://colainlibrary.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="强化学习" scheme="https://colainlibrary.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+  </entry>
   
   <entry>
     <title>用seaborn/matplot绘制误差带阴影图</title>
@@ -432,34 +453,6 @@
     <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
     
     <category term="Linux" scheme="https://colainlibrary.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>KDL的安装</title>
-    <link href="https://colainlibrary.com/archives/e2bb99c2.html"/>
-    <id>https://colainlibrary.com/archives/e2bb99c2.html</id>
-    <published>2021-03-06T11:00:00.000Z</published>
-    <updated>2021-10-21T09:42:32.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;span id=&quot;more&quot;&gt;&lt;/span&gt;
-&lt;h1 id=&quot;1-前言&quot;&gt;&lt;a href=&quot;#1-前言&quot; class=&quot;headerlink&quot; title=&quot;1 前言&quot;&gt;&lt;/a&gt;1 前言&lt;/h1&gt;&lt;p&gt;为了快速搭建一个机器人控制器，方便后期进行机器人控制算法开发，需要用到</summary>
-        
-      
-    
-    
-    
-    <category term="机器人控制" scheme="https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/"/>
-    
-    
-    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
-    
-    <category term="机器人" scheme="https://colainlibrary.com/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
     
   </entry>
   
