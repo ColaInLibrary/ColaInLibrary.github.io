@@ -12,9 +12,9 @@
 <li>顺利的话，会出现下图所示的结果。<br><img src="/images/20220726/01.png" alt="1"></li>
 </ol>
 <h1 id="3-mujoco-py的安装"><a href="#3-mujoco-py的安装" class="headerlink" title="3 mujoco_py的安装"></a>3 mujoco_py的安装</h1><h2 id="3-1-mujoco-py的下载"><a href="#3-1-mujoco-py的下载" class="headerlink" title="3.1 mujoco_py的下载"></a>3.1 mujoco_py的下载</h2><p>执行下列语句下载 mujoco_py。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/openai/mujoco-py.git</span><br></pre></td></tr></table></figure></p>
-<h2 id="3-2-mujoco-py的安装"><a href="#3-2-mujoco-py的安装" class="headerlink" title="3.2 mujoco_py的安装"></a>3.2 mujoco_py的安装</h2><p>依赖项的安装。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libgl1-mesa-dev libgl1-mesa-glx libosmesa6-dev</span><br><span class="line">sudo apt-get install libglew-dev</span><br><span class="line">sudo apt-get install patchelf</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-2-mujoco-py的安装"><a href="#3-2-mujoco-py的安装" class="headerlink" title="3.2 mujoco_py的安装"></a>3.2 mujoco_py的安装</h2><p>依赖项的安装。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注意可能需要科学上网</span></span><br><span class="line">sudo apt-get install libgl1-mesa-dev libgl1-mesa-glx libosmesa6-dev</span><br><span class="line">sudo apt-get install libglew-dev</span><br><span class="line">sudo apt-get install patchelf</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>如果不安装这个依赖项，可能会出现第5节中的问题。</p>
+<p>如果不安装这个依赖项，可能会出现第4节中的问题。</p>
 </blockquote>
 <p>mujoco_py的安装。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda activate py38  <span class="comment"># 激活自己用anaconda配置的环境</span></span><br><span class="line"><span class="built_in">cd</span> ~/mujoco-py       <span class="comment"># 自己下载mujoco-py的路径</span></span><br><span class="line"></span><br><span class="line">pip3 install -U <span class="string">&#x27;mujoco-py&lt;2.2,&gt;=2.1&#x27;</span></span><br><span class="line">pip3 install -r requirements.txt</span><br><span class="line">pip3 install -r requirements.dev.txt</span><br><span class="line">python3 setup.py install</span><br></pre></td></tr></table></figure></p>
 <h2 id="3-3-配置-bashrc"><a href="#3-3-配置-bashrc" class="headerlink" title="3.3 配置.bashrc"></a>3.3 配置.bashrc</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo gedit ~/.bashrc</span><br><span class="line"><span class="comment"># 文件最后添加 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia </span></span><br><span class="line"><span class="comment"># 再添加 export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so</span></span><br><span class="line"><span class="comment"># 保存退出</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
@@ -34,6 +34,13 @@
 <p>解决办法： 安装第3.2节的依赖。</p>
 <p>终端能正常运行后，运行示例程序时直接卡死，终端提示 ERROR: GLEW initalization error: Missing GL version。<br><img src="/images/20220726/06.png" alt="6"></p>
 <p>解决办法： 在 <code>~/.bashrc</code> 中添加 export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80ODY5NTc1MDQ=" title="https://zhuanlan.zhihu.com/p/486957504">https://zhuanlan.zhihu.com/p/486957504<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZGV2aWxtYXljcnk4MTI4Mzk2NjgvcC8xNjAwNzA0Mi5odG1s" title="https://www.cnblogs.com/devilmaycry812839668/p/16007042.html">https://www.cnblogs.com/devilmaycry812839668/p/16007042.html<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDQyMDQxOS9hcnRpY2xlL2RldGFpbHMvMTE2MjMxNTAw" title="https://blog.csdn.net/weixin_44420419/article/details/116231500">https://blog.csdn.net/weixin_44420419/article/details/116231500<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL29wZW5haS9tdWpvY28tcHkvaXNzdWVzLzY1Mg==" title="https://github.com/openai/mujoco-py/issues/652">https://github.com/openai/mujoco-py/issues/652<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL29wZW5haS9tdWpvY28tcHk=" title="https://github.com/openai/mujoco-py">https://github.com/openai/mujoco-py<i class="fa fa-external-link"></i></span></li>
+</ol>
 ]]></content>
       <categories>
         <category>人工智能</category>
