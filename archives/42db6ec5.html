@@ -58,7 +58,7 @@
 <meta property="og:description" content="介绍在Ubuntu下终端科学上网的方式。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-05T11:00:00.000Z">
-<meta property="article:modified_time" content="2021-02-01T12:17:56.000Z">
+<meta property="article:modified_time" content="2022-07-26T02:33:36.817Z">
 <meta property="article:author" content="Cola &amp; Library">
 <meta property="article:tag" content="Library">
 <meta property="article:tag" content="Linux">
@@ -298,7 +298,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>586</span>
+              <span>1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -318,9 +318,11 @@
 
       
         <p>介绍在Ubuntu下终端科学上网的方式。<br><span id="more"></span></p>
-<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p> 最近一段时间用conda来配置虚拟环境，经常会出现终端中下载速度很慢的情况，最终会导致下载安装失败，经向yym学习，遂记录下相关方法步骤。</p>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p> 最近一段时间用conda来配置虚拟环境，经常会出现终端中下载速度很慢的情况，最终会导致下载安装失败，因此有必要使用科学上网来完成相关任务。</p>
 <h1 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2 步骤"></a>2 步骤</h1><ol>
-<li>首先安装小飞机electron-ssr-0.2.6.deb，并将自己的 <strong>ss</strong> 二维码添加入内。（没有太明白，用ssr的二维码为什么就不怎么好用）</li>
+<li>下载小飞机：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3FpbmdzaHVpc2l5dWFuL2VsZWN0cm9uLXNzci1iYWNrdXAvcmVsZWFzZXMvZG93bmxvYWQvdjAuMi42L2VsZWN0cm9uLXNzci0wLjIuNi5kZWI=" title="https://github.com/qingshuisiyuan/electron-ssr-backup/releases/download/v0.2.6/electron-ssr-0.2.6.deb">https://github.com/qingshuisiyuan/electron-ssr-backup/releases/download/v0.2.6/electron-ssr-0.2.6.deb<i class="fa fa-external-link"></i></span>.</li>
+<li>执行以下命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libcanberra-gtk-module libcanberra-gtk3-module gconf2 gconf-service libappindicator1</span><br><span class="line">sudo apt-get install libssl-dev </span><br><span class="line">sudo apt-get install libsodium-dev</span><br><span class="line">sudo apt-get install python</span><br><span class="line">sudo apt-get install python2  <span class="comment"># 理论上来讲装了上一条这个就不用了</span></span><br><span class="line">sudo dpkg -i electron-ssr-0.2.6.deb</span><br></pre></td></tr></table></figure></li>
+<li>安装完后打开小飞机，然后点击自动下载，并将自己的科学上网服务器配置进去。</li>
 <li>执行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.bashrc</span><br></pre></td></tr></table></figure></li>
 <li>在打开的文件末尾，添加下列两行命令后保存退出。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=<span class="string">&#x27;http://localhost:12333&#x27;</span>   <span class="comment"># http代理端口默认的是12333</span></span><br><span class="line"><span class="built_in">export</span> https_proxy=<span class="string">&#x27;http://localhost:12333&#x27;</span></span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -330,6 +332,11 @@
 <li>执行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure></li>
 <li>将小飞机的系统代理模式修改为 <strong>PAC代理</strong>， 再新开一个终端，执行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget www.google.com</span><br></pre></td></tr></table></figure>
 如果能把google首页下载到home目录下，说明配置成功。</li>
+<li>彻底删除小飞机：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -P electron-ssr</span><br><span class="line"><span class="built_in">cd</span> ~/.config</span><br><span class="line">sudo <span class="built_in">rm</span> -rf electron-ssr</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果不删除.config目录下的electron-ssr文件夹，卸载之后再安装还是会使用卸载前的配置。</p>
+</blockquote>
+</li>
 </ol>
 
     </div>
@@ -588,12 +595,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">251k</span>
+    <span title="站点总字数">252k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:48</span>
+    <span title="站点阅读时长">3:49</span>
 </div>
 
 
