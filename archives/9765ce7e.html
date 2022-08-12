@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
+  <meta name="baidu-site-verification" content="aHT7NgajBz">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://colainlibrary.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="本文主要是记录Pytorch学习过程中的一些基础运算方法，方便自己查阅。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch 学习笔记（基础篇）">
+<meta property="og:url" content="https://colainlibrary.com/archives/9765ce7e.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="本文主要是记录Pytorch学习过程中的一些基础运算方法，方便自己查阅。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-09T11:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-12T14:53:41.889Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="Library">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://colainlibrary.com/archives/9765ce7e.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Pytorch 学习笔记（基础篇） | Cola In Library</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cola In Library</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/9765ce7e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Cola & Library">
+      <meta itemprop="description" content="Understand, don't memorize.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cola In Library">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Pytorch 学习笔记（基础篇）
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+			
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-09 11:00:00" itemprop="dateCreated datePublished" datetime="2022-08-09T11:00:00Z">2022-08-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">工科生的基本功</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/" itemprop="url" rel="index">
+                    <span itemprop="name">快乐码农</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/9765ce7e.html" class="post-meta-item leancloud_visitors" data-flag-title="Pytorch 学习笔记（基础篇）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/9765ce7e.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/9765ce7e.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文主要是记录Pytorch学习过程中的一些基础运算方法，方便自己查阅。<br><span id="more"></span></p>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>本文记录了Pytorch学习过程中的一些基本用法，主要包括：线性空间的划分、矩阵乘法等。</p>
+<h1 id="2-Pytroch-基础用法"><a href="#2-Pytroch-基础用法" class="headerlink" title="2 Pytroch 基础用法"></a>2 Pytroch 基础用法</h1><h2 id="2-1-维度置换permute"><a href="#2-1-维度置换permute" class="headerlink" title="2.1 维度置换permute"></a>2.1 维度置换permute</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = torch.randn(<span class="number">4</span>,<span class="number">6</span>,<span class="number">7</span>)</span><br><span class="line">b = a.permute(<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>)  <span class="comment"># 将a的最后两个维度数据交换，即a原来的第1维数据变成b的第2维数据</span></span><br><span class="line"><span class="built_in">print</span>(a.shape)  <span class="comment"># torch.Size([4, 6, 7])</span></span><br><span class="line"><span class="built_in">print</span>(b.shape)  <span class="comment"># torch.Size([4, 7, 6])</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-2-线性空间的划分"><a href="#2-2-线性空间的划分" class="headerlink" title="2.2 线性空间的划分"></a>2.2 线性空间的划分</h2><p>函数原型：</p>
+<blockquote>
+<p>torch.linspace(start, end, steps, *, out=None, dtype=None, layout=torch.strided, device=None, requires_grad=False)</p>
+</blockquote>
+<p>示例用法：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">torch.linspace(<span class="number">3</span>, <span class="number">10</span>, steps=<span class="number">5</span>)  <span class="comment"># tensor([ 3.0000,  4.7500,  6.5000,  8.2500, 10.0000])</span></span><br><span class="line">torch.linspace(-<span class="number">10</span>, <span class="number">10</span>, steps=<span class="number">5</span>)  <span class="comment"># tensor([-10.,  -5.,   0.,   5.,  10.])</span></span><br><span class="line">torch.linspace(start=-<span class="number">10</span>, end=<span class="number">10</span>, steps=<span class="number">5</span>)  <span class="comment"># tensor([-10.,  -5.,   0.,   5.,  10.])</span></span><br><span class="line">torch.linspace(start=-<span class="number">10</span>, end=<span class="number">10</span>, steps=<span class="number">1</span>)  <span class="comment"># tensor([-10.])</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="2-3-tensor连接"><a href="#2-3-tensor连接" class="headerlink" title="2.3 tensor连接"></a>2.3 tensor连接</h2><p>torch.cat() 函数目的： 在给定维度上对输入的张量序列seq 进行连接操作。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x1 = torch.tensor([[<span class="number">11</span>,<span class="number">21</span>,<span class="number">31</span>],[<span class="number">21</span>,<span class="number">31</span>,<span class="number">41</span>]],dtype=torch.<span class="built_in">int</span>)  <span class="comment"># torch.Size([2, 3])</span></span><br><span class="line">x2 = torch.tensor([[<span class="number">12</span>,<span class="number">22</span>,<span class="number">32</span>],[<span class="number">22</span>,<span class="number">32</span>,<span class="number">42</span>]],dtype=torch.<span class="built_in">int</span>)  <span class="comment"># torch.Size([2, 3])</span></span><br><span class="line">torch.cat((x1,x2), <span class="number">0</span>).shape  <span class="comment"># torch.Size([4, 3])</span></span><br><span class="line">torch.cat((x1,x2), <span class="number">1</span>).shape  <span class="comment"># torch.Size([2, 6])</span></span><br><span class="line">x = torch.tensor([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])  <span class="comment"># torch.Size([3])</span></span><br><span class="line">y = torch.tensor([<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>])  <span class="comment"># torch.Size([3])</span></span><br><span class="line">torch.cat((x,y),<span class="number">1</span>)  <span class="comment"># error</span></span><br><span class="line">torch.cat((x,y),<span class="number">0</span>)  <span class="comment"># tensor([ 1,  2,  3, 11, 22, 33])</span></span><br></pre></td></tr></table></figure><br>需要注意的是，连接的维度不能超过tensor本身具备的维度。</p>
+<h2 id="2-4-矩阵运算"><a href="#2-4-矩阵运算" class="headerlink" title="2.4 矩阵运算"></a>2.4 矩阵运算</h2><h3 id="2-4-1-torch-einsum"><a href="#2-4-1-torch-einsum" class="headerlink" title="2.4.1 torch.einsum"></a>2.4.1 torch.einsum</h3><p>[<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MzQyMzI1MTI=" title="https://zhuanlan.zhihu.com/p/434232512">链接<i class="fa fa-external-link"></i></span>]<br>爱因斯坦求和约定：用于简洁的表示乘积、点积、转置等方法。<br>例如：<br>$A\in\mathbb{R}^{i\times k}$, $B\in\mathbb{R}^{k\times j}$，则 $C_j^i=A_k^iB_j^k$，在代码中可以表示为’ik, kj-&gt;ij’，则对应代码为：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">A = torch.linspace(<span class="number">1</span>, <span class="number">12</span>, steps=<span class="number">12</span>).reshape(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">B = torch.linspace(<span class="number">1</span>, <span class="number">20</span>, steps=<span class="number">20</span>).reshape(<span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;A: \n&#x27;</span>, A)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;B: \n&#x27;</span>, B)</span><br><span class="line">C = torch.einsum(<span class="string">&#x27;ik,kj-&gt;ij&#x27;</span>, A, B)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;C:\n&#x27;</span>, C, C.shape)  <span class="comment"># torch.Size([3, 5])</span></span><br><span class="line"></span><br><span class="line">B = torch.linspace(<span class="number">1</span>, <span class="number">20</span>, steps=<span class="number">20</span>).reshape(<span class="number">5</span>, <span class="number">4</span>)</span><br><span class="line">C = torch.einsum(<span class="string">&#x27;ik,jk-&gt;ij&#x27;</span>, A, B)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;C:\n&#x27;</span>, C, C.shape)  <span class="comment"># torch.Size([3, 5])</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;A所有元素求和：ij-&gt;\n&#x27;</span>, torch.einsum(<span class="string">&#x27;ij-&gt;&#x27;</span>, A))  <span class="comment"># 求和，tensor(1.4456)</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;A列求和：ij-&gt;j\n&#x27;</span>, torch.einsum(<span class="string">&#x27;ij-&gt;j&#x27;</span>, A))  <span class="comment"># 列求和</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;A点积求和：ij,ij-&gt;\n&#x27;</span>, torch.einsum(<span class="string">&#x27;ij,ij-&gt;&#x27;</span>, A, A))  <span class="comment"># 点积求和</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;A转置：ij-&gt;ji\n&#x27;</span>, torch.einsum(<span class="string">&#x27;ij-&gt;ji&#x27;</span>, A))  <span class="comment"># 转置</span></span><br><span class="line"><span class="comment"># 多维矩阵求和</span></span><br><span class="line">B = torch.linspace(<span class="number">1</span>, <span class="number">60</span>, steps=<span class="number">60</span>).reshape(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line">C = torch.linspace(<span class="number">1</span>, <span class="number">20</span>, steps=<span class="number">20</span>).reshape(<span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line">D = torch.einsum(<span class="string">&#x27;ij,ijk,jk-&gt;ik&#x27;</span>, A, B, C)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;多维矩阵求和：ij,ijk,jk-&gt;ik\n&#x27;</span>, D, D.shape)  <span class="comment"># torch.Size([3, 5])  将三个矩阵共有的维度j合并</span></span><br></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">A: </span><br><span class="line"> tensor([[ 1.,  2.,  3.,  4.],</span><br><span class="line">        [ 5.,  6.,  7.,  8.],</span><br><span class="line">        [ 9., 10., 11., 12.]])</span><br><span class="line">B: </span><br><span class="line"> tensor([[ 1.,  2.,  3.,  4.,  5.],</span><br><span class="line">        [ 6.,  7.,  8.,  9., 10.],</span><br><span class="line">        [11., 12., 13., 14., 15.],</span><br><span class="line">        [16., 17., 18., 19., 20.]])</span><br><span class="line">C:</span><br><span class="line"> tensor([[110., 120., 130., 140., 150.],</span><br><span class="line">        [246., 272., 298., 324., 350.],</span><br><span class="line">        [382., 424., 466., 508., 550.]]) torch.Size([3, 5])</span><br><span class="line">C:</span><br><span class="line"> tensor([[ 30.,  70., 110., 150., 190.],</span><br><span class="line">        [ 70., 174., 278., 382., 486.],</span><br><span class="line">        [110., 278., 446., 614., 782.]]) torch.Size([3, 5])</span><br><span class="line">A所有元素求和：ij-&gt;</span><br><span class="line"> tensor(78.)</span><br><span class="line">A列求和：ij-&gt;j</span><br><span class="line"> tensor([15., 18., 21., 24.])</span><br><span class="line">A点积求和：ij,ij-&gt;</span><br><span class="line"> tensor(650.)</span><br><span class="line">A转置：ij-&gt;ji</span><br><span class="line"> tensor([[ 1.,  5.,  9.],</span><br><span class="line">        [ 2.,  6., 10.],</span><br><span class="line">        [ 3.,  7., 11.],</span><br><span class="line">        [ 4.,  8., 12.]])</span><br><span class="line">多维矩阵求和：ij,ijk,jk-&gt;ik</span><br><span class="line"> tensor([[ 1460.,  1690.,  1940.,  2210.,  2500.],</span><br><span class="line">        [ 8036.,  9074., 10164., 11306., 12500.],</span><br><span class="line">        [20052., 22538., 25108., 27762., 30500.]]) torch.Size([3, 5])</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-4-2-一维向量的运算"><a href="#2-4-2-一维向量的运算" class="headerlink" title="2.4.2 一维向量的运算"></a>2.4.2 一维向量的运算</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">x = torch.tensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">y = torch.tensor([<span class="number">2</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">3</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x_shape&quot;</span>, x.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;y_shape&quot;</span>, y.shape)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span> + <span class="string">&#x27; 元素相乘: *, torch.mul &#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span>)</span><br><span class="line">c = x*y</span><br><span class="line"><span class="built_in">print</span>(c, c.shape)</span><br><span class="line">d = torch.mul(x, y)</span><br><span class="line"><span class="built_in">print</span>(d, d.shape)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span> + <span class="string">&#x27; 向量点积/内积: torch.dot &#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span>)</span><br><span class="line"><span class="built_in">print</span>(torch.dot(x, y))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span> + <span class="string">&#x27; 向量叉乘: torch.cross &#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span>)</span><br><span class="line">x = torch.tensor([<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">y = torch.tensor([<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(torch.cross(x, y))</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">x_shape torch.Size([4])</span><br><span class="line">y_shape torch.Size([4])</span><br><span class="line"></span><br><span class="line">--------------- 元素相乘: *, torch.mul ---------------</span><br><span class="line">tensor([ 2,  2, 12, 12]) torch.Size([4])</span><br><span class="line">tensor([ 2,  2, 12, 12]) torch.Size([4])</span><br><span class="line"></span><br><span class="line">--------------- 向量点积/内积: torch.dot ---------------</span><br><span class="line">tensor(28)</span><br><span class="line"></span><br><span class="line">--------------- 向量叉乘: torch.cross ---------------</span><br><span class="line">tensor([0, 0, 1])  <span class="comment"># 由 x, y轴叉乘得到z轴</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-4-3-二维矩阵的运算"><a href="#2-4-3-二维矩阵的运算" class="headerlink" title="2.4.3 二维矩阵的运算"></a>2.4.3 二维矩阵的运算</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">x = torch.tensor([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line">y = torch.tensor([[<span class="number">2</span>, <span class="number">1</span>], [<span class="number">4</span>, <span class="number">3</span>]])</span><br><span class="line">z1 = torch.tensor([<span class="number">5</span>, <span class="number">6</span>])</span><br><span class="line">z2 = z1.unsqueeze(<span class="number">0</span>)</span><br><span class="line">z3 = z1.unsqueeze(-<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x_shape&quot;</span>, x.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;y_shape&quot;</span>, y.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;z1_shape&quot;</span>, z1.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;z2_shape&quot;</span>, z2.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;z3_shape&quot;</span>, z3.shape)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>+<span class="string">&#x27;\n&#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span> + <span class="string">&#x27; 元素相乘: *, torch.mul &#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">9312</span>) + <span class="string">&quot;  x * y: \n&quot;</span>,x * y, (x * y).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">9313</span>) + <span class="string">&quot;  x * z1: \n&quot;</span>,x * z1, (x * z1).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">9314</span>) + <span class="string">&quot;  x * z2: \n&quot;</span>,x * z2, (x * z2).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">9315</span>) + <span class="string">&quot;  x * z3: \n&quot;</span>,x * z3, (x * z3).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">9316</span>) + <span class="string">&quot;  torch.mul(x, y): \n&quot;</span>, torch.mul(x, y), torch.mul(x, y).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">9317</span>) + <span class="string">&quot;  torch.mul(x, z1): \n&quot;</span>, torch.mul(x, z1), torch.mul(x, z1).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">9318</span>) + <span class="string">&quot;  torch.mul(x, z2): \n&quot;</span>, torch.mul(x, z2), torch.mul(x, z2).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">9319</span>) + <span class="string">&quot;  torch.mul(x, z3): \n&quot;</span>, torch.mul(x, z3), torch.mul(x, z3).shape)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span> + <span class="string">&#x27; 二维矩阵与一维矩阵相乘: @, torch.matmul() &#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span>)</span><br><span class="line"><span class="comment"># 事实上，z2和z3是二维矩阵，而非一维向量</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x@z1 != z1@x: \n&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27; x@z1:\n&#x27;</span>, x@z1, (x@z1).shape) <span class="comment"># 将 z1 从 (2) 扩展为 (2,1)，计算完再去掉扩充的维度</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27; z1@x:\n&#x27;</span>, z1@x, (z1@x).shape) <span class="comment"># 将 z1 从 (2) 扩展为 (1,2)，计算完再去掉扩充的维度</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;z2@x:\n&#x27;</span>, z2@x, (z2@x).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;x@z3:\n&#x27;</span>, x@z3, (x@z3).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;torch.matmul(x, z1):\n&#x27;</span>, torch.matmul(x, z1))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;torch.matmul(z1, x):\n&#x27;</span>, torch.matmul(z1, x))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span> + <span class="string">&#x27; 二维矩阵乘法: @, torch.mm, torch.matmul() &#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x@y: \n&quot;</span>, x@y, (x@y).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;torch.mm(x, y): \n&quot;</span>, torch.mm(x, y), torch.mm(x, y).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;torch.matmul(x, y): \n&quot;</span>, torch.matmul(x, y), torch.matmul(x, y).shape)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">x_shape torch.Size([2, 2])</span><br><span class="line">y_shape torch.Size([2, 2])</span><br><span class="line">z1_shape torch.Size([2])</span><br><span class="line">z2_shape torch.Size([1, 2])</span><br><span class="line">z3_shape torch.Size([2, 1])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--------------- 元素相乘: *, torch.mul ---------------</span><br><span class="line">①  x * y: </span><br><span class="line"> tensor([[ 2,  2],</span><br><span class="line">        [12, 12]]) torch.Size([2, 2])</span><br><span class="line">②  x * z1: </span><br><span class="line"> tensor([[ 5, 12],</span><br><span class="line">        [15, 24]]) torch.Size([2, 2])</span><br><span class="line">③  x * z2: </span><br><span class="line"> tensor([[ 5, 12],</span><br><span class="line">        [15, 24]]) torch.Size([2, 2])</span><br><span class="line">④  x * z3: </span><br><span class="line"> tensor([[ 5, 10],</span><br><span class="line">        [18, 24]]) torch.Size([2, 2])</span><br><span class="line">⑤  torch.mul(x, y): </span><br><span class="line"> tensor([[ 2,  2],</span><br><span class="line">        [12, 12]]) torch.Size([2, 2])</span><br><span class="line">⑥  torch.mul(x, z1): </span><br><span class="line"> tensor([[ 5, 12],</span><br><span class="line">        [15, 24]]) torch.Size([2, 2])</span><br><span class="line">⑦  torch.mul(x, z2): </span><br><span class="line"> tensor([[ 5, 12],</span><br><span class="line">        [15, 24]]) torch.Size([2, 2])</span><br><span class="line">⑧  torch.mul(x, z3): </span><br><span class="line"> tensor([[ 5, 10],</span><br><span class="line">        [18, 24]]) torch.Size([2, 2])</span><br><span class="line"></span><br><span class="line">--------------- 二维矩阵与一维矩阵相乘: @, torch.matmul() ---------------</span><br><span class="line">x@z1 != z1@x: </span><br><span class="line"></span><br><span class="line"> x@z1:</span><br><span class="line"> tensor([17, 39]) torch.Size([2])</span><br><span class="line"> z1@x:</span><br><span class="line"> tensor([23, 34]) torch.Size([2])</span><br><span class="line">z2@x:</span><br><span class="line"> tensor([[23, 34]]) torch.Size([1, 2])</span><br><span class="line">x@z3:</span><br><span class="line"> tensor([[17],</span><br><span class="line">        [39]]) torch.Size([2, 1])</span><br><span class="line">torch.matmul(x, z1):</span><br><span class="line"> tensor([17, 39])</span><br><span class="line">torch.matmul(z1, x):</span><br><span class="line"> tensor([23, 34])</span><br><span class="line"></span><br><span class="line">--------------- 二维矩阵乘法: @, torch.mm, torch.matmul() ---------------</span><br><span class="line">x@y: </span><br><span class="line"> tensor([[10,  7],</span><br><span class="line">        [22, 15]]) torch.Size([2, 2])</span><br><span class="line">torch.mm(x, y): </span><br><span class="line"> tensor([[10,  7],</span><br><span class="line">        [22, 15]]) torch.Size([2, 2])</span><br><span class="line">torch.matmul(x, y): </span><br><span class="line"> tensor([[10,  7],</span><br><span class="line">        [22, 15]]) torch.Size([2, 2])</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">x = torch.linspace(<span class="number">1</span>, <span class="number">12</span>, steps=<span class="number">12</span>).reshape(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">y = torch.linspace(<span class="number">11</span>, <span class="number">22</span>, steps=<span class="number">12</span>).reshape(<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span> + <span class="string">&#x27; 三维矩阵乘法: @, torch.bmm, torch.matmul() &#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x_shape&quot;</span>, x.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;y_shape&quot;</span>, y.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x@y: \n&quot;</span>, x@y, (x@y).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;torch.mm(x, y): \n&quot;</span>, torch.bmm(x, y), torch.bmm(x, y).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;torch.matmul(x, y): \n&quot;</span>, torch.matmul(x, y), torch.matmul(x, y).shape)</span><br><span class="line"></span><br><span class="line">x = torch.linspace(<span class="number">1</span>, <span class="number">72</span>, steps=<span class="number">72</span>).reshape(<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">y = torch.linspace(<span class="number">11</span>, <span class="number">34</span>, steps=<span class="number">24</span>).reshape(<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span> + <span class="string">&#x27; 三维以上维矩阵乘法: @, torch.matmul() &#x27;</span>+<span class="string">&#x27;-&#x27;</span>*<span class="number">15</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x_shape&quot;</span>, x.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;y_shape&quot;</span>, y.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x@y: \n&quot;</span>, x@y, (x@y).shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;torch.matmul(x, y): \n&quot;</span>, torch.matmul(x, y), torch.matmul(x, y).shape)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line">--------------- 三维矩阵乘法: @, torch.bmm, torch.matmul() ---------------</span><br><span class="line">x_shape torch.Size([2, 2, 3])</span><br><span class="line">y_shape torch.Size([2, 3, 2])</span><br><span class="line">x@y: </span><br><span class="line"> tensor([[[ 82.,  88.],</span><br><span class="line">         [199., 214.]],</span><br><span class="line"></span><br><span class="line">        [[460., 484.],</span><br><span class="line">         [631., 664.]]]) torch.Size([2, 2, 2])</span><br><span class="line">torch.mm(x, y): </span><br><span class="line"> tensor([[[ 82.,  88.],</span><br><span class="line">         [199., 214.]],</span><br><span class="line"></span><br><span class="line">        [[460., 484.],</span><br><span class="line">         [631., 664.]]]) torch.Size([2, 2, 2])</span><br><span class="line">torch.matmul(x, y): </span><br><span class="line"> tensor([[[ 82.,  88.],</span><br><span class="line">         [199., 214.]],</span><br><span class="line"></span><br><span class="line">        [[460., 484.],</span><br><span class="line">         [631., 664.]]]) torch.Size([2, 2, 2])</span><br><span class="line"></span><br><span class="line">--------------- 三维以上维矩阵乘法: @, torch.matmul() ---------------</span><br><span class="line">x_shape torch.Size([3, 4, 2, 3])</span><br><span class="line">y_shape torch.Size([4, 3, 2])</span><br><span class="line">x@y: </span><br><span class="line"> tensor([[[[  82.,   88.],</span><br><span class="line">          [ 199.,  214.]],</span><br><span class="line"></span><br><span class="line">         [[ 460.,  484.],</span><br><span class="line">          [ 631.,  664.]],</span><br><span class="line"></span><br><span class="line">         [[1054., 1096.],</span><br><span class="line">          [1279., 1330.]],</span><br><span class="line"></span><br><span class="line">         [[1864., 1924.],</span><br><span class="line">          [2143., 2212.]]],</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        [[[1018., 1096.],</span><br><span class="line">          [1135., 1222.]],</span><br><span class="line"></span><br><span class="line">         [[1828., 1924.],</span><br><span class="line">          [1999., 2104.]],</span><br><span class="line"></span><br><span class="line">         [[2854., 2968.],</span><br><span class="line">          [3079., 3202.]],</span><br><span class="line"></span><br><span class="line">         [[4096., 4228.],</span><br><span class="line">          [4375., 4516.]]],</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        [[[1954., 2104.],</span><br><span class="line">          [2071., 2230.]],</span><br><span class="line"></span><br><span class="line">         [[3196., 3364.],</span><br><span class="line">          [3367., 3544.]],</span><br><span class="line"></span><br><span class="line">         [[4654., 4840.],</span><br><span class="line">          [4879., 5074.]],</span><br><span class="line"></span><br><span class="line">         [[6328., 6532.],</span><br><span class="line">          [6607., 6820.]]]]) torch.Size([3, 4, 2, 2])</span><br><span class="line">torch.matmul(x, y): </span><br><span class="line"> tensor([[[[  82.,   88.],</span><br><span class="line">          [ 199.,  214.]],</span><br><span class="line"></span><br><span class="line">         [[ 460.,  484.],</span><br><span class="line">          [ 631.,  664.]],</span><br><span class="line"></span><br><span class="line">         [[1054., 1096.],</span><br><span class="line">          [1279., 1330.]],</span><br><span class="line"></span><br><span class="line">         [[1864., 1924.],</span><br><span class="line">          [2143., 2212.]]],</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        [[[1018., 1096.],</span><br><span class="line">          [1135., 1222.]],</span><br><span class="line"></span><br><span class="line">         [[1828., 1924.],</span><br><span class="line">          [1999., 2104.]],</span><br><span class="line"></span><br><span class="line">         [[2854., 2968.],</span><br><span class="line">          [3079., 3202.]],</span><br><span class="line"></span><br><span class="line">         [[4096., 4228.],</span><br><span class="line">          [4375., 4516.]]],</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        [[[1954., 2104.],</span><br><span class="line">          [2071., 2230.]],</span><br><span class="line"></span><br><span class="line">         [[3196., 3364.],</span><br><span class="line">          [3367., 3544.]],</span><br><span class="line"></span><br><span class="line">         [[4654., 4840.],</span><br><span class="line">          [4879., 5074.]],</span><br><span class="line"></span><br><span class="line">         [[6328., 6532.],</span><br><span class="line">          [6607., 6820.]]]]) torch.Size([3, 4, 2, 2])</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+	<div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
+    
+</div>
+    
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐阅读</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/9765ce4r.html" rel="bookmark">Numpy 学习笔记</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/9765ce3g.html" rel="bookmark">Pytorch 学习笔记（神经网络篇）</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/9765ce6d.html" rel="bookmark">Python 基础篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/c386cf1b.html" rel="bookmark">Python爬取小说</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/6aa96330.html" rel="bookmark">Python爬虫的环境搭建</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>Donate a cup of cola?</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cola & Library
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://colainlibrary.com/archives/9765ce7e.html" title="Pytorch 学习笔记（基础篇）">https://colainlibrary.com/archives/9765ce7e.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Library/" rel="tag"><i class="fa fa-tag"></i> Library</a>
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/9765ce6d.html" rel="prev" title="Python 基础篇">
+      <i class="fa fa-chevron-left"></i> Python 基础篇
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/9765ce3g.html" rel="next" title="Pytorch 学习笔记（神经网络篇）">
+      Pytorch 学习笔记（神经网络篇） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%89%8D%E8%A8%80"><span class="nav-text">1 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Pytroch-%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95"><span class="nav-text">2 Pytroch 基础用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E7%BB%B4%E5%BA%A6%E7%BD%AE%E6%8D%A2permute"><span class="nav-text">2.1 维度置换permute</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%92%E5%88%86"><span class="nav-text">2.2 线性空间的划分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-tensor%E8%BF%9E%E6%8E%A5"><span class="nav-text">2.3 tensor连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97"><span class="nav-text">2.4 矩阵运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-torch-einsum"><span class="nav-text">2.4.1 torch.einsum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-%E4%B8%80%E7%BB%B4%E5%90%91%E9%87%8F%E7%9A%84%E8%BF%90%E7%AE%97"><span class="nav-text">2.4.2 一维向量的运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E7%9A%84%E8%BF%90%E7%AE%97"><span class="nav-text">2.4.3 二维矩阵的运算</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cola & Library"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Cola & Library</p>
+  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">281k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:16</span>
+</div>
+
+
+<!-- 网站运行时间的设置 -->
+<div>
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+</div>
+
+<!-- 网站底部统计本站访问数量 -->
+<!--
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+    <span class="post-meta-divider">|</span>
+已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
+</div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+       	<i class="fa fa-"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        共观看 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+	
+</body>
+</html>

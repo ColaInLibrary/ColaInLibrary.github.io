@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
+  <meta name="baidu-site-verification" content="aHT7NgajBz">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://colainlibrary.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="本文主要记录在用Pytorch时和神经网络相关的一些笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch 学习笔记（神经网络篇）">
+<meta property="og:url" content="https://colainlibrary.com/archives/9765ce3g.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="本文主要记录在用Pytorch时和神经网络相关的一些笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-10T11:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-12T15:06:48.639Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="Library">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://colainlibrary.com/archives/9765ce3g.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Pytorch 学习笔记（神经网络篇） | Cola In Library</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cola In Library</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/9765ce3g.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Cola & Library">
+      <meta itemprop="description" content="Understand, don't memorize.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cola In Library">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Pytorch 学习笔记（神经网络篇）
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+			
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-10 11:00:00" itemprop="dateCreated datePublished" datetime="2022-08-10T11:00:00Z">2022-08-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index">
+                    <span itemprop="name">人工智能</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index">
+                    <span itemprop="name">神经网络</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/9765ce3g.html" class="post-meta-item leancloud_visitors" data-flag-title="Pytorch 学习笔记（神经网络篇）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/9765ce3g.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/9765ce3g.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文主要记录在用Pytorch时和神经网络相关的一些笔记。<br><span id="more"></span></p>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>本文记录了Pytorch学习过程中的和神经网络相关的一些内容，例如：多层网络的搭建，LSTM的计算结果等。</p>
+<h1 id="2-nn中的一些方法"><a href="#2-nn中的一些方法" class="headerlink" title="2 nn中的一些方法"></a>2 nn中的一些方法</h1><h2 id="2-0-基础"><a href="#2-0-基础" class="headerlink" title="2.0 基础"></a>2.0 基础</h2><ul>
+<li><code>dir(torch.xxx.xxxx)</code>可以用来查看下一级的函数<br>示例：<code>dir(torch.cuda)</code> 有双下划线的表示不可以修改，表示已经到底了</li>
+<li><p><code>help(torch.cuda.is_available)</code>  查看怎么使用，这里不加括号</p>
+</li>
+<li><p>Jupyter Notebook可以将输出显示的很整洁，而控制台将会混乱</p>
+</li>
+<li><p>Dataset 提供一种数据获取方式及其label，Dataset主要是重写<strong>getitem</strong>这个方法</p>
+</li>
+<li>Dataloader 为网络提供不同的数据形式。dataset是建立数据集，就是建立起数据以及它们的索引，还有数据总量；dataloader负责从dataset中取数据，例如dataset就是一副扑克牌，dataloader决定了用一只手还是两只手去抓牌；dataloader中 batch_size 就是一次取2张牌还是4张牌。</li>
+<li>num_workers可能在Windows中出错</li>
+<li>tensorboard的使用：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple tensorboard</span><br><span class="line"><span class="built_in">cd</span> logs所在目录</span><br><span class="line">tensorboard --logdir=logs --port=6007  <span class="comment"># 默认的端口是6006</span></span><br></pre></td></tr></table></figure></li>
+<li>torch中非线性激活函数Relu(input, inplace=True) inplace 表示将原来给Relu的输入替换</li>
+<li>Tudui.train(), Tudui.eval() 仅仅是对网络中包含Dropout、BatchNorm层的网络才有效，如果没有这两层，可以不调用这两个函数。</li>
+<li>pytorch中requires<em>grad()</em>的用法：<br><code>tensor.requires_grad_()</code> 可以将tensor的求导属性设置未True</li>
+<li>类继承的简单说明：<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Model</span>(nn.Module):  <span class="comment"># 小括号中的nn.module表示对自己定义的Model类对nn.module继承</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">init</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="built_in">super</span>(Model, self).__init__  <span class="comment"># 表示对nn.Module类的初始化</span></span><br><span class="line">    self.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">20</span>, <span class="number">5</span>)</span><br><span class="line">    self.conv2 = nn.Conv2d(<span class="number">20</span>, <span class="number">20</span>, <span class="number">5</span>)</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    x = F.relu(self.conv1(x))</span><br><span class="line">    <span class="keyword">return</span> F.relu(self.conv2(x))</span><br></pre></td></tr></table></figure></li>
+<li>最大池化的目的是提取主要特征，保留主要信息，减少数据量</li>
+<li>pytorch视觉的一些数据集：<span class="exturl" data-url="aHR0cHM6Ly9weXRvcmNoLm9yZy92aXNpb24vc3RhYmxlL2luZGV4Lmh0bWw=" title="https://pytorch.org/vision/stable/index.html">https://pytorch.org/vision/stable/index.html<i class="fa fa-external-link"></i></span></li>
+</ul>
+<h2 id="2-1-多个相同网络的添加"><a href="#2-1-多个相同网络的添加" class="headerlink" title="2.1 多个相同网络的添加"></a>2.1 多个相同网络的添加</h2><p>参考[<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQwOTA0MjkvYXJ0aWNsZS9kZXRhaWxzLzExMjYxODYwNw==" title="https://blog.csdn.net/u014090429/article/details/112618607">链接<i class="fa fa-external-link"></i></span>]中说的非常清晰。</p>
+<p>总的来说， nn.Sequential() 可以在添加网络的时候同时进行forward，不需要再额外写forward函数，但是这样也失去了一部分的灵活性。而 nn.ModuleList() 仅仅是灵活添加网络，但并不包含 forward，需要自己在forward中进行重写。前者更多地应用于需要将一个模块反复调用的场景，后者更适用于需要知道前面某层输出或参数的情况。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">net7</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(net7, self).__init__()</span><br><span class="line">        self.linear_list = [nn.Linear(<span class="number">10</span>, <span class="number">10</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>)]</span><br><span class="line">        self.linears = nn.Sequential(*self.linears_list)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        self.x = self.linears(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line">net = net7()</span><br><span class="line"><span class="built_in">print</span>(net)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上述代码中的 * 操作符，参考[<span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpBNE1qRXlOVEE1TXc9PSZhbXA7bWlkPTI2NTI1NjkxNTMmYW1wO2lkeD0xJmFtcDtzbj01N2IzNDQxM2RlODRlYzg3Njk3NmNhZDVjYWI1MjBiYyZhbXA7Y2hrc209ODQ2NGQ2MGJiMzEzNWYxZDVmYjcyNDAyMjk1MmI5ZWYxYzM2NmE0MmVhYzFiYzQ3NWE4YWU1MzQxOTE2ZTQ2NzBjMDI5ZTc0Y2I5ZCZhbXA7bXBzaGFyZT0xJmFtcDtzY2VuZT0xJmFtcDtzcmNpZD0jcmQ=" title="https://mp.weixin.qq.com/s?__biz=MzA4MjEyNTA5Mw==&amp;mid=2652569153&amp;idx=1&amp;sn=57b34413de84ec876976cad5cab520bc&amp;chksm=8464d60bb3135f1d5fb724022952b9ef1c366a42eac1bc475a8ae5341916e4670c029e74cb9d&amp;mpshare=1&amp;scene=1&amp;srcid=#rd">链接<i class="fa fa-external-link"></i></span>]。</p>
+</blockquote>
+<p>输出结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">net7(</span><br><span class="line">  (linears): Sequential(</span><br><span class="line">    (0): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (1): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (2): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>torch.nn.ModuleList()方法<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyModule</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(MyModule, self).__init__()</span><br><span class="line">        self.linears = nn.ModuleList([nn.Linear(<span class="number">10</span>, <span class="number">10</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>)])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="comment"># ModuleList can act as an iterable, or be indexed using ints</span></span><br><span class="line">        <span class="keyword">for</span> i, l <span class="keyword">in</span> <span class="built_in">enumerate</span>(self.linears):</span><br><span class="line">            x = self.linears[i // <span class="number">2</span>](x) + l(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">test=MyModule()</span><br><span class="line"><span class="built_in">print</span>(test)</span><br></pre></td></tr></table></figure><br>上述代码的输出为：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">MyModule(</span><br><span class="line">  (linears): ModuleList(</span><br><span class="line">    (0): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (1): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (2): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (3): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (4): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (5): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (6): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (7): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (8): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">    (9): Linear(in_features=10, out_features=10, bias=True)</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">input_size=<span class="number">10</span></span><br><span class="line">hidden_size=<span class="number">128</span></span><br><span class="line">nlayers = <span class="number">3</span></span><br><span class="line">rnns = nn.ModuleList()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(nlayers):</span><br><span class="line">    input_size = input_size <span class="keyword">if</span> i==<span class="number">0</span> <span class="keyword">else</span> hidden_size</span><br><span class="line">    rnns.append(nn.LSTM(input_size,hidden_size,<span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(rnns)</span><br></pre></td></tr></table></figure>
+<p>输出结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ModuleList(</span><br><span class="line">  (0): LSTM(10, 128)</span><br><span class="line">  (1): LSTM(128, 128)</span><br><span class="line">  (2): LSTM(128, 128)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：</p>
+<ul>
+<li>子模块必须放在顶层的属性中，而不可能放在列表或者字典中。因为如果不在顶层，而是在列表或者字典中，那么优化器就不能够准确定位这些子模块，因而也就无法优化更新这些模块的参数。</li>
+<li>如果你需要一个列表或者字典来存放你的子模块，那么就需要使用pytorch提供的方式nn.ModuleList和nn.ModuleDict方法。</li>
+</ul>
+</blockquote>
+<h2 id="2-2-torch-manual-seed-seed-介绍"><a href="#2-2-torch-manual-seed-seed-介绍" class="headerlink" title="2.2 torch.manual_seed(seed) 介绍"></a>2.2 torch.manual_seed(seed) 介绍</h2><p>参考：[<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDIxMTk2OC9hcnRpY2xlL2RldGFpbHMvMTIzNzY5MDEw" title="https://blog.csdn.net/weixin_44211968/article/details/123769010">链接<i class="fa fa-external-link"></i></span>]<br>函数的功能就是保证程序每次运行的时候生成的随机数都是一致的。</p>
+<h2 id="2-3-dataloader提取数据"><a href="#2-3-dataloader提取数据" class="headerlink" title="2.3 dataloader提取数据"></a>2.3 dataloader提取数据</h2><p>[<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTk1ODM2Ni9hcnRpY2xlL2RldGFpbHMvMTEwNDkzNTUx" title="https://blog.csdn.net/weixin_39958366/article/details/110493551">链接<i class="fa fa-external-link"></i></span>]</p>
+<h2 id="2-4-nn-Conv1d"><a href="#2-4-nn-Conv1d" class="headerlink" title="2.4 nn.Conv1d()"></a>2.4 nn.Conv1d()</h2><p>[<span class="exturl" data-url="aHR0cHM6Ly9weXRvcmNoLm9yZy9kb2NzL3N0YWJsZS9nZW5lcmF0ZWQvdG9yY2gubm4uQ29udjFkLmh0bWw=" title="https://pytorch.org/docs/stable/generated/torch.nn.Conv1d.html">链接1<i class="fa fa-external-link"></i></span>]<br>[<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bm55X3hzYzE5OTQvYXJ0aWNsZS9kZXRhaWxzLzgyOTY5ODY3" title="https://blog.csdn.net/sunny_xsc1994/article/details/82969867">链接2<i class="fa fa-external-link"></i></span>]</p>
+<h2 id="2-5-torch-nn-init-kaimingnormal"><a href="#2-5-torch-nn-init-kaimingnormal" class="headerlink" title="2.5 torch.nn.init.kaimingnormal()"></a>2.5 torch.nn.init.kaiming<em>normal</em>()</h2><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L251bGlsaXEvYXJ0aWNsZS9kZXRhaWxzLzEyMjY3ODI4OQ==" title="https://blog.csdn.net/nuliliq/article/details/122678289">https://blog.csdn.net/nuliliq/article/details/122678289<i class="fa fa-external-link"></i></span></p>
+<p>使用正态分布对输入张量进行赋值。<br>如果权重是通过线性层（卷积或全连接）隐性确定的，则需设置mode=fan_in。如果通过创建随机矩阵显式创建权重，则应进行设置mode=‘fan_out’。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line">w = torch.empty(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line"><span class="built_in">print</span>(w)</span><br><span class="line"><span class="built_in">print</span>(torch.nn.init.kaiming_normal_(w, mode=<span class="string">&#x27;fan_out&#x27;</span>, nonlinearity=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(w)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tensor([[9.9184e-39, 8.7245e-39, 9.2755e-39, 8.9082e-39, 9.9184e-39],</span><br><span class="line">        [8.4490e-39, 9.6429e-39, 1.0653e-38, 1.0469e-38, 4.2246e-39],</span><br><span class="line">        [1.0378e-38, 9.6429e-39, 9.2755e-39, 9.7346e-39, 1.0745e-38]])</span><br><span class="line">tensor([[-1.1195,  0.8319,  0.4465,  1.5517, -0.2840],</span><br><span class="line">        [-0.6165,  0.2486,  0.0273,  0.7761, -0.9499],</span><br><span class="line">        [ 0.3389, -0.1474,  0.5669, -0.1427,  0.2397]])</span><br><span class="line">tensor([[-1.1195,  0.8319,  0.4465,  1.5517, -0.2840],</span><br><span class="line">        [-0.6165,  0.2486,  0.0273,  0.7761, -0.9499],</span><br><span class="line">        [ 0.3389, -0.1474,  0.5669, -0.1427,  0.2397]])</span><br></pre></td></tr></table></figure>
+<h2 id="2-6-torch-nn-Embedding"><a href="#2-6-torch-nn-Embedding" class="headerlink" title="2.6 torch.nn.Embedding()"></a>2.6 torch.nn.Embedding()</h2><p>Embedding 教程. [<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLmdvb2dsZS5jb20vbWFjaGluZS1sZWFybmluZy9jcmFzaC1jb3Vyc2UvZW1iZWRkaW5ncy92aWRlby1sZWN0dXJlP2hsPXpoX2Nu" title="https://developers.google.com/machine-learning/crash-course/embeddings/video-lecture?hl=zh_cn">链接1<i class="fa fa-external-link"></i></span>][<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLmdvb2dsZS5jb20vbWFjaGluZS1sZWFybmluZy9jcmFzaC1jb3Vyc2UvZW1iZWRkaW5ncy90cmFuc2xhdGluZy10by1hLWxvd2VyLWRpbWVuc2lvbmFsLXNwYWNl" title="https://developers.google.com/machine-learning/crash-course/embeddings/translating-to-a-lower-dimensional-space">链接2<i class="fa fa-external-link"></i></span>].<br>torch.nn.Embedding(numembeddings,embeddingdim)的意思是创建一个词嵌入模型，numembeddings代表一共有多少个词, embedding_dim代表你想要为每个词创建一个多少维的向量来表示它，如下面的例子。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line">embedding = nn.Embedding(<span class="number">5</span>, <span class="number">4</span>) <span class="comment"># 假定字典中只有5个词，词向量维度为4</span></span><br><span class="line">word = [[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">        [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]] <span class="comment"># 每个数字代表一个词，例如 &#123;&#x27;!&#x27;:0,&#x27;how&#x27;:1, &#x27;are&#x27;:2, &#x27;you&#x27;:3,  &#x27;ok&#x27;:4&#125;</span></span><br><span class="line">         		   <span class="comment">#而且这些数字的范围只能在0～4之间，因为上面定义了只有5个词</span></span><br><span class="line">embed = embedding(torch.LongTensor(word))</span><br><span class="line"><span class="built_in">print</span>(embed) </span><br><span class="line"><span class="built_in">print</span>(embed.size())</span><br></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># print result:</span></span><br><span class="line">tensor([[[-0.7768, -0.6267,  0.0288, -1.0217],</span><br><span class="line">         [-0.0518,  0.6011,  1.2924, -1.4219],</span><br><span class="line">         [-0.4475, -1.9976,  0.9484, -0.1971]],</span><br><span class="line"></span><br><span class="line">        [[-0.0518,  0.6011,  1.2924, -1.4219],</span><br><span class="line">         [-0.4475, -1.9976,  0.9484, -0.1971],</span><br><span class="line">         [ 1.5638, -0.8426, -0.8601,  1.1443]]], grad_fn=&lt;EmbeddingBackward0&gt;)</span><br><span class="line">torch.Size([2, 3, 4])</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-7-nn-LayerNorm"><a href="#2-7-nn-LayerNorm" class="headerlink" title="2.7 nn.LayerNorm()"></a>2.7 nn.LayerNorm()</h2><p>[<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MTk3ODY5OS9hcnRpY2xlL2RldGFpbHMvMTIyNzc4MDg1" title="https://blog.csdn.net/weixin_41978699/article/details/122778085">链接<i class="fa fa-external-link"></i></span>].<br>在transformer中一般采用LayerNorm，LayerNorm也是归一化的一种方法，与BatchNorm不同的是它是对每单个batch进行的归一化，而batchnorm是对所有batch一起进行归一化的。</p>
+<h1 id="3-LSTM-的一些笔记"><a href="#3-LSTM-的一些笔记" class="headerlink" title="3 LSTM 的一些笔记"></a>3 LSTM 的一些笔记</h1><h2 id="3-1-nn-LSTM的使用"><a href="#3-1-nn-LSTM的使用" class="headerlink" title="3.1 nn.LSTM的使用"></a>3.1 nn.LSTM的使用</h2><p>参考链接：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbWlkdWNrL2FydGljbGUvZGV0YWlscy8xMTk5NzUwODA=" title="https://blog.csdn.net/mimiduck/article/details/119975080">https://blog.csdn.net/mimiduck/article/details/119975080<i class="fa fa-external-link"></i></span><br>莫烦Python 402_RNN.py说明：<br>任务目标：预测手写数字是几<br>训练数据集是MNIST，使用pytorch加载该数据集返回两个值, 第一个是一个 60000x28x28 的tensor, 这里的 n 是样本数(行数), m 是特征数(列数). 训练数据集包含 60,000 个样本, 测试数据集包含 10,000 样本. 在 MNIST 数据集中的每张图片由 28 x 28 个像素点构成, 每个像素点用一个灰度值表示. 在这里, 我们将 28 x 28 的像素展开为一个一维的行向量, 这些行向量就是图片数组里的行(每行 784 个值, 或者说每行就是代表了一张图片). load_mnist 函数返回的第二个数组(labels) 包含了相应的目标变量, 也就是手写数字的类标签(整数 0-9).</p>
+<h2 id="3-2-pytorch种LSTM层数的问题"><a href="#3-2-pytorch种LSTM层数的问题" class="headerlink" title="3.2 pytorch种LSTM层数的问题"></a>3.2 pytorch种LSTM层数的问题</h2><ol>
+<li>官网上关于LSTM参数 num_layers 的讨论：<span class="exturl" data-url="aHR0cHM6Ly9kaXNjdXNzLnB5dG9yY2gub3JnL3Qvd2hhdC1pcy1udW0tbGF5ZXJzLWluLXJubi1tb2R1bGUvOTg0Mw==" title="https://discuss.pytorch.org/t/what-is-num-layers-in-rnn-module/9843">https://discuss.pytorch.org/t/what-is-num-layers-in-rnn-module/9843<i class="fa fa-external-link"></i></span></li>
+<li>LSTM层数问题：<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDkyMjQ0MTMvZGlmZmVyZW5jZS1iZXR3ZWVuLTEtbHN0bS13aXRoLW51bS1sYXllcnMtMi1hbmQtMi1sc3Rtcy1pbi1weXRvcmNo" title="https://stackoverflow.com/questions/49224413/difference-between-1-lstm-with-num-layers-2-and-2-lstms-in-pytorch">https://stackoverflow.com/questions/49224413/difference-between-1-lstm-with-num-layers-2-and-2-lstms-in-pytorch<i class="fa fa-external-link"></i></span></li>
+<li>LSTM层数代码的验证：<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNzE2MzA0OTMvbXVsdGktbHN0bS1sYXllcnMtYW5kLW11bHRpLWxzdG0taW4tcHl0b3JjaA==" title="https://stackoverflow.com/questions/71630493/multi-lstm-layers-and-multi-lstm-in-pytorch">https://stackoverflow.com/questions/71630493/multi-lstm-layers-and-multi-lstm-in-pytorch<i class="fa fa-external-link"></i></span></li>
+<li>多层LSTM与cell的绘图：<span class="exturl" data-url="aHR0cHM6Ly90b3dhcmRzZGF0YXNjaWVuY2UuY29tL2Zyb20tYS1sc3RtLWNlbGwtdG8tYS1tdWx0aWxheWVyLWxzdG0tbmV0d29yay13aXRoLXB5dG9yY2gtMjg5OWViNTY5NmYz" title="https://towardsdatascience.com/from-a-lstm-cell-to-a-multilayer-lstm-network-with-pytorch-2899eb5696f3">https://towardsdatascience.com/from-a-lstm-cell-to-a-multilayer-lstm-network-with-pytorch-2899eb5696f3<i class="fa fa-external-link"></i></span></li>
+</ol>
+<h2 id="3-3-变长数据的处理"><a href="#3-3-变长数据的处理" class="headerlink" title="3.3 变长数据的处理"></a>3.3 变长数据的处理</h2><p>LSTM变长数据的输入：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tlaml6dWlxaWFuZmFuZy9hcnRpY2xlL2RldGFpbHMvMTAwODM1NTI4" title="https://blog.csdn.net/kejizuiqianfang/article/details/100835528">https://blog.csdn.net/kejizuiqianfang/article/details/100835528<i class="fa fa-external-link"></i></span><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将不等长的tensor数据，补充成等长的tensor数据，这个就已经是补充好的等长tensor数据了</span></span><br><span class="line">torch.nn.utils.rnn.pad_sequence()</span><br><span class="line"><span class="comment"># 把等长的tensor根据所输入的参数压缩成实际的数据, 同时数据格式变成PackedSequence</span></span><br><span class="line">torch.nn.utils.rnn.pack_padded_sequence()</span><br><span class="line"><span class="comment"># 上述压缩成PackedSequence的数据还原成tensor类型, 并补成等长的数据</span></span><br><span class="line">torch.nn.utils.rnn.pad_packed_sequence()</span><br></pre></td></tr></table></figure><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn.utils.rnn <span class="keyword">as</span> rnn_utils</span><br><span class="line">x = [torch.tensor([<span class="number">1</span>]), torch.tensor([<span class="number">1</span>,<span class="number">2</span>])]</span><br><span class="line">y = rnn_utils.pad_sequence(x, batch_first=<span class="literal">True</span>, padding_value=-<span class="number">999</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;type: &quot;</span>, <span class="built_in">type</span>(x), <span class="built_in">type</span>(y))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x:\n&quot;</span>, x)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;y:\n&quot;</span>, y)</span><br></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span>:  &lt;class <span class="string">&#x27;list&#x27;</span>&gt; &lt;class <span class="string">&#x27;torch.Tensor&#x27;</span>&gt;</span><br><span class="line">x:</span><br><span class="line"> [tensor([1]), tensor([1, 2])]</span><br><span class="line">y:</span><br><span class="line"> tensor([[   1, -999],</span><br><span class="line">        [   1,    2]])</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-4-Seq2Seq模型"><a href="#3-4-Seq2Seq模型" class="headerlink" title="3.4 Seq2Seq模型"></a>3.4 Seq2Seq模型</h2><ol>
+<li>简易版RNN</li>
+<li>LSTM</li>
+<li>GRU，LSTM的简化版</li>
+<li>Attention</li>
+<li>Self Attention</li>
+<li>Transformer (<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMVNLNHkxZDdRaC8/c3BtX2lkX2Zyb209MzMzLjc4OC5yZWNvbW1lbmRfbW9yZV92aWRlby4tMQ==" title="https://www.bilibili.com/video/BV1SK4y1d7Qh/?spm_id_from=333.788.recommend_more_video.-1">b站王树森<i class="fa fa-external-link"></i></span>)<br>[<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmJzbWF4LmNvbS9BL0drejFQbTRxZFIv" title="https://www.bbsmax.com/A/Gkz1Pm4qdR/">深入理解Transformer及其源码<i class="fa fa-external-link"></i></span>]</li>
+<li>Informer<br>AAAI最佳论文Informer 解读. [<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZsdWVudG4vYXJ0aWNsZS9kZXRhaWxzLzExNTM5MjIyOQ==" title="https://blog.csdn.net/fluentn/article/details/115392229">链接<i class="fa fa-external-link"></i></span>]</li>
+</ol>
+<h1 id="4-两个警告"><a href="#4-两个警告" class="headerlink" title="4 两个警告"></a>4 两个警告</h1><h2 id="4-2-警告1-——-Numpy-array-is-not-writeable"><a href="#4-2-警告1-——-Numpy-array-is-not-writeable" class="headerlink" title="4.2 警告1 —— Numpy array is not writeable"></a>4.2 警告1 —— Numpy array is not writeable</h2><p>警告1：\torchvision\datasets\mnist.py:498: UserWarning: The given NumPy array is not writeable, and PyTorch does not support non-writeable tensors. This means you can write to the underlying (supposedly non-writeable) NumPy array using the tensor. You may want to copy the array to protect its data or make it writeable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at …\torch\csrc\utils\tensor_numpy.cpp:180.)</p>
+<p>点进去之后将copy=False改为copy=True</p>
+<p>参考链接：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2NjY3MTcwL2FydGljbGUvZGV0YWlscy8xMjEyMjI3NjY=" title="https://blog.csdn.net/qq_36667170/article/details/121222766">https://blog.csdn.net/qq_36667170/article/details/121222766<i class="fa fa-external-link"></i></span></p>
+<h2 id="4-2-警告2-——-test-data-has-been-renamed-data"><a href="#4-2-警告2-——-test-data-has-been-renamed-data" class="headerlink" title="4.2 警告2 —— test_data has been renamed data"></a>4.2 警告2 —— test_data has been renamed data</h2><p>警告2：UserWarning: test_data has been renamed datawarnings.warn(“test_data has been renamed data”)<br>UserWarning: test_labels has been renamed targets warnings.warn(“test_labels has been renamed targets”)</p>
+<p>test_data.test_data → test_data.data<br>test_data.tast_labels → test_data.targets</p>
+<p>参考链接：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE1MjI2ODYvYXJ0aWNsZS9kZXRhaWxzLzEwNDcxNzMxMQ==" title="https://blog.csdn.net/u011522686/article/details/104717311">https://blog.csdn.net/u011522686/article/details/104717311<i class="fa fa-external-link"></i></span></p>
+<h1 id="5-可参考的视频教程"><a href="#5-可参考的视频教程" class="headerlink" title="5 可参考的视频教程"></a>5 可参考的视频教程</h1><ul>
+<li>pytorch的另一个基础教程：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMXNENHkxMjdiQz9mcm9tPXNlYXJjaCZhbXA7c2VpZD0xMzc1NzUzOTE1MTc1OTc4MzUxNiZhbXA7c3BtX2lkX2Zyb209MzMzLjMzNy4wLjA=" title="https://www.bilibili.com/video/BV1sD4y127bC?from=search&amp;seid=13757539151759783516&amp;spm_id_from=333.337.0.0">视频<i class="fa fa-external-link"></i></span><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NldGFpbC9weXRvcmNoX3R1dG9yaWFs" title="https://github.com/setail/pytorch_tutorial">代码<i class="fa fa-external-link"></i></span></li>
+<li>pytorch小土堆快速入门：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMWhFNDExdDdSTj9wPTE1" title="https://www.bilibili.com/video/BV1hE411t7RN?p=15">视频<i class="fa fa-external-link"></i></span><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpYW90dWR1aS9QeVRvcmNoLVR1dG9yaWFs" title="https://github.com/xiaotudui/PyTorch-Tutorial">代码<i class="fa fa-external-link"></i></span></li>
+</ul>
+
+    </div>
+
+	<div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
+    
+</div>
+    
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐阅读</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/9765ce4r.html" rel="bookmark">Numpy 学习笔记</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/9765ce7e.html" rel="bookmark">Pytorch 学习笔记（基础篇）</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/9765ce6d.html" rel="bookmark">Python 基础篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/c386cf1b.html" rel="bookmark">Python爬取小说</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/6aa96330.html" rel="bookmark">Python爬虫的环境搭建</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>Donate a cup of cola?</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cola & Library
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://colainlibrary.com/archives/9765ce3g.html" title="Pytorch 学习笔记（神经网络篇）">https://colainlibrary.com/archives/9765ce3g.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Library/" rel="tag"><i class="fa fa-tag"></i> Library</a>
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/9765ce7e.html" rel="prev" title="Pytorch 学习笔记（基础篇）">
+      <i class="fa fa-chevron-left"></i> Pytorch 学习笔记（基础篇）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/9765ce4r.html" rel="next" title="Numpy 学习笔记">
+      Numpy 学习笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%89%8D%E8%A8%80"><span class="nav-text">1 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-nn%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="nav-text">2 nn中的一些方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-%E5%9F%BA%E7%A1%80"><span class="nav-text">2.0 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%A4%9A%E4%B8%AA%E7%9B%B8%E5%90%8C%E7%BD%91%E7%BB%9C%E7%9A%84%E6%B7%BB%E5%8A%A0"><span class="nav-text">2.1 多个相同网络的添加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-torch-manual-seed-seed-%E4%BB%8B%E7%BB%8D"><span class="nav-text">2.2 torch.manual_seed(seed) 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-dataloader%E6%8F%90%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-text">2.3 dataloader提取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-nn-Conv1d"><span class="nav-text">2.4 nn.Conv1d()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-torch-nn-init-kaimingnormal"><span class="nav-text">2.5 torch.nn.init.kaimingnormal()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-torch-nn-Embedding"><span class="nav-text">2.6 torch.nn.Embedding()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-7-nn-LayerNorm"><span class="nav-text">2.7 nn.LayerNorm()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-LSTM-%E7%9A%84%E4%B8%80%E4%BA%9B%E7%AC%94%E8%AE%B0"><span class="nav-text">3 LSTM 的一些笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-nn-LSTM%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">3.1 nn.LSTM的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-pytorch%E7%A7%8DLSTM%E5%B1%82%E6%95%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">3.2 pytorch种LSTM层数的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%8F%98%E9%95%BF%E6%95%B0%E6%8D%AE%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-text">3.3 变长数据的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-Seq2Seq%E6%A8%A1%E5%9E%8B"><span class="nav-text">3.4 Seq2Seq模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E4%B8%A4%E4%B8%AA%E8%AD%A6%E5%91%8A"><span class="nav-text">4 两个警告</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E8%AD%A6%E5%91%8A1-%E2%80%94%E2%80%94-Numpy-array-is-not-writeable"><span class="nav-text">4.2 警告1 —— Numpy array is not writeable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E8%AD%A6%E5%91%8A2-%E2%80%94%E2%80%94-test-data-has-been-renamed-data"><span class="nav-text">4.2 警告2 —— test_data has been renamed data</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%8F%AF%E5%8F%82%E8%80%83%E7%9A%84%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="nav-text">5 可参考的视频教程</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cola & Library"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Cola & Library</p>
+  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">281k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:16</span>
+</div>
+
+
+<!-- 网站运行时间的设置 -->
+<div>
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+</div>
+
+<!-- 网站底部统计本站访问数量 -->
+<!--
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+    <span class="post-meta-divider">|</span>
+已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
+</div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+       	<i class="fa fa-"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        共观看 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+	
+</body>
+</html>

@@ -6,7 +6,7 @@
   <link href="https://colainlibrary.com/atom.xml" rel="self"/>
   
   <link href="https://colainlibrary.com/"/>
-  <updated>2022-07-26T09:46:21.547Z</updated>
+  <updated>2022-08-12T14:54:12.132Z</updated>
   <id>https://colainlibrary.com/</id>
   
   <author>
@@ -15,6 +15,98 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Numpy 学习笔记</title>
+    <link href="https://colainlibrary.com/archives/9765ce4r.html"/>
+    <id>https://colainlibrary.com/archives/9765ce4r.html</id>
+    <published>2022-08-11T11:00:00.000Z</published>
+    <updated>2022-08-12T14:54:12.132Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文主要记录Numpy的一些学习笔记，方便自己查阅。&lt;br&gt;</summary>
+    
+    
+    
+    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    
+    <category term="快乐码农" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pytorch 学习笔记（神经网络篇）</title>
+    <link href="https://colainlibrary.com/archives/9765ce3g.html"/>
+    <id>https://colainlibrary.com/archives/9765ce3g.html</id>
+    <published>2022-08-10T11:00:00.000Z</published>
+    <updated>2022-08-12T15:06:48.639Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文主要记录在用Pytorch时和神经网络相关的一些笔记。&lt;br&gt;</summary>
+    
+    
+    
+    <category term="人工智能" scheme="https://colainlibrary.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="神经网络" scheme="https://colainlibrary.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pytorch 学习笔记（基础篇）</title>
+    <link href="https://colainlibrary.com/archives/9765ce7e.html"/>
+    <id>https://colainlibrary.com/archives/9765ce7e.html</id>
+    <published>2022-08-09T11:00:00.000Z</published>
+    <updated>2022-08-12T14:53:41.889Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文主要是记录Pytorch学习过程中的一些基础运算方法，方便自己查阅。&lt;br&gt;</summary>
+    
+    
+    
+    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    
+    <category term="快乐码农" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python 基础篇</title>
+    <link href="https://colainlibrary.com/archives/9765ce6d.html"/>
+    <id>https://colainlibrary.com/archives/9765ce6d.html</id>
+    <published>2022-08-08T11:00:00.000Z</published>
+    <updated>2022-08-12T14:54:00.648Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文简单记录一下早期学习Python的笔记。&lt;br&gt;</summary>
+    
+    
+    
+    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    
+    <category term="快乐码农" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Mujoco210安装</title>
@@ -357,102 +449,6 @@
     <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
     
     <category term="Ethercat" scheme="https://colainlibrary.com/tags/Ethercat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux 多内核切换和设置默认开启内核</title>
-    <link href="https://colainlibrary.com/archives/456588d2.html"/>
-    <id>https://colainlibrary.com/archives/456588d2.html</id>
-    <published>2021-04-21T11:00:00.000Z</published>
-    <updated>2021-05-21T08:08:01.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;记录 Ubuntu16.04 多内核切换的方法。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="机器人控制" scheme="https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/"/>
-    
-    <category term="专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置" scheme="https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
-    
-    
-    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
-    
-    <category term="Linux" scheme="https://colainlibrary.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ethercat 主站搭建</title>
-    <link href="https://colainlibrary.com/archives/e5d7cd24.html"/>
-    <id>https://colainlibrary.com/archives/e5d7cd24.html</id>
-    <published>2021-04-17T11:00:00.000Z</published>
-    <updated>2021-05-21T07:58:56.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;介绍 Ubuntu16.04 下 Igh Ethercat 主站搭建的过程。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="机器人控制" scheme="https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/"/>
-    
-    <category term="专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置" scheme="https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
-    
-    
-    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
-    
-    <category term="机器人" scheme="https://colainlibrary.com/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
-    
-    <category term="Ethercat" scheme="https://colainlibrary.com/tags/Ethercat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>preempt_rt 实时内核补丁</title>
-    <link href="https://colainlibrary.com/archives/d44fcc81.html"/>
-    <id>https://colainlibrary.com/archives/d44fcc81.html</id>
-    <published>2021-04-16T11:00:00.000Z</published>
-    <updated>2022-03-07T07:46:39.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;介绍在 Ubuntu16.04 下安装 preempt_rt 实时内核的方法。&lt;br&gt;</summary>
-    
-    
-    
-    <category term="机器人控制" scheme="https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/"/>
-    
-    <category term="专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置" scheme="https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
-    
-    
-    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
-    
-    <category term="Preempt" scheme="https://colainlibrary.com/tags/Preempt/"/>
-    
-    <category term="Ethercat" scheme="https://colainlibrary.com/tags/Ethercat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>两台Ubuntu系统文件共享</title>
-    <link href="https://colainlibrary.com/archives/4347a04c.html"/>
-    <id>https://colainlibrary.com/archives/4347a04c.html</id>
-    <published>2021-03-10T11:00:00.000Z</published>
-    <updated>2021-05-21T07:44:06.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;介绍两台Ubuntu系统共享文件的方法。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
-    
-    <category term="软件技术" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
-    
-    <category term="Linux" scheme="https://colainlibrary.com/tags/Linux/"/>
     
   </entry>
   
