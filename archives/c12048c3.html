@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
+  <meta name="baidu-site-verification" content="aHT7NgajBz">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://colainlibrary.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="再学习Pytorch中的 backward() 和求导">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch 学习笔记（梯度的求取）">
+<meta property="og:url" content="https://colainlibrary.com/archives/c12048c3.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="再学习Pytorch中的 backward() 和求导">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://colainlibrary.com/images/20191023/00.png">
+<meta property="og:image" content="https://colainlibrary.com/images/20220814/01.png">
+<meta property="article:published_time" content="2022-08-14T15:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-15T09:34:28.640Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="Library">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://colainlibrary.com/images/20191023/00.png">
+
+<link rel="canonical" href="https://colainlibrary.com/archives/c12048c3.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Pytorch 学习笔记（梯度的求取） | Cola In Library</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cola In Library</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/c12048c3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Cola & Library">
+      <meta itemprop="description" content="Understand, don't memorize.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cola In Library">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Pytorch 学习笔记（梯度的求取）
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+			
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-14 15:00:00" itemprop="dateCreated datePublished" datetime="2022-08-14T15:00:00Z">2022-08-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index">
+                    <span itemprop="name">人工智能</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index">
+                    <span itemprop="name">神经网络</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/c12048c3.html" class="post-meta-item leancloud_visitors" data-flag-title="Pytorch 学习笔记（梯度的求取）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/c12048c3.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/c12048c3.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+            <div class="post-description">再学习Pytorch中的 backward() 和求导</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!-- <img src=" /images/20191023/00.png" width=50% /> -->
+<p>记录pytorch中 backward() 方法，学习pytorch中求导的方法。</p>
+<span id="more"></span>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>神经网络求导，一种是针对神经网络参数的求导，一种是针对输入的求导。</p>
+<p>标量 $y$ 对向量 $x = [x_1,x_2,\cdots,x_m]^\text{T}$ 求导：</p>
+<script type="math/tex; mode=display">
+\frac{\partial y}{\partial x} = \begin{bmatrix}
+ \frac{\partial y}{\partial x_1}\\
+ \frac{\partial y}{\partial x_2}\\
+ \vdots \\
+ \frac{\partial y}{\partial x_m}
+\end{bmatrix}</script><p>向量 $y=[y_1, y_2, \cdots, y_n]^\text{T}$ 对标量 $x$ 求导，有：</p>
+<script type="math/tex; mode=display">
+\frac{\partial y}{\partial x} = \begin{bmatrix}
+ \frac{\partial y_1}{\partial x} & \frac{\partial y_2}{\partial x} & \cdots & \frac{\partial y_n}{\partial x}
+\end{bmatrix}</script><p>向量 $y=[y_1, y_2, \cdots, y_n]^\text{T}$ 对向量 $x = [x_1,x_2,\cdots,x_m]^\text{T}$ 求导，有：</p>
+<script type="math/tex; mode=display">
+\frac{\partial {y}}{\partial {x}}=\begin{bmatrix}
+ \frac{\partial y_1}{\partial x} & \frac{\partial y_2}{\partial x} & \cdots & \frac{\partial y_n}{\partial x}
+\end{bmatrix}
+=\left[\begin{array}{cccc}
+\frac{\partial y_{1}}{\partial x_{1}} & \frac{\partial y_{2}}{\partial x_{1}} & \cdots & \frac{\partial y_{n}}{\partial x_{1}} \\
+\frac{\partial y_{1}}{\partial x_{2}} & \frac{\partial y_{2}}{\partial x_{2}} & \cdots & \frac{\partial y_{n}}{\partial x_{2}} \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial y_{1}}{\partial x_{n}} & \frac{\partial y_{2}}{\partial x_{n}} & \cdots & \frac{\partial y_{n}}{\partial x_{m}}
+\end{array}\right]</script><h1 id="2-Tensor再认识"><a href="#2-Tensor再认识" class="headerlink" title="2 Tensor再认识"></a>2 Tensor再认识</h1><p>因为pytorch中所有的计算都可以回归到Tensor上，所以重新认识一下Tensor。 Tensor中通常会记录如下的属性：</p>
+<ul>
+<li>data: 即存储的数据信息</li>
+<li>requires_grad: 设置为 True 则表示该 Tensor 需要求导</li>
+<li>grad: 该 Tensor 的梯度值，每次在计算 backward 时需要将前一时刻的梯度清零，否则梯度会一直累加。</li>
+<li>grad_fn: 叶子节点通常为 None，只有结果节点的 grad_fn 才有效，用于指示梯度函数时哪种类型。</li>
+<li>is_leaf: 用来指示该 Tensor 是否是叶子节点。可以简单认为，自己定义的变量是叶子节点，在此基础上进行的计算则为中间量/最终量，也就是结果节点。</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">x = torch.rand(<span class="number">3</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">y = x**<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/20220814/01.png" alt="1"></p>
+<h1 id="2-梯度计算"><a href="#2-梯度计算" class="headerlink" title="2 梯度计算"></a>2 梯度计算</h1><h2 id="2-1-backward"><a href="#2-1-backward" class="headerlink" title="2.1 backward()"></a>2.1 backward()</h2><p>源码中关于 backward() 的接口定义如下：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">torch.autograd.backward(tensors, </span><br><span class="line">                        grad_tensors=<span class="literal">None</span>, </span><br><span class="line">                        retain_graph=<span class="literal">None</span>, </span><br><span class="line">                        create_graph=<span class="literal">False</span>, </span><br><span class="line">                        grad_variables=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure><br>参数说明：</p>
+<ul>
+<li>tensor: 用于计算梯度的tensor。也就是说这两种方式是等价的：torch.autograd.backward(z) == z.backward()</li>
+<li>grad_tensors: 在计算矩阵的梯度时会用到。他其实也是一个tensor，shape一般需要和前面的tensor保持一致。</li>
+<li>retain_graph: 通常在调用一次backward后，pytorch会自动把计算图销毁，所以要想对某个变量重复调用backward，则需要将该参数设置为True</li>
+<li>create_graph: 当设置为True的时候可以用来计算更高阶的梯度</li>
+<li>grad_variables: 这个官方说法是grad_variables’ is deprecated. Use ‘grad_tensors’ instead.也就是说这个参数后面版本中应该会丢弃，直接使用grad_tensors就好了。</li>
+</ul>
+<h2 id="2-2-标量的梯度计算"><a href="#2-2-标量的梯度计算" class="headerlink" title="2.2 标量的梯度计算"></a>2.2 标量的梯度计算</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x = torch.tensor(<span class="number">2.0</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">y = torch.tensor(<span class="number">3.0</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">z = x**<span class="number">3</span>+<span class="number">2</span>*y</span><br><span class="line">z.backward()</span><br><span class="line"><span class="built_in">print</span>(z, x.grad, y.grad)</span><br></pre></td></tr></table></figure>
+<p>输出结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensor(14., grad_fn=&lt;AddBackward0&gt;) tensor(12.) tensor(2.)</span><br></pre></td></tr></table></figure><br>不严谨地讲，上述代码定义了一个函数：</p>
+<script type="math/tex; mode=display">
+z = x^3 + 2y</script><p>对其求梯度，有：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial z}{\partial x} &= 3x^2 \\
+\frac{\partial z}{\partial y} &= 2
+\end{align*}</script><p>因为上述代码中 z 是一个标量，所以调用 backward() 方法后会依据链式法则自动计算出叶子节点(x=2, y=3)的梯度值。简单代入即可验证计算的正确性。</p>
+<h2 id="2-3-矩阵的梯度计算"><a href="#2-3-矩阵的梯度计算" class="headerlink" title="2.3 矩阵的梯度计算"></a>2.3 矩阵的梯度计算</h2><p>pytorch不能直接用来求一个矩阵对另一矩阵的导数，会报 <strong>只有对标量输出才能显式计算梯度</strong> 的错误。考虑如下的一个矩阵计算：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+x&=\begin{bmatrix}
+x_1 & x_2 \\
+\end{bmatrix},
+y=\begin{bmatrix}
+y_1 & y_2 \\
+y_3 & y_4 \\
+\end{bmatrix}\\
+z&=xy
+=\begin{bmatrix}
+x_1 & x_2 \\
+\end{bmatrix}\begin{bmatrix}
+y_1 & y_2 \\
+y_3 & y_4 \\
+\end{bmatrix}
+=\begin{bmatrix}
+x_1y_1 + x_2y_3 & x_1y_2 + x_2y_4 \\
+\end{bmatrix}=\begin{bmatrix}
+z_1 & z_2 \\
+\end{bmatrix}
+
+\end{align*}</script><p>因为 $z$ 不再是一个标量，因此不能直接求导了，而矩阵求导本质上仍为标量求导，只不过结果进行了重新书写，为了后续的计算。为了将这个结果变为标量进行求导，就引入了 <code>grad_tensors</code> 这个变量。例如：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = torch.tensor([<span class="number">2.</span>, <span class="number">1.</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line">y = torch.tensor([[<span class="number">1.</span>, <span class="number">2.</span>], [<span class="number">3.</span>, <span class="number">4.</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">z = torch.mm(x.view(<span class="number">1</span>, <span class="number">2</span>), y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;z:<span class="subst">&#123;z&#125;</span>&quot;</span>)</span><br><span class="line">z.backward(torch.Tensor([[<span class="number">1.</span>, <span class="number">0</span>]]), retain_graph=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;x.grad: <span class="subst">&#123;x.grad&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;y.grad: <span class="subst">&#123;y.grad&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure><br>输出结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">z:tensor([[5., 8.]], grad_fn=&lt;MmBackward0&gt;)</span><br><span class="line">x.grad: tensor([1., 3.])</span><br><span class="line">y.grad: tensor([[2., 0.],</span><br><span class="line">        [1., 0.]])</span><br></pre></td></tr></table></figure></p>
+<script type="math/tex; mode=display">
+\begin{align*}
+x&=\begin{bmatrix}
+2 & 1 \\
+\end{bmatrix},
+y=\begin{bmatrix}
+1 & 2 \\
+3 & 4 \\
+\end{bmatrix}\\
+z&=xy=\begin{bmatrix}
+5 & 8 \\
+\end{bmatrix}        
+\end{align*}</script><p>上述代码在对z求梯度的时候，<code>grad_tensors=torch.Tensor([[1., 0]])</code>。它将z变为一个标量，其实际计算过程即：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+z_1 & z_2 \\
+\end{bmatrix}\circ \begin{bmatrix}
+1 & 0 \\
+\end{bmatrix}=z_1\times1+z_2\times0=z_1</script><p>而</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial z_1}{\partial x} &= \begin{bmatrix}
+y_1 & y_3 \\
+\end{bmatrix}= \begin{bmatrix}
+1 & 3 \\
+\end{bmatrix}\\
+\frac{\partial z_1}{\partial y} &= \begin{bmatrix}
+x_1 & 0 \\
+x_2 & 0
+\end{bmatrix}= \begin{bmatrix}
+2 & 0 \\
+1 & 0
+\end{bmatrix}        
+\end{align*}</script><p>同理，对于矩阵：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+x&=\begin{bmatrix}
+x_1 & x_2 \\
+x_3 & x_4 \\
+\end{bmatrix},
+y=\begin{bmatrix}
+y_1 & y_2 \\
+y_3 & y_4 \\
+\end{bmatrix}\\
+z&=xy
+=\begin{bmatrix}
+x_1 & x_2 \\
+x_3 & x_4 \\
+\end{bmatrix}\begin{bmatrix}
+y_1 & y_2 \\
+y_3 & y_4 \\
+\end{bmatrix}
+=\begin{bmatrix}
+x_1y_1 + x_2y_3 & x_1y_2 + x_2y_4 \\
+x_3y_1 + x_4y_3 & x_3y_2 + x_4y_4 \\
+\end{bmatrix}=\begin{bmatrix}
+z_1 & z_2 \\
+z_3 & z_4 \\
+\end{bmatrix}
+
+\end{align*}</script><p>选择 <code>grad_tensors=torch.ones_like(x)=[[1, 1], [1, 1]]</code>，则计算过程为：</p>
+<script type="math/tex; mode=display">
+V=\begin{bmatrix}
+z_1 & z_2 \\
+z_3 & z_4 \\
+\end{bmatrix}\circ \begin{bmatrix}
+1 & 1 \\
+1 & 1 \\
+\end{bmatrix}=z_1\times1+z_2\times1+z_3\times1+z_4\times1=z_1+z_2+z_3+z_4</script><p>求导，有：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial V}{\partial x} &= \begin{bmatrix}
+y_1+y_2 & y_3+y_4 \\
+y_1+y_2 & y_3+y_4 \\
+\end{bmatrix}\\
+\frac{\partial V}{\partial y} &= \begin{bmatrix}
+x_1+x_3 & x_1+x_3 \\
+x_2+x_4 & x_2+x_4 \\
+\end{bmatrix}
+\end{align*}</script><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = torch.tensor([<span class="number">2.</span>, <span class="number">1.</span>, <span class="number">4.</span>, <span class="number">3.</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line">y = torch.tensor([[<span class="number">1.</span>, <span class="number">2.</span>], [<span class="number">3.</span>, <span class="number">4.</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">z = torch.mm(x.view(<span class="number">2</span>, <span class="number">2</span>), y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;z:<span class="subst">&#123;z&#125;</span>&quot;</span>)</span><br><span class="line">z.backward(torch.Tensor([[<span class="number">1.</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">1</span>]]), retain_graph=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;x.grad: <span class="subst">&#123;x.grad&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;y.grad: <span class="subst">&#123;y.grad&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">z:tensor([[ 5.,  8.],</span><br><span class="line">        [13., 20.]], grad_fn=&lt;MmBackward0&gt;)</span><br><span class="line">x.grad: tensor([3., 7., 3., 7.])</span><br><span class="line">y.grad: tensor([[6., 6.],</span><br><span class="line">        [4., 4.]])</span><br></pre></td></tr></table></figure>
+<p>选择 <code>grad_tensors=torch.ones_like(x)=[[1, 5], [3, 9]]</code>，则计算过程为：</p>
+<script type="math/tex; mode=display">
+V=\begin{bmatrix}
+z_1 & z_2 \\
+z_3 & z_4 \\
+\end{bmatrix}\circ \begin{bmatrix}
+1 & 5 \\
+3 & 9 \\
+\end{bmatrix}=z_1+5z_2+3z_3+9z_4</script><p>求导，有：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial V}{\partial x} &= \begin{bmatrix}
+y_1+5y_2 & y_3+5y_4 \\
+3y_1+9y_2 & 3y_3+9y_4 \\
+\end{bmatrix}= \begin{bmatrix}
+1+5\times2 & 3+5\times4 \\
+3\times1+9\times2 & 3\times3+9\times4 \\
+\end{bmatrix}\\
+\frac{\partial V}{\partial y} &= \begin{bmatrix}
+x_1+3x_3 & 5x_1+9x_3 \\
+x_2+3x_4 & 5x_2+9x_4 \\
+\end{bmatrix} = \begin{bmatrix}
+2+3\times4 & 5\times2+9\times4 \\
+1+3\times3 & 5\times1+9\times3 \\
+\end{bmatrix}
+\end{align*}</script><p>验证结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x.grad: tensor([11., 23., 21., 45.])</span><br><span class="line">y.grad: tensor([[14., 46.],</span><br><span class="line">        [10., 32.]])</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-函数求导示例"><a href="#3-函数求导示例" class="headerlink" title="3 函数求导示例"></a>3 函数求导示例</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable <span class="keyword">as</span> V</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;x^2 * e^x&quot;&quot;&quot;</span></span><br><span class="line">    y = x**<span class="number">2</span> * torch.exp(x)</span><br><span class="line">    <span class="keyword">return</span> y</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gradf</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;2*x*e^x + x^2*e^x&quot;&quot;&quot;</span></span><br><span class="line">    dx = <span class="number">2</span>*x*torch.exp(x) + x**<span class="number">2</span>*torch.exp(x)</span><br><span class="line">    <span class="keyword">return</span> dx</span><br><span class="line"></span><br><span class="line">x = V(torch.randn(<span class="number">3</span>,<span class="number">4</span>), requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(x, <span class="built_in">type</span>(x), x.shape)</span><br><span class="line">y = f(x)</span><br><span class="line">y.backward(torch.ones(y.size()))</span><br><span class="line"><span class="built_in">print</span>(x.grad)</span><br><span class="line"><span class="built_in">print</span>(gradf(x))</span><br></pre></td></tr></table></figure>
+<p>结果为：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tensor([[ 1.0985, -0.0066,  2.4466, -0.2702],</span><br><span class="line">        [ 0.8466, -0.2120,  1.3101,  1.0119],</span><br><span class="line">        [-0.1750, -0.3442, -0.5999,  0.9945]], requires_grad=True) &lt;class <span class="string">&#x27;torch.Tensor&#x27;</span>&gt; torch.Size([3, 4])</span><br><span class="line">tensor([[ 1.0211e+01, -1.3000e-02,  1.2565e+02, -3.5673e-01],</span><br><span class="line">        [ 5.6190e+00, -3.0664e-01,  1.6073e+01,  8.3833e+00],</span><br><span class="line">        [-2.6812e-01, -4.0395e-01, -4.6100e-01,  8.0503e+00]])</span><br><span class="line">tensor([[ 1.0211e+01, -1.3000e-02,  1.2565e+02, -3.5673e-01],</span><br><span class="line">        [ 5.6190e+00, -3.0664e-01,  1.6073e+01,  8.3833e+00],</span><br><span class="line">        [-2.6812e-01, -4.0395e-01, -4.6100e-01,  8.0503e+00]],</span><br><span class="line">       grad_fn=&lt;AddBackward0&gt;)</span><br></pre></td></tr></table></figure><br>可以看到，两种求导的结果一致。</p>
+<h1 id="4-Jacobian-示例"><a href="#4-Jacobian-示例" class="headerlink" title="4 Jacobian 示例"></a>4 Jacobian 示例</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd.functional <span class="keyword">import</span> jacobian</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># define a function</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> x ** <span class="number">3</span> + <span class="number">4</span> * x - <span class="number">10</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># define the inputs</span></span><br><span class="line">input1 = torch.tensor([<span class="number">2.</span>], requires_grad=<span class="literal">True</span>)  <span class="comment"># 如果只是用jacobian的方式，不用 requires_grad=True</span></span><br><span class="line">input2 = torch.tensor([<span class="number">2.</span>, <span class="number">3.</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line">input3 = torch.tensor([<span class="number">2.</span>, <span class="number">3.</span>, <span class="number">4.</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># compute the jacobians</span></span><br><span class="line">y = func(input1)</span><br><span class="line">y.backward(torch.ones(y.size()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;backward grad:\n&quot;</span>, input1.grad)</span><br><span class="line">output1 = jacobian(func, input1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Jacobian Tensor:\n&quot;</span>, output1)</span><br><span class="line"></span><br><span class="line">y=func(input2)</span><br><span class="line">y.backward(torch.ones(y.size()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nbackward grad:\n&quot;</span>, input2.grad)</span><br><span class="line">output2 = jacobian(func, input2)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Jacobian Tensor:\n&quot;</span>, output2)</span><br><span class="line"></span><br><span class="line">y=func(input3)</span><br><span class="line">y.backward(torch.ones(y.size()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nbackward grad:\n&quot;</span>, input3.grad)</span><br><span class="line">output3 = jacobian(func, input3)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Jacobian Tensor:\n&quot;</span>, output3)</span><br></pre></td></tr></table></figure>
+<p>输出结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">backward grad:</span><br><span class="line"> tensor([16.])</span><br><span class="line">Jacobian Tensor:</span><br><span class="line"> tensor([[16.]])</span><br><span class="line"></span><br><span class="line">backward grad:</span><br><span class="line"> tensor([16., 31.])</span><br><span class="line">Jacobian Tensor:</span><br><span class="line"> tensor([[16.,  0.],</span><br><span class="line">        [ 0., 31.]])</span><br><span class="line"></span><br><span class="line">backward grad:</span><br><span class="line"> tensor([16., 31., 52.])</span><br><span class="line">Jacobian Tensor:</span><br><span class="line"> tensor([[16.,  0.,  0.],</span><br><span class="line">        [ 0., 31.,  0.],</span><br><span class="line">        [ 0.,  0., 52.]])</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC84MzE3MjAyMw==" title="https://zhuanlan.zhihu.com/p/83172023">https://zhuanlan.zhihu.com/p/83172023<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3h5empkLmNvbS9hcnRpY2xlL3dlaXhpbl8zMzgyNTY4My84NjQ0MzQxMA==" title="https://www.cxyzjd.com/article/weixin_33825683/86443410">https://www.cxyzjd.com/article/weixin_33825683/86443410<i class="fa fa-external-link"></i></span></li>
+</ol>
+
+    </div>
+
+	<div>
+    
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
+    
+</div>
+    
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐阅读</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/9765ce4r.html" rel="bookmark">Numpy 学习笔记</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/9765ce3g.html" rel="bookmark">Pytorch 学习笔记（神经网络篇）</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/9765ce7e.html" rel="bookmark">Pytorch 学习笔记（基础篇）</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/9765ce6d.html" rel="bookmark">Python 基础篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/c386cf1b.html" rel="bookmark">Python爬取小说</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>Donate a cup of cola?</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cola & Library
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://colainlibrary.com/archives/c12048c3.html" title="Pytorch 学习笔记（梯度的求取）">https://colainlibrary.com/archives/c12048c3.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Library/" rel="tag"><i class="fa fa-tag"></i> Library</a>
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/fa516be2.html" rel="prev" title="cmake生成动态链接库并调用">
+      <i class="fa fa-chevron-left"></i> cmake生成动态链接库并调用
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%89%8D%E8%A8%80"><span class="nav-text">1 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Tensor%E5%86%8D%E8%AE%A4%E8%AF%86"><span class="nav-text">2 Tensor再认识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97"><span class="nav-text">2 梯度计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-backward"><span class="nav-text">2.1 backward()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%A0%87%E9%87%8F%E7%9A%84%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97"><span class="nav-text">2.2 标量的梯度计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E7%9F%A9%E9%98%B5%E7%9A%84%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97"><span class="nav-text">2.3 矩阵的梯度计算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC%E7%A4%BA%E4%BE%8B"><span class="nav-text">3 函数求导示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Jacobian-%E7%A4%BA%E4%BE%8B"><span class="nav-text">4 Jacobian 示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cola & Library"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Cola & Library</p>
+  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">296k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:29</span>
+</div>
+
+
+<!-- 网站运行时间的设置 -->
+<div>
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+</div>
+
+<!-- 网站底部统计本站访问数量 -->
+<!--
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+    <span class="post-meta-divider">|</span>
+已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
+</div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+       	<i class="fa fa-"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        共观看 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+	
+</body>
+</html>

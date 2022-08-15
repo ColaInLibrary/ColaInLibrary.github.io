@@ -1,8 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Pytorch 学习笔记（梯度的求取）</title>
+    <url>/archives/c12048c3.html</url>
+    <content><![CDATA[<!-- <img src=" /images/20191023/00.png" width=50% /> -->
+<p>记录pytorch中 backward() 方法，学习pytorch中求导的方法。</p>
+<span id="more"></span>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>神经网络求导，一种是针对神经网络参数的求导，一种是针对输入的求导。</p>
+<p>标量 $y$ 对向量 $x = [x_1,x_2,\cdots,x_m]^\text{T}$ 求导：</p>
+<script type="math/tex; mode=display">
+\frac{\partial y}{\partial x} = \begin{bmatrix}
+ \frac{\partial y}{\partial x_1}\\
+ \frac{\partial y}{\partial x_2}\\
+ \vdots \\
+ \frac{\partial y}{\partial x_m}
+\end{bmatrix}</script><p>向量 $y=[y_1, y_2, \cdots, y_n]^\text{T}$ 对标量 $x$ 求导，有：</p>
+<script type="math/tex; mode=display">
+\frac{\partial y}{\partial x} = \begin{bmatrix}
+ \frac{\partial y_1}{\partial x} & \frac{\partial y_2}{\partial x} & \cdots & \frac{\partial y_n}{\partial x}
+\end{bmatrix}</script><p>向量 $y=[y_1, y_2, \cdots, y_n]^\text{T}$ 对向量 $x = [x_1,x_2,\cdots,x_m]^\text{T}$ 求导，有：</p>
+<script type="math/tex; mode=display">
+\frac{\partial {y}}{\partial {x}}=\begin{bmatrix}
+ \frac{\partial y_1}{\partial x} & \frac{\partial y_2}{\partial x} & \cdots & \frac{\partial y_n}{\partial x}
+\end{bmatrix}
+=\left[\begin{array}{cccc}
+\frac{\partial y_{1}}{\partial x_{1}} & \frac{\partial y_{2}}{\partial x_{1}} & \cdots & \frac{\partial y_{n}}{\partial x_{1}} \\
+\frac{\partial y_{1}}{\partial x_{2}} & \frac{\partial y_{2}}{\partial x_{2}} & \cdots & \frac{\partial y_{n}}{\partial x_{2}} \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial y_{1}}{\partial x_{n}} & \frac{\partial y_{2}}{\partial x_{n}} & \cdots & \frac{\partial y_{n}}{\partial x_{m}}
+\end{array}\right]</script><h1 id="2-Tensor再认识"><a href="#2-Tensor再认识" class="headerlink" title="2 Tensor再认识"></a>2 Tensor再认识</h1><p>因为pytorch中所有的计算都可以回归到Tensor上，所以重新认识一下Tensor。 Tensor中通常会记录如下的属性：</p>
+<ul>
+<li>data: 即存储的数据信息</li>
+<li>requires_grad: 设置为 True 则表示该 Tensor 需要求导</li>
+<li>grad: 该 Tensor 的梯度值，每次在计算 backward 时需要将前一时刻的梯度清零，否则梯度会一直累加。</li>
+<li>grad_fn: 叶子节点通常为 None，只有结果节点的 grad_fn 才有效，用于指示梯度函数时哪种类型。</li>
+<li>is_leaf: 用来指示该 Tensor 是否是叶子节点。可以简单认为，自己定义的变量是叶子节点，在此基础上进行的计算则为中间量/最终量，也就是结果节点。</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">x = torch.rand(<span class="number">3</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">y = x**<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/20220814/01.png" alt="1"></p>
+<h1 id="2-梯度计算"><a href="#2-梯度计算" class="headerlink" title="2 梯度计算"></a>2 梯度计算</h1><h2 id="2-1-backward"><a href="#2-1-backward" class="headerlink" title="2.1 backward()"></a>2.1 backward()</h2><p>源码中关于 backward() 的接口定义如下：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">torch.autograd.backward(tensors, </span><br><span class="line">                        grad_tensors=<span class="literal">None</span>, </span><br><span class="line">                        retain_graph=<span class="literal">None</span>, </span><br><span class="line">                        create_graph=<span class="literal">False</span>, </span><br><span class="line">                        grad_variables=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure><br>参数说明：</p>
+<ul>
+<li>tensor: 用于计算梯度的tensor。也就是说这两种方式是等价的：torch.autograd.backward(z) == z.backward()</li>
+<li>grad_tensors: 在计算矩阵的梯度时会用到。他其实也是一个tensor，shape一般需要和前面的tensor保持一致。</li>
+<li>retain_graph: 通常在调用一次backward后，pytorch会自动把计算图销毁，所以要想对某个变量重复调用backward，则需要将该参数设置为True</li>
+<li>create_graph: 当设置为True的时候可以用来计算更高阶的梯度</li>
+<li>grad_variables: 这个官方说法是grad_variables’ is deprecated. Use ‘grad_tensors’ instead.也就是说这个参数后面版本中应该会丢弃，直接使用grad_tensors就好了。</li>
+</ul>
+<h2 id="2-2-标量的梯度计算"><a href="#2-2-标量的梯度计算" class="headerlink" title="2.2 标量的梯度计算"></a>2.2 标量的梯度计算</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">x = torch.tensor(<span class="number">2.0</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">y = torch.tensor(<span class="number">3.0</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">z = x**<span class="number">3</span>+<span class="number">2</span>*y</span><br><span class="line">z.backward()</span><br><span class="line"><span class="built_in">print</span>(z, x.grad, y.grad)</span><br></pre></td></tr></table></figure>
+<p>输出结果：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tensor(14., grad_fn=&lt;AddBackward0&gt;) tensor(12.) tensor(2.)</span><br></pre></td></tr></table></figure><br>不严谨地讲，上述代码定义了一个函数：</p>
+<script type="math/tex; mode=display">
+z = x^3 + 2y</script><p>对其求梯度，有：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial z}{\partial x} &= 3x^2 \\
+\frac{\partial z}{\partial y} &= 2
+\end{align*}</script><p>因为上述代码中 z 是一个标量，所以调用 backward() 方法后会依据链式法则自动计算出叶子节点(x=2, y=3)的梯度值。简单代入即可验证计算的正确性。</p>
+<h2 id="2-3-矩阵的梯度计算"><a href="#2-3-矩阵的梯度计算" class="headerlink" title="2.3 矩阵的梯度计算"></a>2.3 矩阵的梯度计算</h2><p>pytorch不能直接用来求一个矩阵对另一矩阵的导数，会报 <strong>只有对标量输出才能显式计算梯度</strong> 的错误。考虑如下的一个矩阵计算：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+x&=\begin{bmatrix}
+x_1 & x_2 \\
+\end{bmatrix},
+y=\begin{bmatrix}
+y_1 & y_2 \\
+y_3 & y_4 \\
+\end{bmatrix}\\
+z&=xy
+=\begin{bmatrix}
+x_1 & x_2 \\
+\end{bmatrix}\begin{bmatrix}
+y_1 & y_2 \\
+y_3 & y_4 \\
+\end{bmatrix}
+=\begin{bmatrix}
+x_1y_1 + x_2y_3 & x_1y_2 + x_2y_4 \\
+\end{bmatrix}=\begin{bmatrix}
+z_1 & z_2 \\
+\end{bmatrix}
+
+\end{align*}</script><p>因为 $z$ 不再是一个标量，因此不能直接求导了，而矩阵求导本质上仍为标量求导，只不过结果进行了重新书写，为了后续的计算。为了将这个结果变为标量进行求导，就引入了 <code>grad_tensors</code> 这个变量。例如：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">x = torch.tensor([<span class="number">2.</span>, <span class="number">1.</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line">y = torch.tensor([[<span class="number">1.</span>, <span class="number">2.</span>], [<span class="number">3.</span>, <span class="number">4.</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">z = torch.mm(x.view(<span class="number">1</span>, <span class="number">2</span>), y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;z:<span class="subst">&#123;z&#125;</span>&quot;</span>)</span><br><span class="line">z.backward(torch.Tensor([[<span class="number">1.</span>, <span class="number">0</span>]]), retain_graph=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;x.grad: <span class="subst">&#123;x.grad&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;y.grad: <span class="subst">&#123;y.grad&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure><br>输出结果：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">z:tensor([[5., 8.]], grad_fn=&lt;MmBackward0&gt;)</span><br><span class="line">x.grad: tensor([1., 3.])</span><br><span class="line">y.grad: tensor([[2., 0.],</span><br><span class="line">        [1., 0.]])</span><br></pre></td></tr></table></figure></p>
+<script type="math/tex; mode=display">
+\begin{align*}
+x&=\begin{bmatrix}
+2 & 1 \\
+\end{bmatrix},
+y=\begin{bmatrix}
+1 & 2 \\
+3 & 4 \\
+\end{bmatrix}\\
+z&=xy=\begin{bmatrix}
+5 & 8 \\
+\end{bmatrix}        
+\end{align*}</script><p>上述代码在对z求梯度的时候，<code>grad_tensors=torch.Tensor([[1., 0]])</code>。它将z变为一个标量，其实际计算过程即：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+z_1 & z_2 \\
+\end{bmatrix}\circ \begin{bmatrix}
+1 & 0 \\
+\end{bmatrix}=z_1\times1+z_2\times0=z_1</script><p>而</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial z_1}{\partial x} &= \begin{bmatrix}
+y_1 & y_3 \\
+\end{bmatrix}= \begin{bmatrix}
+1 & 3 \\
+\end{bmatrix}\\
+\frac{\partial z_1}{\partial y} &= \begin{bmatrix}
+x_1 & 0 \\
+x_2 & 0
+\end{bmatrix}= \begin{bmatrix}
+2 & 0 \\
+1 & 0
+\end{bmatrix}        
+\end{align*}</script><p>同理，对于矩阵：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+x&=\begin{bmatrix}
+x_1 & x_2 \\
+x_3 & x_4 \\
+\end{bmatrix},
+y=\begin{bmatrix}
+y_1 & y_2 \\
+y_3 & y_4 \\
+\end{bmatrix}\\
+z&=xy
+=\begin{bmatrix}
+x_1 & x_2 \\
+x_3 & x_4 \\
+\end{bmatrix}\begin{bmatrix}
+y_1 & y_2 \\
+y_3 & y_4 \\
+\end{bmatrix}
+=\begin{bmatrix}
+x_1y_1 + x_2y_3 & x_1y_2 + x_2y_4 \\
+x_3y_1 + x_4y_3 & x_3y_2 + x_4y_4 \\
+\end{bmatrix}=\begin{bmatrix}
+z_1 & z_2 \\
+z_3 & z_4 \\
+\end{bmatrix}
+
+\end{align*}</script><p>选择 <code>grad_tensors=torch.ones_like(x)=[[1, 1], [1, 1]]</code>，则计算过程为：</p>
+<script type="math/tex; mode=display">
+V=\begin{bmatrix}
+z_1 & z_2 \\
+z_3 & z_4 \\
+\end{bmatrix}\circ \begin{bmatrix}
+1 & 1 \\
+1 & 1 \\
+\end{bmatrix}=z_1\times1+z_2\times1+z_3\times1+z_4\times1=z_1+z_2+z_3+z_4</script><p>求导，有：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial V}{\partial x} &= \begin{bmatrix}
+y_1+y_2 & y_3+y_4 \\
+y_1+y_2 & y_3+y_4 \\
+\end{bmatrix}\\
+\frac{\partial V}{\partial y} &= \begin{bmatrix}
+x_1+x_3 & x_1+x_3 \\
+x_2+x_4 & x_2+x_4 \\
+\end{bmatrix}
+\end{align*}</script><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">x = torch.tensor([<span class="number">2.</span>, <span class="number">1.</span>, <span class="number">4.</span>, <span class="number">3.</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line">y = torch.tensor([[<span class="number">1.</span>, <span class="number">2.</span>], [<span class="number">3.</span>, <span class="number">4.</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">z = torch.mm(x.view(<span class="number">2</span>, <span class="number">2</span>), y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;z:<span class="subst">&#123;z&#125;</span>&quot;</span>)</span><br><span class="line">z.backward(torch.Tensor([[<span class="number">1.</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">1</span>]]), retain_graph=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;x.grad: <span class="subst">&#123;x.grad&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;y.grad: <span class="subst">&#123;y.grad&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">z:tensor([[ 5.,  8.],</span><br><span class="line">        [13., 20.]], grad_fn=&lt;MmBackward0&gt;)</span><br><span class="line">x.grad: tensor([3., 7., 3., 7.])</span><br><span class="line">y.grad: tensor([[6., 6.],</span><br><span class="line">        [4., 4.]])</span><br></pre></td></tr></table></figure>
+<p>选择 <code>grad_tensors=torch.ones_like(x)=[[1, 5], [3, 9]]</code>，则计算过程为：</p>
+<script type="math/tex; mode=display">
+V=\begin{bmatrix}
+z_1 & z_2 \\
+z_3 & z_4 \\
+\end{bmatrix}\circ \begin{bmatrix}
+1 & 5 \\
+3 & 9 \\
+\end{bmatrix}=z_1+5z_2+3z_3+9z_4</script><p>求导，有：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial V}{\partial x} &= \begin{bmatrix}
+y_1+5y_2 & y_3+5y_4 \\
+3y_1+9y_2 & 3y_3+9y_4 \\
+\end{bmatrix}= \begin{bmatrix}
+1+5\times2 & 3+5\times4 \\
+3\times1+9\times2 & 3\times3+9\times4 \\
+\end{bmatrix}\\
+\frac{\partial V}{\partial y} &= \begin{bmatrix}
+x_1+3x_3 & 5x_1+9x_3 \\
+x_2+3x_4 & 5x_2+9x_4 \\
+\end{bmatrix} = \begin{bmatrix}
+2+3\times4 & 5\times2+9\times4 \\
+1+3\times3 & 5\times1+9\times3 \\
+\end{bmatrix}
+\end{align*}</script><p>验证结果：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x.grad: tensor([11., 23., 21., 45.])</span><br><span class="line">y.grad: tensor([[14., 46.],</span><br><span class="line">        [10., 32.]])</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-函数求导示例"><a href="#3-函数求导示例" class="headerlink" title="3 函数求导示例"></a>3 函数求导示例</h1><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable <span class="keyword">as</span> V</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;x^2 * e^x&quot;&quot;&quot;</span></span><br><span class="line">    y = x**<span class="number">2</span> * torch.exp(x)</span><br><span class="line">    <span class="keyword">return</span> y</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gradf</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;2*x*e^x + x^2*e^x&quot;&quot;&quot;</span></span><br><span class="line">    dx = <span class="number">2</span>*x*torch.exp(x) + x**<span class="number">2</span>*torch.exp(x)</span><br><span class="line">    <span class="keyword">return</span> dx</span><br><span class="line"></span><br><span class="line">x = V(torch.randn(<span class="number">3</span>,<span class="number">4</span>), requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(x, <span class="built_in">type</span>(x), x.shape)</span><br><span class="line">y = f(x)</span><br><span class="line">y.backward(torch.ones(y.size()))</span><br><span class="line"><span class="built_in">print</span>(x.grad)</span><br><span class="line"><span class="built_in">print</span>(gradf(x))</span><br></pre></td></tr></table></figure>
+<p>结果为：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tensor([[ 1.0985, -0.0066,  2.4466, -0.2702],</span><br><span class="line">        [ 0.8466, -0.2120,  1.3101,  1.0119],</span><br><span class="line">        [-0.1750, -0.3442, -0.5999,  0.9945]], requires_grad=True) &lt;class <span class="string">&#x27;torch.Tensor&#x27;</span>&gt; torch.Size([3, 4])</span><br><span class="line">tensor([[ 1.0211e+01, -1.3000e-02,  1.2565e+02, -3.5673e-01],</span><br><span class="line">        [ 5.6190e+00, -3.0664e-01,  1.6073e+01,  8.3833e+00],</span><br><span class="line">        [-2.6812e-01, -4.0395e-01, -4.6100e-01,  8.0503e+00]])</span><br><span class="line">tensor([[ 1.0211e+01, -1.3000e-02,  1.2565e+02, -3.5673e-01],</span><br><span class="line">        [ 5.6190e+00, -3.0664e-01,  1.6073e+01,  8.3833e+00],</span><br><span class="line">        [-2.6812e-01, -4.0395e-01, -4.6100e-01,  8.0503e+00]],</span><br><span class="line">       grad_fn=&lt;AddBackward0&gt;)</span><br></pre></td></tr></table></figure><br>可以看到，两种求导的结果一致。</p>
+<h1 id="4-Jacobian-示例"><a href="#4-Jacobian-示例" class="headerlink" title="4 Jacobian 示例"></a>4 Jacobian 示例</h1><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd.functional <span class="keyword">import</span> jacobian</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># define a function</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> x ** <span class="number">3</span> + <span class="number">4</span> * x - <span class="number">10</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># define the inputs</span></span><br><span class="line">input1 = torch.tensor([<span class="number">2.</span>], requires_grad=<span class="literal">True</span>)  <span class="comment"># 如果只是用jacobian的方式，不用 requires_grad=True</span></span><br><span class="line">input2 = torch.tensor([<span class="number">2.</span>, <span class="number">3.</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line">input3 = torch.tensor([<span class="number">2.</span>, <span class="number">3.</span>, <span class="number">4.</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># compute the jacobians</span></span><br><span class="line">y = func(input1)</span><br><span class="line">y.backward(torch.ones(y.size()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;backward grad:\n&quot;</span>, input1.grad)</span><br><span class="line">output1 = jacobian(func, input1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Jacobian Tensor:\n&quot;</span>, output1)</span><br><span class="line"></span><br><span class="line">y=func(input2)</span><br><span class="line">y.backward(torch.ones(y.size()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nbackward grad:\n&quot;</span>, input2.grad)</span><br><span class="line">output2 = jacobian(func, input2)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Jacobian Tensor:\n&quot;</span>, output2)</span><br><span class="line"></span><br><span class="line">y=func(input3)</span><br><span class="line">y.backward(torch.ones(y.size()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nbackward grad:\n&quot;</span>, input3.grad)</span><br><span class="line">output3 = jacobian(func, input3)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Jacobian Tensor:\n&quot;</span>, output3)</span><br></pre></td></tr></table></figure>
+<p>输出结果：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">backward grad:</span><br><span class="line"> tensor([16.])</span><br><span class="line">Jacobian Tensor:</span><br><span class="line"> tensor([[16.]])</span><br><span class="line"></span><br><span class="line">backward grad:</span><br><span class="line"> tensor([16., 31.])</span><br><span class="line">Jacobian Tensor:</span><br><span class="line"> tensor([[16.,  0.],</span><br><span class="line">        [ 0., 31.]])</span><br><span class="line"></span><br><span class="line">backward grad:</span><br><span class="line"> tensor([16., 31., 52.])</span><br><span class="line">Jacobian Tensor:</span><br><span class="line"> tensor([[16.,  0.,  0.],</span><br><span class="line">        [ 0., 31.,  0.],</span><br><span class="line">        [ 0.,  0., 52.]])</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC84MzE3MjAyMw==" title="https://zhuanlan.zhihu.com/p/83172023">https://zhuanlan.zhihu.com/p/83172023<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3h5empkLmNvbS9hcnRpY2xlL3dlaXhpbl8zMzgyNTY4My84NjQ0MzQxMA==" title="https://www.cxyzjd.com/article/weixin_33825683/86443410">https://www.cxyzjd.com/article/weixin_33825683/86443410<i class="fa fa-external-link"></i></span></li>
+</ol>
+]]></content>
+      <categories>
+        <category>人工智能</category>
+        <category>神经网络</category>
+      </categories>
+      <tags>
+        <tag>Library</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>cmake生成动态链接库并调用</title>
-    <url>/archives/9765ce4h.html</url>
+    <url>/archives/fa516be2.html</url>
     <content><![CDATA[<p>本文记录了使用cmake生成动态链接库并调用的方法。<br><span id="more"></span></p>
 <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>不同工程之间经常会使用到动态链接库以方便调用，这里记录下相应的cmake实现方法。本文用两个同级下的文件夹表示两个工程，其中 <em>Generate_lib</em> 用来生成对应的动态链接库，<em>Use_lib</em> 用来调用前面生成的动态链接库。</p>
 <h1 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2 代码实现"></a>2 代码实现</h1><h2 id="2-1-Generate-lib-文件夹"><a href="#2-1-Generate-lib-文件夹" class="headerlink" title="2.1 Generate_lib 文件夹"></a>2.1 Generate_lib 文件夹</h2><p>创建 <em>Generate_lib</em> 文件夹，其目录如下所示：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── build</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── include</span><br><span class="line">│   └── hello.h</span><br><span class="line">└── src</span><br><span class="line">    └── hello.cpp</span><br></pre></td></tr></table></figure></p>
@@ -163,7 +367,7 @@
 <li>tensorboard的使用：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple tensorboard</span><br><span class="line"><span class="built_in">cd</span> logs所在目录</span><br><span class="line">tensorboard --logdir=logs --port=6007  <span class="comment"># 默认的端口是6006</span></span><br></pre></td></tr></table></figure></li>
 <li>torch中非线性激活函数Relu(input, inplace=True) inplace 表示将原来给Relu的输入替换</li>
 <li>Tudui.train(), Tudui.eval() 仅仅是对网络中包含Dropout、BatchNorm层的网络才有效，如果没有这两层，可以不调用这两个函数。</li>
-<li>pytorch中requires<em>grad()</em>的用法：<br><code>tensor.requires_grad_()</code> 可以将tensor的求导属性设置未True</li>
+<li>pytorch中requires_grad()_的用法：<br><code>tensor.requires_grad_()</code> 可以将tensor的求导属性设置未True</li>
 <li>类继承的简单说明：<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Model</span>(nn.Module):  <span class="comment"># 小括号中的nn.module表示对自己定义的Model类对nn.module继承</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">init</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="built_in">super</span>(Model, self).__init__  <span class="comment"># 表示对nn.Module类的初始化</span></span><br><span class="line">    self.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">20</span>, <span class="number">5</span>)</span><br><span class="line">    self.conv2 = nn.Conv2d(<span class="number">20</span>, <span class="number">20</span>, <span class="number">5</span>)</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    x = F.relu(self.conv1(x))</span><br><span class="line">    <span class="keyword">return</span> F.relu(self.conv2(x))</span><br></pre></td></tr></table></figure></li>
 <li>最大池化的目的是提取主要特征，保留主要信息，减少数据量</li>
 <li>pytorch视觉的一些数据集：<span class="exturl" data-url="aHR0cHM6Ly9weXRvcmNoLm9yZy92aXNpb24vc3RhYmxlL2luZGV4Lmh0bWw=" title="https://pytorch.org/vision/stable/index.html">https://pytorch.org/vision/stable/index.html<i class="fa fa-external-link"></i></span></li>
@@ -188,7 +392,7 @@
 <h2 id="2-2-torch-manual-seed-seed-介绍"><a href="#2-2-torch-manual-seed-seed-介绍" class="headerlink" title="2.2 torch.manual_seed(seed) 介绍"></a>2.2 torch.manual_seed(seed) 介绍</h2><p>参考：[<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDIxMTk2OC9hcnRpY2xlL2RldGFpbHMvMTIzNzY5MDEw" title="https://blog.csdn.net/weixin_44211968/article/details/123769010">链接<i class="fa fa-external-link"></i></span>]<br>函数的功能就是保证程序每次运行的时候生成的随机数都是一致的。</p>
 <h2 id="2-3-dataloader提取数据"><a href="#2-3-dataloader提取数据" class="headerlink" title="2.3 dataloader提取数据"></a>2.3 dataloader提取数据</h2><p>[<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTk1ODM2Ni9hcnRpY2xlL2RldGFpbHMvMTEwNDkzNTUx" title="https://blog.csdn.net/weixin_39958366/article/details/110493551">链接<i class="fa fa-external-link"></i></span>]</p>
 <h2 id="2-4-nn-Conv1d"><a href="#2-4-nn-Conv1d" class="headerlink" title="2.4 nn.Conv1d()"></a>2.4 nn.Conv1d()</h2><p>[<span class="exturl" data-url="aHR0cHM6Ly9weXRvcmNoLm9yZy9kb2NzL3N0YWJsZS9nZW5lcmF0ZWQvdG9yY2gubm4uQ29udjFkLmh0bWw=" title="https://pytorch.org/docs/stable/generated/torch.nn.Conv1d.html">链接1<i class="fa fa-external-link"></i></span>]<br>[<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bm55X3hzYzE5OTQvYXJ0aWNsZS9kZXRhaWxzLzgyOTY5ODY3" title="https://blog.csdn.net/sunny_xsc1994/article/details/82969867">链接2<i class="fa fa-external-link"></i></span>]</p>
-<h2 id="2-5-torch-nn-init-kaimingnormal"><a href="#2-5-torch-nn-init-kaimingnormal" class="headerlink" title="2.5 torch.nn.init.kaimingnormal()"></a>2.5 torch.nn.init.kaiming<em>normal</em>()</h2><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L251bGlsaXEvYXJ0aWNsZS9kZXRhaWxzLzEyMjY3ODI4OQ==" title="https://blog.csdn.net/nuliliq/article/details/122678289">https://blog.csdn.net/nuliliq/article/details/122678289<i class="fa fa-external-link"></i></span></p>
+<h2 id="2-5-torch-nn-init-kaiming-normal"><a href="#2-5-torch-nn-init-kaiming-normal" class="headerlink" title="2.5 torch.nn.init.kaiming_normal_()"></a>2.5 torch.nn.init.kaiming_normal_()</h2><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L251bGlsaXEvYXJ0aWNsZS9kZXRhaWxzLzEyMjY3ODI4OQ==" title="https://blog.csdn.net/nuliliq/article/details/122678289">https://blog.csdn.net/nuliliq/article/details/122678289<i class="fa fa-external-link"></i></span></p>
 <p>使用正态分布对输入张量进行赋值。<br>如果权重是通过线性层（卷积或全连接）隐性确定的，则需设置mode=fan_in。如果通过创建随机矩阵显式创建权重，则应进行设置mode=‘fan_out’。</p>
 <figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line">w = torch.empty(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line"><span class="built_in">print</span>(w)</span><br><span class="line"><span class="built_in">print</span>(torch.nn.init.kaiming_normal_(w, mode=<span class="string">&#x27;fan_out&#x27;</span>, nonlinearity=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(w)</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tensor([[9.9184e-39, 8.7245e-39, 9.2755e-39, 8.9082e-39, 9.9184e-39],</span><br><span class="line">        [8.4490e-39, 9.6429e-39, 1.0653e-38, 1.0469e-38, 4.2246e-39],</span><br><span class="line">        [1.0378e-38, 9.6429e-39, 9.2755e-39, 9.7346e-39, 1.0745e-38]])</span><br><span class="line">tensor([[-1.1195,  0.8319,  0.4465,  1.5517, -0.2840],</span><br><span class="line">        [-0.6165,  0.2486,  0.0273,  0.7761, -0.9499],</span><br><span class="line">        [ 0.3389, -0.1474,  0.5669, -0.1427,  0.2397]])</span><br><span class="line">tensor([[-1.1195,  0.8319,  0.4465,  1.5517, -0.2840],</span><br><span class="line">        [-0.6165,  0.2486,  0.0273,  0.7761, -0.9499],</span><br><span class="line">        [ 0.3389, -0.1474,  0.5669, -0.1427,  0.2397]])</span><br></pre></td></tr></table></figure>
@@ -900,12 +1104,12 @@ p &=  atan2(-r_{31},\sqrt{r_{11}^2 + r_{21}^2})\\
 y &=  atan2(\frac{r_{21}}{\cos p},\frac{r_{11}}{\cos p})\\
 r &=  atan2(\frac{r_{32}}{\cos p},\frac{r_{33}}{\cos p})\\
 \end{aligned}\right. \tag{7}</script></li>
-<li>当 $p = 90°$ 时，$r<em>{12} = -\sin y\cos r+\cos y\sin r = \sin(r-y)$, $r</em>{13} = \sin y\sin r + \cos y\cos r = \cos(r-y)$, 无法直接解算出，直接设定此时 $r = 0$，此时 $r<em>{12} = -\sin y$，$r</em>{13} = \cos y$，因此，解为<script type="math/tex; mode=display">
+<li>当 $p = 90°$ 时，$r_{12} = -\sin y\cos r+\cos y\sin r = \sin(r-y)$, $r_{13} = \sin y\sin r + \cos y\cos r = \cos(r-y)$, 无法直接解算出，直接设定此时 $r = 0$，此时 $r_{12} = -\sin y$，$r_{13} = \cos y$，因此，解为<script type="math/tex; mode=display">
 \left\{\begin{aligned}
 r &= 0°\\
 y &= - atan2(r_{12},r_{13})\\
 \end{aligned}\right. \tag{8}</script></li>
-<li>同理，当 $p = -90°$ 时， $r<em>{12} = -\sin y\cos r - \cos y\sin r = -\sin(r+y)$， $r</em>{13} = \sin y\sin r - \cos y\cos r = -\cos(y+r)$，指定 $r = 0$，此时 $r<em>{12} = -\sin y$，$r</em>{13} = -\cos y$，因此，解为<script type="math/tex; mode=display">
+<li>同理，当 $p = -90°$ 时， $r_{12} = -\sin y\cos r - \cos y\sin r = -\sin(r+y)$， $r_{13} = \sin y\sin r - \cos y\cos r = -\cos(y+r)$，指定 $r = 0$，此时 $r_{12} = -\sin y$，$r_{13} = -\cos y$，因此，解为<script type="math/tex; mode=display">
 \left\{\begin{aligned}
 r &= 0°\\
 y &=  atan2(-r_{12},-r_{13})\\
@@ -958,22 +1162,22 @@ y &=  atan2(-r_{12},-r_{13})\\
 <h1 id="2-SDH建立坐标系的过程"><a href="#2-SDH建立坐标系的过程" class="headerlink" title="2 SDH建立坐标系的过程"></a>2 SDH建立坐标系的过程</h1><p><img src="/images/20210519/rvc_SDH.png" alt="SDH"></p>
 <p>上图所示的转动关节 DH 参数的定义<sup>[1]</sup>：</p>
 <ol>
-<li>关节距离 $d<em>j$：从 $x</em>{j-1}$ 轴沿 $z_{j-1}$ 轴到 $x_j$ 轴的距离；</li>
-<li>关节转角 $\theta <em>j$：从 $x</em>{j-1}$ 轴沿 $z_{j-1}$ 轴转到 $x_j$ 轴的角度，且  $\theta_j \in (-\pi,\pi]$；</li>
-<li>杆间距离 $a<em>j$：从 $z</em>{j-1}$ 轴沿 $x_j$ 轴到 $z_j$ 轴的距离；</li>
-<li>杆件扭角 $\alpha<em>j$：从 $z</em>{j-1}$ 轴沿 $x_j$ 轴转到 $z_j$ 轴的角度，且 $\alpha_j \in (-\pi,\pi]$.</li>
+<li>关节距离 $d_j$：从 $x_{j-1}$ 轴沿 $z_{j-1}$ 轴到 $x_j$ 轴的距离；</li>
+<li>关节转角 $\theta _j$：从 $x_{j-1}$ 轴沿 $z_{j-1}$ 轴转到 $x_j$ 轴的角度，且  $\theta_j \in (-\pi,\pi]$；</li>
+<li>杆间距离 $a_j$：从 $z_{j-1}$ 轴沿 $x_j$ 轴到 $z_j$ 轴的距离；</li>
+<li>杆件扭角 $\alpha_j$：从 $z_{j-1}$ 轴沿 $x_j$ 轴转到 $z_j$ 轴的角度，且 $\alpha_j \in (-\pi,\pi]$.</li>
 </ol>
 <p>DH 坐标系中轴与原点确定的基本原则是<sup>[2]</sup>：</p>
 <ol>
 <li>$z_j$ 轴沿关节 $j+1$ 的轴向(指向可任选，但通常都将各平行的 $z$ 轴均取为相同的指向)；</li>
-<li>原点选取的原则：原点 $O<em>j$ 为 $z</em>{j-1}$ 轴和 $z<em>j$ 轴的公法线与 $z</em>{j-1}$ 轴的交点.<ul>
-<li>当 $z<em>{j-1}$ 轴和 $z_j$ 轴平行时，两轴之间有无数条公垂线，若两轴重合，取 $O_j = O</em>{j-1}$；若两轴平行但不重合，则过 $O<em>{j-1}$ 点作 $z</em>{j-1}$ 轴和 $z_j$ 轴的公垂线，此公垂线与 $z_j$ 轴的交点即 $O_j$.</li>
+<li>原点选取的原则：原点 $O_j$ 为 $z_{j-1}$ 轴和 $z_j$ 轴的公法线与 $z_{j-1}$ 轴的交点.<ul>
+<li>当 $z_{j-1}$ 轴和 $z_j$ 轴平行时，两轴之间有无数条公垂线，若两轴重合，取 $O_j = O_{j-1}$；若两轴平行但不重合，则过 $O_{j-1}$ 点作 $z_{j-1}$ 轴和 $z_j$ 轴的公垂线，此公垂线与 $z_j$ 轴的交点即 $O_j$.</li>
 <li>由于没有 $z_{-1}$，所以上述方法不适用于 $O_0$，这时确定 $O_0$ 的方法是：若 $z_0$ 与 $z_1$ 相交，取 $O_0 = O_1$；若$z_0$ 与 $z_1$ 不相交，取 $O_0$ 在 $z_0$ 与 $z_1$ 的公垂线上。</li>
 </ul>
 </li>
-<li>轴 $x<em>j$ 与轴 $z</em>{j-1}$ 相交且垂直，即 $x<em>j$ 为沿过 $z</em>{j-1}$ 轴和 $z<em>j$ 轴的公垂线，方向从 $z</em>{j-1}$ 指向 $z_j$.<ul>
-<li>当 $z<em>{j-1}$ 轴和 $z_j$ 轴重合时，这时 $O_j = O</em>{j-1}$，那么在零位时要求 $x<em>j = x</em>{j-1}$.</li>
-<li>当 $z<em>{j-1}$ 轴和 $z_j$ 轴相交且不重合时，选择 $x_j = \pm(z</em>{j-1}\times z_j)$，通常使所有平行的 $x$ 轴均具有相同的指向.</li>
+<li>轴 $x_j$ 与轴 $z_{j-1}$ 相交且垂直，即 $x_j$ 为沿过 $z_{j-1}$ 轴和 $z_j$ 轴的公垂线，方向从 $z_{j-1}$ 指向 $z_j$.<ul>
+<li>当 $z_{j-1}$ 轴和 $z_j$ 轴重合时，这时 $O_j = O_{j-1}$，那么在零位时要求 $x_j = x_{j-1}$.</li>
+<li>当 $z_{j-1}$ 轴和 $z_j$ 轴相交且不重合时，选择 $x_j = \pm(z_{j-1}\times z_j)$，通常使所有平行的 $x$ 轴均具有相同的指向.</li>
 <li>当 $j = 0$时，$O_0 = O_1$, 或 $O_0$ 在 $z_0$ 轴和 $z_1$ 轴的公垂线上，选取 $x_0$ 轴与 $x_1$ 轴重合.<blockquote>
 <p>Tip: 上述方法没有考虑平动关节的建系，可参见[2]。</p>
 </blockquote>
@@ -986,7 +1190,7 @@ y &=  atan2(-r_{12},-r_{13})\\
 <p>按照第 2 节给出的 DH 建系原则，进行以下步骤的建模：</p>
 <ol>
 <li>确定各关节的旋转轴，用 $q_j$ 表示(可以参考下一节的图)。</li>
-<li>确定 $z$ 轴，依据 DH 建系方法， $z<em>0 (z</em>{base})$ 应为 $q_1$，$z_1$ 应为 $q_2$，以此类推，最终，$z_6$ 应为 $q_6$，与 $z_5$ 相同。</li>
+<li>确定 $z$ 轴，依据 DH 建系方法， $z_0 (z_{base})$ 应为 $q_1$，$z_1$ 应为 $q_2$，以此类推，最终，$z_6$ 应为 $q_6$，与 $z_5$ 相同。</li>
 <li>确定坐标原点：<ul>
 <li>$j = 0$ 时，$z_0$ 与 $z_1$ 相交，取 $O_0 = O_1$；</li>
 <li>$j = 1$ 时，$z_0$ 与 $z_1$ 相交，取其交点为 $O_1$；</li>
@@ -1997,23 +2201,23 @@ y &=  atan2(-r_{12},-r_{13})\\
     <url>/archives/d7a626d9.html</url>
     <content><![CDATA[<p>本文将介绍经典的BP神经网络推导过程。<br><span id="more"></span></p>
 <h1 id="1-神经元模型"><a href="#1-神经元模型" class="headerlink" title="1 神经元模型"></a>1 神经元模型</h1><p>单个神经元模型如下图所示。</p>
-<p><img src="/images/20201020/01.png" alt="01"><br>单个神经元模型工作过程如下：输入信号$\mathbf{x}=\left [ x<em>1,x_2,\cdots ,x_m \right ]^\mathrm{T}$.<br>经过权重$w</em>{kj}$加权后，传入神经元$k$，经过引入偏置$b_k$后，可以得到神经元的输出$v_k$，被激活函数$\psi(\cdot)$激励后，得到输出$y_k$。</p>
+<p><img src="/images/20201020/01.png" alt="01"><br>单个神经元模型工作过程如下：输入信号 $\mathbf{x}=\begin{bmatrix}<br>x_1, &amp; x_2, &amp; \cdots, &amp; x_m \\<br>\end{bmatrix}^\text{T}$.<br>经过权重 $w_{kj}$ 加权后，传入神经元 $k$，经过引入偏置 $b_k$ 后，可以得到神经元的输出 $v_k$ ，被激活函数 ${\psi}({\cdot})$ 激励后，得到输出 $y_k$ 。</p>
 <h1 id="2-单隐含层神经网络模型"><a href="#2-单隐含层神经网络模型" class="headerlink" title="2 单隐含层神经网络模型"></a>2 单隐含层神经网络模型</h1><p>对于多输入多输出，仅有一层隐含层的神经网络模型如下图所示。</p>
 <p><img src="/images/20201020/02.png" alt="02"></p>
 <h2 id="2-1-符号含义说明"><a href="#2-1-符号含义说明" class="headerlink" title="2.1 符号含义说明"></a>2.1 符号含义说明</h2><p>对于用到的符号含义说明如下：</p>
 <p>1.输入的第$n$个样本为$\mathbf{x_{n}}$;</p>
-<p>2.每个样本中包含$d$个元素 $\mathbf{x<em>{n}}=\left [ x</em>{n1},x<em>{n2},\cdots ,x</em>{nd} \right ]^\mathrm{T}\in\mathbb{R}^d$；</p>
-<p>3.隐含层有$m$个神经元，隐含层神经元的输出 $\mathbf{h} = \left [ h<em>{1},h</em>{2},\cdots ,h_{m} \right ]^\mathrm{T}\in\mathbb{R}^m$，下标中的第一位数表示第1层隐含层。</p>
+<p>2.每个样本中包含$d$个元素 $\mathbf{x_{n}}=\left [ x_{n1},x_{n2},\cdots ,x_{nd} \right ]^\mathrm{T}\in\mathbb{R}^d$；</p>
+<p>3.隐含层有$m$个神经元，隐含层神经元的输出 $\mathbf{h} = \left [ h_{1},h_{2},\cdots ,h_{m} \right ]^\mathrm{T}\in\mathbb{R}^m$，下标中的第一位数表示第1层隐含层。</p>
 <p>4.为方便讨论，定义输入和输出的样本是一一对应关系，即共有$n$个输出样本 $\mathbf{y_{n}}$;</p>
-<p>5.输出层有 $r$ 个神经元，对应单次样本的 $r$ 维输出 $\mathbf{y<em>{n}} = \left [ y</em>{n1},y<em>{n2},\cdots ,y</em>{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$；</p>
-<p>6.隐含层未经过激励函数，只有线性求和时的输出用 $\mathbf{neth} = \left [ neth<em>{1},neth</em>{2},\cdots ,neth_{m} \right ]^\mathrm{T}\in\mathbb{R}^m$表示；</p>
+<p>5.输出层有 $r$ 个神经元，对应单次样本的 $r$ 维输出 $\mathbf{y_{n}} = \left [ y_{n1},y_{n2},\cdots ,y_{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$；</p>
+<p>6.隐含层未经过激励函数，只有线性求和时的输出用 $\mathbf{neth} = \left [ neth_{1},neth_{2},\cdots ,neth_{m} \right ]^\mathrm{T}\in\mathbb{R}^m$表示；</p>
 <p>7.输出层未经过激励函数，只有线性求和时的输出用 $\mathbf{nety} _n = \left[nety_1, nety_2, \cdots, nety_r \right]^\mathrm{T}\in \mathbb{R}^r$ 表示；</p>
 <p>8.从输入层到隐含层的权重矩阵用$\mathbf{U}_{xh}\in\mathbb{R}^{m\times d}$表示；</p>
 <p>9.从隐含层到输出层的权重矩阵用$\mathbf{W}_{hy}\in\mathbb{R}^{r\times m}$表示；</p>
-<p>10.输入层到隐含层的偏置向量用 $\mathbf{b<em>1} = \left [ b</em>{11},b<em>{12},\cdots ,b</em>{1m} \right ]^\mathrm{T}\in\mathbb{R}^m$ 表示；<br><!-- $\mathbf{b}_1 = \left[ b_{11}, b_{12}, \cdots, b_{1m} \right]^\mathrm{T} \in \mathbb{R}^m$ 表示； --></p>
-<p>11.隐含层到输出层的偏置向量用 $\mathbf{b<em>y} = \left [ b</em>{y1},b<em>{y2},\cdots ,b</em>{yr} \right ]^\mathrm{T}\in\mathbb{R}^r$ 表示；<br><!-- $\mathbf{b}_y = \left [ b_{y1},b_{y2},\cdots ,b_{yr} \right ]^\mathrm{T}\in\mathbb{R}^r$表示； --></p>
-<p>12.与第$n$个输入样本对应的第$n$个目标真实值为$\mathbf{o<em>{n}} = \left [ o</em>{n1},o<em>{n2},\cdots ,o</em>{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$；</p>
-<p>13.第$n$个样本真实值与网络输出之间的误差为 $\mathbf{e<em>n} = \left [ e</em>{n1},e<em>{n2},\cdots ,e</em>{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$ 表示；<br><!-- $\mathbf{e}_n = \left [ e_{n1},e_{n2},\cdots ,e_{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$; --></p>
+<p>10.输入层到隐含层的偏置向量用 $\mathbf{b_1} = \left [ b_{11},b_{12},\cdots ,b_{1m} \right ]^\mathrm{T}\in\mathbb{R}^m$ 表示；<br><!-- $\mathbf{b}_1 = \left[ b_{11}, b_{12}, \cdots, b_{1m} \right]^\mathrm{T} \in \mathbb{R}^m$ 表示； --></p>
+<p>11.隐含层到输出层的偏置向量用 $\mathbf{b_y} = \left [ b_{y1},b_{y2},\cdots ,b_{yr} \right ]^\mathrm{T}\in\mathbb{R}^r$ 表示；<br><!-- $\mathbf{b}_y = \left [ b_{y1},b_{y2},\cdots ,b_{yr} \right ]^\mathrm{T}\in\mathbb{R}^r$表示； --></p>
+<p>12.与第$n$个输入样本对应的第$n$个目标真实值为$\mathbf{o_{n}} = \left [ o_{n1},o_{n2},\cdots ,o_{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$；</p>
+<p>13.第$n$个样本真实值与网络输出之间的误差为 $\mathbf{e_n} = \left [ e_{n1},e_{n2},\cdots ,e_{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$ 表示；<br><!-- $\mathbf{e}_n = \left [ e_{n1},e_{n2},\cdots ,e_{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$; --></p>
 <p>14.损失函数为$E$。</p>
 <h2 id="2-2-前向传播"><a href="#2-2-前向传播" class="headerlink" title="2.2 前向传播"></a>2.2 前向传播</h2><p>第n个样本前向传播的隐含层神经网络模型线性求和可以搭建为</p>
 <script type="math/tex; mode=display">
@@ -2049,7 +2253,7 @@ y_{nr} = f_r \left ( w_{r1}h_{1}+w_{r2}h_{2}+\cdots +w_{rm}h_{m} + b_{yr} \right
 \mathbf{neth} = \mathbf{U}_{xh}\mathbf{x}_n + \mathbf{b}_1 \tag {5}</script><script type="math/tex; mode=display">
 \mathbf{h} = \mathbf{\Psi} \left (\mathbf{U}_{xh}\mathbf{x}_n + \mathbf{b}_1 \right ) \tag {6}</script><script type="math/tex; mode=display">
 \mathbf{nety}_n = \mathbf{W}_{hy}\mathbf{h} + \mathbf{b}_y \tag {7}</script><script type="math/tex; mode=display">
-\mathbf{y}_n = \mathbf{F} \left (\mathbf{W}_{hy}\mathbf{h} + \mathbf{b}_y \right ) \tag {8}</script><p>上式中，对于输入层到隐含层的权重矩阵 $\mathbf{U}<em>{xh}$、从隐含层到输出层的权重 $\mathbf{W}</em>{hy}$ 的形式如下：</p>
+\mathbf{y}_n = \mathbf{F} \left (\mathbf{W}_{hy}\mathbf{h} + \mathbf{b}_y \right ) \tag {8}</script><p>上式中，对于输入层到隐含层的权重矩阵 $\mathbf{U}_{xh}$、从隐含层到输出层的权重 $\mathbf{W}_{hy}$ 的形式如下：</p>
 <script type="math/tex; mode=display">
 \mathbf{U}_{xh}=\begin{bmatrix}
 u_{11} & u_{12} & \cdots & u_{1i} & \cdots & u_{1d} \\
@@ -2074,7 +2278,7 @@ w_{r1} & w_{r2} & \cdots & w_{rj} & \cdots & w_{rm}
 <script type="math/tex; mode=display">
 E = \frac{1}{2} \mathbf{e}_n^\mathrm{T} \mathbf{e}_n \tag{9}</script><p>第$n$个样本的网络输出与真实值之间的误差为</p>
 <script type="math/tex; mode=display">
-\mathbf{e}_n = \mathbf{x}_n - \mathbf{y}_n \tag {10}</script><h2 id="2-4-误差反向传播"><a href="#2-4-误差反向传播" class="headerlink" title="2.4 误差反向传播"></a>2.4 误差反向传播</h2><p>神经网络的目的是寻找合适的$\mathbf{U}<em>{xh}$、$\mathbf{W}</em>{hy}$，使得网络的输出值与真实值之间的误差和$E$最小。因此一个自然的想法就是，通过$E$对这两个权重求导。</p>
+\mathbf{e}_n = \mathbf{x}_n - \mathbf{y}_n \tag {10}</script><h2 id="2-4-误差反向传播"><a href="#2-4-误差反向传播" class="headerlink" title="2.4 误差反向传播"></a>2.4 误差反向传播</h2><p>神经网络的目的是寻找合适的$\mathbf{U}_{xh}$、$\mathbf{W}_{hy}$，使得网络的输出值与真实值之间的误差和$E$最小。因此一个自然的想法就是，通过$E$对这两个权重求导。</p>
 <p>根据标量对矩阵的求导定义，可以得到：</p>
 <script type="math/tex; mode=display">
 \frac{\partial E}{\partial \mathbf{U}_{xh}}=\begin{bmatrix}
@@ -2093,13 +2297,13 @@ E = \frac{1}{2} \mathbf{e}_n^\mathrm{T} \mathbf{e}_n \tag{9}</script><p>第$n$�
 </blockquote>
 <h3 id="2-4-1-对输出层权重的求导"><a href="#2-4-1-对输出层权重的求导" class="headerlink" title="2.4.1 对输出层权重的求导"></a>2.4.1 对输出层权重的求导</h3><p>从直观角度来讲，误差和$E$与输出层更为邻近，因此我们先计算 $E$ 对 $\mathbf{W}_{hy}$ 的导数。</p>
 <p><img src="/images/20201020/03.png" alt="03"></p>
-<p>显然，$E$ 与 $\mathbf{W}<em>{hy}$ 之间的联系建立方式为：$\mathbf{W}</em>{hy} \rightarrow \mathbf{nety}_n \rightarrow \mathbf{y}_n \rightarrow E$。依据链式求导法则有</p>
+<p>显然，$E$ 与 $\mathbf{W}_{hy}$ 之间的联系建立方式为：$\mathbf{W}_{hy} \rightarrow \mathbf{nety}_n \rightarrow \mathbf{y}_n \rightarrow E$。依据链式求导法则有</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
 \frac{\partial E}{\partial \mathbf{W}_{hy}} = \frac{\partial E}{\partial \mathbf{y}_{n}}\cdot\frac{\partial \mathbf{y}_{n}}{\partial \mathbf{nety}_n} \cdot \frac{\partial\mathbf{nety}_n}{\partial \mathbf{W}_{hy}}
 \end{aligned} \tag{13}</script><p>因为一般情况下输出层的每个神经元激励函数都相同，这里我们假设采用sigmoid函数，选择隐含层第 $j$ 个神经元到输出层第 $k$ 个神经元的权重 $w_{kj}$ 求导。</p>
 <script type="math/tex; mode=display">
-y_{nk} = f_k \left ( w_{k1}h_{1}+w_{k2}h_{2}+\cdots + w_{kj}h_{j} + \cdots +w_{km}h_{m} + b_{yk} \right ) \tag{14}</script><p>$E$ 与 $w<em>{kj}$之间的联系建立方式为：$w</em>{kj} \rightarrow nety<em>{kj} \rightarrow y</em>{kj} \rightarrow E$，依据链式求导法则，有</p>
+y_{nk} = f_k \left ( w_{k1}h_{1}+w_{k2}h_{2}+\cdots + w_{kj}h_{j} + \cdots +w_{km}h_{m} + b_{yk} \right ) \tag{14}</script><p>$E$ 与 $w_{kj}$之间的联系建立方式为：$w_{kj} \rightarrow nety_{kj} \rightarrow y_{kj} \rightarrow E$，依据链式求导法则，有</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
 \frac{\partial E}{\partial w_{kj}} &= \frac{1}{2}\cdot\frac{\partial \left ( e_{n1}^2 + e_{n2}^2 + \cdots + e_{nk}+ \cdots + e_{nr}^2 \right )}{\partial w_{11}} \\
@@ -2112,7 +2316,7 @@ y_{nk} = f_k \left ( w_{k1}h_{1}+w_{k2}h_{2}+\cdots + w_{kj}h_{j} + \cdots +w_{k
 \end{aligned} \tag{15}</script><blockquote>
 <p>sigmoid激励函数求导见附录。</p>
 </blockquote>
-<h3 id="2-4-2-对隐含层权重的求导"><a href="#2-4-2-对隐含层权重的求导" class="headerlink" title="2.4.2 对隐含层权重的求导"></a>2.4.2 对隐含层权重的求导</h3><p>同理，$E$ 与 $\mathbf{W}<em>{xh}$ 建立联系的方式为： $\mathbf{W}</em>{xh} \rightarrow \mathbf{neth} \rightarrow \mathbf{h} \rightarrow \mathbf{nety_{n}} \rightarrow \mathbf{y}_n \rightarrow E$。</p>
+<h3 id="2-4-2-对隐含层权重的求导"><a href="#2-4-2-对隐含层权重的求导" class="headerlink" title="2.4.2 对隐含层权重的求导"></a>2.4.2 对隐含层权重的求导</h3><p>同理，$E$ 与 $\mathbf{W}_{xh}$ 建立联系的方式为： $\mathbf{W}_{xh} \rightarrow \mathbf{neth} \rightarrow \mathbf{h} \rightarrow \mathbf{nety_{n}} \rightarrow \mathbf{y}_n \rightarrow E$。</p>
 <p><img src="/images/20201020/04.png" alt="04"></p>
 <p>假设隐含层的激活函数也为sigmoid函数。选择式(11)中从第 $i$ 个输入到第 $j$ 个隐含层神经元的权重 $u_{ji}$ 项求导，有</p>
 <script type="math/tex; mode=display">
@@ -2141,7 +2345,7 @@ y_{nk} = f_k \left ( w_{k1}h_{1}+w_{k2}h_{2}+\cdots + w_{kj}h_{j} + \cdots +w_{k
 <script type="math/tex; mode=display">
 \frac{\partial net{h_j}}{\partial u_{ji}} = \frac{\partial \left( u_{j1}x_{n1} + u_{j2}x_{n2} + \cdots + u_{ji}x_{ni} +  \cdots  + {u_{jd}}{x_{nd}} \right)}{\partial u_{ji}} = x_{ni} \tag{19}</script><p>由式(16)~(19)可得：</p>
 <script type="math/tex; mode=display">
-\frac{\partial E}{\partial u_{ji}} = \left[ {\sum\limits_{l = 1}^r { - \left( o_{nl} - y_{nl} \right) \cdot y_{nl}\left( 1 - y_{nl} \right) \cdot w_{lj}} } \right] \cdot \left[ {h_j}\left( 1 - {h_j} \right) \right] \cdot x_{ni} \tag{20}</script><h2 id="2-5-权重更新"><a href="#2-5-权重更新" class="headerlink" title="2.5 权重更新"></a>2.5 权重更新</h2><p>经过2.3~2.4节分别对输入层到隐含层权重 $\mathbf{U}<em>{xh}$、隐含层到输出层权重 $\mathbf{W}</em>{hy}$求导，现在可以得到相应的权重梯度更新算法为</p>
+\frac{\partial E}{\partial u_{ji}} = \left[ {\sum\limits_{l = 1}^r { - \left( o_{nl} - y_{nl} \right) \cdot y_{nl}\left( 1 - y_{nl} \right) \cdot w_{lj}} } \right] \cdot \left[ {h_j}\left( 1 - {h_j} \right) \right] \cdot x_{ni} \tag{20}</script><h2 id="2-5-权重更新"><a href="#2-5-权重更新" class="headerlink" title="2.5 权重更新"></a>2.5 权重更新</h2><p>经过2.3~2.4节分别对输入层到隐含层权重 $\mathbf{U}_{xh}$、隐含层到输出层权重 $\mathbf{W}_{hy}$求导，现在可以得到相应的权重梯度更新算法为</p>
 <script type="math/tex; mode=display">
 u_{ji}^+ = u_{ji} - \eta  \frac{\partial E}{\partial u_{ji}}\tag{21}</script><script type="math/tex; mode=display">
 w_{kj}^+ = w_{kj} - \xi \frac{\partial E}{\partial w_{kj}}\tag{22}</script><p>式中，$\eta$、$\xi$ 表示学习因子。</p>
@@ -2897,7 +3101,7 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
 <h4 id="2-2-2-2-param标签"><a href="#2-2-2-2-param标签" class="headerlink" title="2.2.2.2 param标签"></a>2.2.2.2 param标签</h4><p>parameter是ROS系统运行中的参数，存储在参数服务器中。在launch文件中通过<code>&lt;param&gt;</code>元素加载parameter；launch文件执行后，parameter就加载到ROS的参数服务器上了。每个活跃的节点都可以通过 ros::param::get()接口来获取parameter的值，用户也可以在终端中通过rosparam命令获得parameter的值。</p>
 <p><code>&lt;param&gt;</code>的使用方法如下：<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;output_frame&quot;</span> <span class="attr">value</span>=<span class="string">&quot;odom&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure><br>运行launch文件后，output_frame这个parameter的值就设置为odom，并且加载到ROS参数服务器上了。但是在很多复杂的系统中，参数的数量很多，如果这样一个一个的设置会非常麻烦，ROS也为我们提供了另外一种类似的参数加载方式——<code>&lt;rosparam&gt;</code>：<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">&lt;rosparamfile=&quot;$(find 2dnav_pr2)/config/costmap_common_params.yaml&quot; command=&quot;load&quot; ns=&quot;local_costmap&quot; /&gt;</span><br></pre></td></tr></table></figure><br><code>&lt;rosparam&gt;</code>可以帮助我们将一个yaml格式文件中的参数全部加载到ROS参数服务器中，需要设置command属性为“load”，还可以选择设置命名空间“ns”。</p>
 <p>回到view_arm.launch文件中：<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">command</span>=<span class="string">&quot;$(find xacro)/xacro --inorder $(find mastering_ros_robot_description_pkg)/urdf/seven_dof_arm.xacro&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;use_gui&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>依据上述原理，我们知道第一句话的意思是<em>robot_description</em>这个参数，会加载在<strong>mastering_ros_robot_description</strong>中的<strong>urdf/seven<em>dof_arm</em>.xacro</strong>文件，该文件即为七自由度机器人的模型描述文件。第二句话的意思是设置一个GUI参数，从效果上来说就是会出现上一篇博客3.1节中的GUI界面。</p>
+<p>依据上述原理，我们知道第一句话的意思是<em>robot_description</em>这个参数，会加载在<strong>mastering_ros_robot_description</strong>中的<strong>urdf/seven_dof_arm_.xacro</strong>文件，该文件即为七自由度机器人的模型描述文件。第二句话的意思是设置一个GUI参数，从效果上来说就是会出现上一篇博客3.1节中的GUI界面。</p>
 <h4 id="2-2-2-3-node标签"><a href="#2-2-2-3-node标签" class="headerlink" title="2.2.2.3 node标签"></a>2.2.2.3 node标签</h4><p>启动文件的核心是启动ROS节点，采用<code>&lt;node&gt;</code>标签定义，语法如下：<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;package-name&quot;</span><span class="attr">type</span>=<span class="string">&quot;executable-name&quot;</span> <span class="attr">name</span>=<span class="string">&quot;node-name&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>从上边的定义规则可以看出，在启动文件中启动一个节点需要三个属性：pkg、type和name。其中pkg定义节点所在的功能包名称，type定义节点的可执行文件名称，这两个属性等同于在终端中使用rosrun命令执行节点时的输入参数。name属性用来定义节点运行的名称，将覆盖节点中init()赋予节点的名称。这是三个最常用的属性，在某些情况下，我们还有可能用到以下属性：</p>
 <ul>
@@ -3744,13 +3948,15 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
 <blockquote>
 <p>注意：在新电脑上第二次及以后更新博客内容时，在第2步时可以执行<code>git pull</code>来更新自己电脑的本地仓库，如果有加密博客而博客源码又未存放至github，注意需要将加密博客从源电脑拷贝到新电脑的博客文件夹中才行。上述操作的第6步会将将静态网页文件推送到<code>master</code>分支，第7步会将源文件推送到<code>source</code>分支。</p>
 </blockquote>
-<h3 id="2-2-3-数学公式mathjax的配置"><a href="#2-2-3-数学公式mathjax的配置" class="headerlink" title="2.2.3 数学公式mathjax的配置"></a>2.2.3 数学公式mathjax的配置</h3><p>插件安装<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked --save</span><br><span class="line">npm install hexo-renderer-kramed --save</span><br></pre></td></tr></table></figure><br>安装好后，找到./node_modules/kramed/lib/rules/inline.js,修改<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//  escape: /^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/, 原第11行</span></span><br><span class="line">  <span class="attr">escape</span>: <span class="regexp">/^\\([`*\[\]()#$+\-.!_&gt;])/</span></span><br><span class="line">  <span class="comment">//  em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,  原第20行</span></span><br><span class="line">  <span class="attr">em</span>: <span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span></span><br></pre></td></tr></table></figure><br>注意：</p>
+<h3 id="2-2-3-数学公式mathjax的配置"><a href="#2-2-3-数学公式mathjax的配置" class="headerlink" title="2.2.3 数学公式mathjax的配置"></a>2.2.3 数学公式mathjax的配置</h3><p>插件安装<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked --save</span><br><span class="line">npm install hexo-renderer-kramed --save</span><br></pre></td></tr></table></figure><br>安装好后，找到./node_modules/kramed/lib/rules/inline.js,修改<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//  escape: /^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/, 原第11行</span></span><br><span class="line">  <span class="attr">escape</span>: <span class="regexp">/^\\([`*\[\]()#$+\-.!_&gt;])/</span>,</span><br><span class="line">  <span class="comment">//  em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,  原第20行</span></span><br><span class="line">  <span class="attr">em</span>: <span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br></pre></td></tr></table></figure><br>注意：</p>
 <ol>
 <li>在主题的配置文件中将mathjax开关打开</li>
 <li>在博文的开始加上 <strong>mathjax: true</strong></li>
+<li>上述代码的最后逗号不能少</li>
 </ol>
 <h3 id="2-2-4-node报warning-no-module"><a href="#2-2-4-node报warning-no-module" class="headerlink" title="2.2.4 node报warning: no module"></a>2.2.4 node报warning: no module</h3><p>node 报Warning: Accessing non-existent property xxxx of module exports inside circular dependency</p>
 <p>解决方案：<br>找到 <em>./node_modules/stylus/lib/nodes/index.js</em>，代码最前面加入<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">exports</span>.<span class="property">lineno</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">column</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">filename</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-2-5-目录不能跳转的解决方案："><a href="#2-2-5-目录不能跳转的解决方案：" class="headerlink" title="2.2.5 目录不能跳转的解决方案："></a>2.2.5 目录不能跳转的解决方案：</h3><p><code>blog/themes/next7-7/source/js/utils.js</code>中删除两条代码（红色），增加两条代码(绿色)，具体参考[<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L3B1bGwvMTU0MC9maWxlcw==" title="https://github.com/theme-next/hexo-theme-next/pull/1540/files">链接<i class="fa fa-external-link"></i></span>]。<br><img src="/images/20200130/mulu.png" alt="mulu"></p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p>1.<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIxMTkzNzYyL2Fuc3dlci83OTEwOTI4MA==" title="https://www.zhihu.com/question/21193762/answer/79109280">使用hexo，如果换了电脑怎么更新博客？<i class="fa fa-external-link"></i></span><br>2.<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC83YWIyMWM3ZjA2NzQ=" title="https://www.jianshu.com/p/7ab21c7f0674">在Hexo中渲染MathJax数学公式<i class="fa fa-external-link"></i></span><br>3.<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjQwNTIyMy9hcnRpY2xlL2RldGFpbHMvMTA2MjcwNDMx" title="https://blog.csdn.net/weixin_42405223/article/details/106270431">Warning: Accessing non-existent property xxxx of module exports inside circular dependency<i class="fa fa-external-link"></i></span></p>
 ]]></content>
       <categories>

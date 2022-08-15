@@ -58,8 +58,9 @@
 <meta property="og:description" content="介绍多台设备管理GitHub个人网站的方法">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://colainlibrary.com/images/20200130/00.jpg">
+<meta property="og:image" content="https://colainlibrary.com/images/20200130/mulu.png">
 <meta property="article:published_time" content="2020-01-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-12-28T12:32:10.000Z">
+<meta property="article:modified_time" content="2022-08-15T09:23:22.492Z">
 <meta property="article:author" content="Cola &amp; Library">
 <meta property="article:tag" content="GitHub">
 <meta property="article:tag" content="Library">
@@ -300,7 +301,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.1k</span>
+              <span>3.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -346,13 +347,15 @@
 <blockquote>
 <p>注意：在新电脑上第二次及以后更新博客内容时，在第2步时可以执行<code>git pull</code>来更新自己电脑的本地仓库，如果有加密博客而博客源码又未存放至github，注意需要将加密博客从源电脑拷贝到新电脑的博客文件夹中才行。上述操作的第6步会将将静态网页文件推送到<code>master</code>分支，第7步会将源文件推送到<code>source</code>分支。</p>
 </blockquote>
-<h3 id="2-2-3-数学公式mathjax的配置"><a href="#2-2-3-数学公式mathjax的配置" class="headerlink" title="2.2.3 数学公式mathjax的配置"></a>2.2.3 数学公式mathjax的配置</h3><p>插件安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked --save</span><br><span class="line">npm install hexo-renderer-kramed --save</span><br></pre></td></tr></table></figure><br>安装好后，找到./node_modules/kramed/lib/rules/inline.js,修改<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  escape: /^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/, 原第11行</span></span><br><span class="line">  <span class="attr">escape</span>: <span class="regexp">/^\\([`*\[\]()#$+\-.!_&gt;])/</span></span><br><span class="line">  <span class="comment">//  em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,  原第20行</span></span><br><span class="line">  <span class="attr">em</span>: <span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span></span><br></pre></td></tr></table></figure><br>注意：</p>
+<h3 id="2-2-3-数学公式mathjax的配置"><a href="#2-2-3-数学公式mathjax的配置" class="headerlink" title="2.2.3 数学公式mathjax的配置"></a>2.2.3 数学公式mathjax的配置</h3><p>插件安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked --save</span><br><span class="line">npm install hexo-renderer-kramed --save</span><br></pre></td></tr></table></figure><br>安装好后，找到./node_modules/kramed/lib/rules/inline.js,修改<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  escape: /^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/, 原第11行</span></span><br><span class="line">  <span class="attr">escape</span>: <span class="regexp">/^\\([`*\[\]()#$+\-.!_&gt;])/</span>,</span><br><span class="line">  <span class="comment">//  em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,  原第20行</span></span><br><span class="line">  <span class="attr">em</span>: <span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br></pre></td></tr></table></figure><br>注意：</p>
 <ol>
 <li>在主题的配置文件中将mathjax开关打开</li>
 <li>在博文的开始加上 <strong>mathjax: true</strong></li>
+<li>上述代码的最后逗号不能少</li>
 </ol>
 <h3 id="2-2-4-node报warning-no-module"><a href="#2-2-4-node报warning-no-module" class="headerlink" title="2.2.4 node报warning: no module"></a>2.2.4 node报warning: no module</h3><p>node 报Warning: Accessing non-existent property xxxx of module exports inside circular dependency</p>
 <p>解决方案：<br>找到 <em>./node_modules/stylus/lib/nodes/index.js</em>，代码最前面加入<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exports</span>.<span class="property">lineno</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">column</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">filename</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-2-5-目录不能跳转的解决方案："><a href="#2-2-5-目录不能跳转的解决方案：" class="headerlink" title="2.2.5 目录不能跳转的解决方案："></a>2.2.5 目录不能跳转的解决方案：</h3><p><code>blog/themes/next7-7/source/js/utils.js</code>中删除两条代码（红色），增加两条代码(绿色)，具体参考[<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L3B1bGwvMTU0MC9maWxlcw==" title="https://github.com/theme-next/hexo-theme-next/pull/1540/files">链接<i class="fa fa-external-link"></i></span>]。<br><img src="/images/20200130/mulu.png" alt="mulu"></p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p>1.<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIxMTkzNzYyL2Fuc3dlci83OTEwOTI4MA==" title="https://www.zhihu.com/question/21193762/answer/79109280">使用hexo，如果换了电脑怎么更新博客？<i class="fa fa-external-link"></i></span><br>2.<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC83YWIyMWM3ZjA2NzQ=" title="https://www.jianshu.com/p/7ab21c7f0674">在Hexo中渲染MathJax数学公式<i class="fa fa-external-link"></i></span><br>3.<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjQwNTIyMy9hcnRpY2xlL2RldGFpbHMvMTA2MjcwNDMx" title="https://blog.csdn.net/weixin_42405223/article/details/106270431">Warning: Accessing non-existent property xxxx of module exports inside circular dependency<i class="fa fa-external-link"></i></span></p>
 
     </div>
@@ -507,7 +510,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%87%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-text">〇、前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%8E%9F%E7%90%86"><span class="nav-text">一、原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-text">二、操作方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E6%BA%90%E7%94%B5%E8%84%91%E4%B8%8A%E7%9A%84%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-text">2.1 源电脑上的操作方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E7%9A%84%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-text">2.2 新电脑上的操作方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-SSH%E7%9A%84%E6%B7%BB%E5%8A%A0"><span class="nav-text">2.2.1 SSH的添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%8F%91%E5%B8%83"><span class="nav-text">2.2.2 新电脑上博客的配置与发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8Fmathjax%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">2.2.3 数学公式mathjax的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-node%E6%8A%A5warning-no-module"><span class="nav-text">2.2.4 node报warning: no module</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%87%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-text">〇、前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%8E%9F%E7%90%86"><span class="nav-text">一、原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-text">二、操作方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E6%BA%90%E7%94%B5%E8%84%91%E4%B8%8A%E7%9A%84%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-text">2.1 源电脑上的操作方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E7%9A%84%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-text">2.2 新电脑上的操作方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-SSH%E7%9A%84%E6%B7%BB%E5%8A%A0"><span class="nav-text">2.2.1 SSH的添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%8F%91%E5%B8%83"><span class="nav-text">2.2.2 新电脑上博客的配置与发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8Fmathjax%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">2.2.3 数学公式mathjax的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-node%E6%8A%A5warning-no-module"><span class="nav-text">2.2.4 node报warning: no module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-5-%E7%9B%AE%E5%BD%95%E4%B8%8D%E8%83%BD%E8%B7%B3%E8%BD%AC%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-text">2.2.5 目录不能跳转的解决方案：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -523,7 +526,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">91</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -611,12 +614,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">288k</span>
+    <span title="站点总字数">296k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:22</span>
+    <span title="站点阅读时长">4:29</span>
 </div>
 
 

@@ -64,7 +64,7 @@
 <meta property="og:image" content="https://colainlibrary.com/images/20201020/sigmoid.png">
 <meta property="og:image" content="https://colainlibrary.com/images/20201020/tanh.png">
 <meta property="article:published_time" content="2020-10-20T11:00:00.000Z">
-<meta property="article:modified_time" content="2020-12-29T04:10:06.000Z">
+<meta property="article:modified_time" content="2022-08-15T08:59:14.413Z">
 <meta property="article:author" content="Cola &amp; Library">
 <meta property="article:tag" content="Library">
 <meta name="twitter:card" content="summary">
@@ -304,7 +304,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.9k</span>
+              <span>9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -325,23 +325,23 @@
       
         <p>本文将介绍经典的BP神经网络推导过程。<br><span id="more"></span></p>
 <h1 id="1-神经元模型"><a href="#1-神经元模型" class="headerlink" title="1 神经元模型"></a>1 神经元模型</h1><p>单个神经元模型如下图所示。</p>
-<p><img src="/images/20201020/01.png" alt="01"><br>单个神经元模型工作过程如下：输入信号$\mathbf{x}=\left [ x<em>1,x_2,\cdots ,x_m \right ]^\mathrm{T}$.<br>经过权重$w</em>{kj}$加权后，传入神经元$k$，经过引入偏置$b_k$后，可以得到神经元的输出$v_k$，被激活函数$\psi(\cdot)$激励后，得到输出$y_k$。</p>
+<p><img src="/images/20201020/01.png" alt="01"><br>单个神经元模型工作过程如下：输入信号 $\mathbf{x}=\begin{bmatrix}<br>x_1, &amp; x_2, &amp; \cdots, &amp; x_m \\<br>\end{bmatrix}^\text{T}$.<br>经过权重 $w_{kj}$ 加权后，传入神经元 $k$，经过引入偏置 $b_k$ 后，可以得到神经元的输出 $v_k$ ，被激活函数 ${\psi}({\cdot})$ 激励后，得到输出 $y_k$ 。</p>
 <h1 id="2-单隐含层神经网络模型"><a href="#2-单隐含层神经网络模型" class="headerlink" title="2 单隐含层神经网络模型"></a>2 单隐含层神经网络模型</h1><p>对于多输入多输出，仅有一层隐含层的神经网络模型如下图所示。</p>
 <p><img src="/images/20201020/02.png" alt="02"></p>
 <h2 id="2-1-符号含义说明"><a href="#2-1-符号含义说明" class="headerlink" title="2.1 符号含义说明"></a>2.1 符号含义说明</h2><p>对于用到的符号含义说明如下：</p>
 <p>1.输入的第$n$个样本为$\mathbf{x_{n}}$;</p>
-<p>2.每个样本中包含$d$个元素 $\mathbf{x<em>{n}}=\left [ x</em>{n1},x<em>{n2},\cdots ,x</em>{nd} \right ]^\mathrm{T}\in\mathbb{R}^d$；</p>
-<p>3.隐含层有$m$个神经元，隐含层神经元的输出 $\mathbf{h} = \left [ h<em>{1},h</em>{2},\cdots ,h_{m} \right ]^\mathrm{T}\in\mathbb{R}^m$，下标中的第一位数表示第1层隐含层。</p>
+<p>2.每个样本中包含$d$个元素 $\mathbf{x_{n}}=\left [ x_{n1},x_{n2},\cdots ,x_{nd} \right ]^\mathrm{T}\in\mathbb{R}^d$；</p>
+<p>3.隐含层有$m$个神经元，隐含层神经元的输出 $\mathbf{h} = \left [ h_{1},h_{2},\cdots ,h_{m} \right ]^\mathrm{T}\in\mathbb{R}^m$，下标中的第一位数表示第1层隐含层。</p>
 <p>4.为方便讨论，定义输入和输出的样本是一一对应关系，即共有$n$个输出样本 $\mathbf{y_{n}}$;</p>
-<p>5.输出层有 $r$ 个神经元，对应单次样本的 $r$ 维输出 $\mathbf{y<em>{n}} = \left [ y</em>{n1},y<em>{n2},\cdots ,y</em>{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$；</p>
-<p>6.隐含层未经过激励函数，只有线性求和时的输出用 $\mathbf{neth} = \left [ neth<em>{1},neth</em>{2},\cdots ,neth_{m} \right ]^\mathrm{T}\in\mathbb{R}^m$表示；</p>
+<p>5.输出层有 $r$ 个神经元，对应单次样本的 $r$ 维输出 $\mathbf{y_{n}} = \left [ y_{n1},y_{n2},\cdots ,y_{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$；</p>
+<p>6.隐含层未经过激励函数，只有线性求和时的输出用 $\mathbf{neth} = \left [ neth_{1},neth_{2},\cdots ,neth_{m} \right ]^\mathrm{T}\in\mathbb{R}^m$表示；</p>
 <p>7.输出层未经过激励函数，只有线性求和时的输出用 $\mathbf{nety} _n = \left[nety_1, nety_2, \cdots, nety_r \right]^\mathrm{T}\in \mathbb{R}^r$ 表示；</p>
 <p>8.从输入层到隐含层的权重矩阵用$\mathbf{U}_{xh}\in\mathbb{R}^{m\times d}$表示；</p>
 <p>9.从隐含层到输出层的权重矩阵用$\mathbf{W}_{hy}\in\mathbb{R}^{r\times m}$表示；</p>
-<p>10.输入层到隐含层的偏置向量用 $\mathbf{b<em>1} = \left [ b</em>{11},b<em>{12},\cdots ,b</em>{1m} \right ]^\mathrm{T}\in\mathbb{R}^m$ 表示；<br><!-- $\mathbf{b}_1 = \left[ b_{11}, b_{12}, \cdots, b_{1m} \right]^\mathrm{T} \in \mathbb{R}^m$ 表示； --></p>
-<p>11.隐含层到输出层的偏置向量用 $\mathbf{b<em>y} = \left [ b</em>{y1},b<em>{y2},\cdots ,b</em>{yr} \right ]^\mathrm{T}\in\mathbb{R}^r$ 表示；<br><!-- $\mathbf{b}_y = \left [ b_{y1},b_{y2},\cdots ,b_{yr} \right ]^\mathrm{T}\in\mathbb{R}^r$表示； --></p>
-<p>12.与第$n$个输入样本对应的第$n$个目标真实值为$\mathbf{o<em>{n}} = \left [ o</em>{n1},o<em>{n2},\cdots ,o</em>{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$；</p>
-<p>13.第$n$个样本真实值与网络输出之间的误差为 $\mathbf{e<em>n} = \left [ e</em>{n1},e<em>{n2},\cdots ,e</em>{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$ 表示；<br><!-- $\mathbf{e}_n = \left [ e_{n1},e_{n2},\cdots ,e_{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$; --></p>
+<p>10.输入层到隐含层的偏置向量用 $\mathbf{b_1} = \left [ b_{11},b_{12},\cdots ,b_{1m} \right ]^\mathrm{T}\in\mathbb{R}^m$ 表示；<br><!-- $\mathbf{b}_1 = \left[ b_{11}, b_{12}, \cdots, b_{1m} \right]^\mathrm{T} \in \mathbb{R}^m$ 表示； --></p>
+<p>11.隐含层到输出层的偏置向量用 $\mathbf{b_y} = \left [ b_{y1},b_{y2},\cdots ,b_{yr} \right ]^\mathrm{T}\in\mathbb{R}^r$ 表示；<br><!-- $\mathbf{b}_y = \left [ b_{y1},b_{y2},\cdots ,b_{yr} \right ]^\mathrm{T}\in\mathbb{R}^r$表示； --></p>
+<p>12.与第$n$个输入样本对应的第$n$个目标真实值为$\mathbf{o_{n}} = \left [ o_{n1},o_{n2},\cdots ,o_{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$；</p>
+<p>13.第$n$个样本真实值与网络输出之间的误差为 $\mathbf{e_n} = \left [ e_{n1},e_{n2},\cdots ,e_{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$ 表示；<br><!-- $\mathbf{e}_n = \left [ e_{n1},e_{n2},\cdots ,e_{nr} \right ]^\mathrm{T}\in\mathbb{R}^r$; --></p>
 <p>14.损失函数为$E$。</p>
 <h2 id="2-2-前向传播"><a href="#2-2-前向传播" class="headerlink" title="2.2 前向传播"></a>2.2 前向传播</h2><p>第n个样本前向传播的隐含层神经网络模型线性求和可以搭建为</p>
 <script type="math/tex; mode=display">
@@ -377,7 +377,7 @@ y_{nr} = f_r \left ( w_{r1}h_{1}+w_{r2}h_{2}+\cdots +w_{rm}h_{m} + b_{yr} \right
 \mathbf{neth} = \mathbf{U}_{xh}\mathbf{x}_n + \mathbf{b}_1 \tag {5}</script><script type="math/tex; mode=display">
 \mathbf{h} = \mathbf{\Psi} \left (\mathbf{U}_{xh}\mathbf{x}_n + \mathbf{b}_1 \right ) \tag {6}</script><script type="math/tex; mode=display">
 \mathbf{nety}_n = \mathbf{W}_{hy}\mathbf{h} + \mathbf{b}_y \tag {7}</script><script type="math/tex; mode=display">
-\mathbf{y}_n = \mathbf{F} \left (\mathbf{W}_{hy}\mathbf{h} + \mathbf{b}_y \right ) \tag {8}</script><p>上式中，对于输入层到隐含层的权重矩阵 $\mathbf{U}<em>{xh}$、从隐含层到输出层的权重 $\mathbf{W}</em>{hy}$ 的形式如下：</p>
+\mathbf{y}_n = \mathbf{F} \left (\mathbf{W}_{hy}\mathbf{h} + \mathbf{b}_y \right ) \tag {8}</script><p>上式中，对于输入层到隐含层的权重矩阵 $\mathbf{U}_{xh}$、从隐含层到输出层的权重 $\mathbf{W}_{hy}$ 的形式如下：</p>
 <script type="math/tex; mode=display">
 \mathbf{U}_{xh}=\begin{bmatrix}
 u_{11} & u_{12} & \cdots & u_{1i} & \cdots & u_{1d} \\
@@ -402,7 +402,7 @@ w_{r1} & w_{r2} & \cdots & w_{rj} & \cdots & w_{rm}
 <script type="math/tex; mode=display">
 E = \frac{1}{2} \mathbf{e}_n^\mathrm{T} \mathbf{e}_n \tag{9}</script><p>第$n$个样本的网络输出与真实值之间的误差为</p>
 <script type="math/tex; mode=display">
-\mathbf{e}_n = \mathbf{x}_n - \mathbf{y}_n \tag {10}</script><h2 id="2-4-误差反向传播"><a href="#2-4-误差反向传播" class="headerlink" title="2.4 误差反向传播"></a>2.4 误差反向传播</h2><p>神经网络的目的是寻找合适的$\mathbf{U}<em>{xh}$、$\mathbf{W}</em>{hy}$，使得网络的输出值与真实值之间的误差和$E$最小。因此一个自然的想法就是，通过$E$对这两个权重求导。</p>
+\mathbf{e}_n = \mathbf{x}_n - \mathbf{y}_n \tag {10}</script><h2 id="2-4-误差反向传播"><a href="#2-4-误差反向传播" class="headerlink" title="2.4 误差反向传播"></a>2.4 误差反向传播</h2><p>神经网络的目的是寻找合适的$\mathbf{U}_{xh}$、$\mathbf{W}_{hy}$，使得网络的输出值与真实值之间的误差和$E$最小。因此一个自然的想法就是，通过$E$对这两个权重求导。</p>
 <p>根据标量对矩阵的求导定义，可以得到：</p>
 <script type="math/tex; mode=display">
 \frac{\partial E}{\partial \mathbf{U}_{xh}}=\begin{bmatrix}
@@ -421,13 +421,13 @@ E = \frac{1}{2} \mathbf{e}_n^\mathrm{T} \mathbf{e}_n \tag{9}</script><p>第$n$�
 </blockquote>
 <h3 id="2-4-1-对输出层权重的求导"><a href="#2-4-1-对输出层权重的求导" class="headerlink" title="2.4.1 对输出层权重的求导"></a>2.4.1 对输出层权重的求导</h3><p>从直观角度来讲，误差和$E$与输出层更为邻近，因此我们先计算 $E$ 对 $\mathbf{W}_{hy}$ 的导数。</p>
 <p><img src="/images/20201020/03.png" alt="03"></p>
-<p>显然，$E$ 与 $\mathbf{W}<em>{hy}$ 之间的联系建立方式为：$\mathbf{W}</em>{hy} \rightarrow \mathbf{nety}_n \rightarrow \mathbf{y}_n \rightarrow E$。依据链式求导法则有</p>
+<p>显然，$E$ 与 $\mathbf{W}_{hy}$ 之间的联系建立方式为：$\mathbf{W}_{hy} \rightarrow \mathbf{nety}_n \rightarrow \mathbf{y}_n \rightarrow E$。依据链式求导法则有</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
 \frac{\partial E}{\partial \mathbf{W}_{hy}} = \frac{\partial E}{\partial \mathbf{y}_{n}}\cdot\frac{\partial \mathbf{y}_{n}}{\partial \mathbf{nety}_n} \cdot \frac{\partial\mathbf{nety}_n}{\partial \mathbf{W}_{hy}}
 \end{aligned} \tag{13}</script><p>因为一般情况下输出层的每个神经元激励函数都相同，这里我们假设采用sigmoid函数，选择隐含层第 $j$ 个神经元到输出层第 $k$ 个神经元的权重 $w_{kj}$ 求导。</p>
 <script type="math/tex; mode=display">
-y_{nk} = f_k \left ( w_{k1}h_{1}+w_{k2}h_{2}+\cdots + w_{kj}h_{j} + \cdots +w_{km}h_{m} + b_{yk} \right ) \tag{14}</script><p>$E$ 与 $w<em>{kj}$之间的联系建立方式为：$w</em>{kj} \rightarrow nety<em>{kj} \rightarrow y</em>{kj} \rightarrow E$，依据链式求导法则，有</p>
+y_{nk} = f_k \left ( w_{k1}h_{1}+w_{k2}h_{2}+\cdots + w_{kj}h_{j} + \cdots +w_{km}h_{m} + b_{yk} \right ) \tag{14}</script><p>$E$ 与 $w_{kj}$之间的联系建立方式为：$w_{kj} \rightarrow nety_{kj} \rightarrow y_{kj} \rightarrow E$，依据链式求导法则，有</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
 \frac{\partial E}{\partial w_{kj}} &= \frac{1}{2}\cdot\frac{\partial \left ( e_{n1}^2 + e_{n2}^2 + \cdots + e_{nk}+ \cdots + e_{nr}^2 \right )}{\partial w_{11}} \\
@@ -440,7 +440,7 @@ y_{nk} = f_k \left ( w_{k1}h_{1}+w_{k2}h_{2}+\cdots + w_{kj}h_{j} + \cdots +w_{k
 \end{aligned} \tag{15}</script><blockquote>
 <p>sigmoid激励函数求导见附录。</p>
 </blockquote>
-<h3 id="2-4-2-对隐含层权重的求导"><a href="#2-4-2-对隐含层权重的求导" class="headerlink" title="2.4.2 对隐含层权重的求导"></a>2.4.2 对隐含层权重的求导</h3><p>同理，$E$ 与 $\mathbf{W}<em>{xh}$ 建立联系的方式为： $\mathbf{W}</em>{xh} \rightarrow \mathbf{neth} \rightarrow \mathbf{h} \rightarrow \mathbf{nety_{n}} \rightarrow \mathbf{y}_n \rightarrow E$。</p>
+<h3 id="2-4-2-对隐含层权重的求导"><a href="#2-4-2-对隐含层权重的求导" class="headerlink" title="2.4.2 对隐含层权重的求导"></a>2.4.2 对隐含层权重的求导</h3><p>同理，$E$ 与 $\mathbf{W}_{xh}$ 建立联系的方式为： $\mathbf{W}_{xh} \rightarrow \mathbf{neth} \rightarrow \mathbf{h} \rightarrow \mathbf{nety_{n}} \rightarrow \mathbf{y}_n \rightarrow E$。</p>
 <p><img src="/images/20201020/04.png" alt="04"></p>
 <p>假设隐含层的激活函数也为sigmoid函数。选择式(11)中从第 $i$ 个输入到第 $j$ 个隐含层神经元的权重 $u_{ji}$ 项求导，有</p>
 <script type="math/tex; mode=display">
@@ -469,7 +469,7 @@ y_{nk} = f_k \left ( w_{k1}h_{1}+w_{k2}h_{2}+\cdots + w_{kj}h_{j} + \cdots +w_{k
 <script type="math/tex; mode=display">
 \frac{\partial net{h_j}}{\partial u_{ji}} = \frac{\partial \left( u_{j1}x_{n1} + u_{j2}x_{n2} + \cdots + u_{ji}x_{ni} +  \cdots  + {u_{jd}}{x_{nd}} \right)}{\partial u_{ji}} = x_{ni} \tag{19}</script><p>由式(16)~(19)可得：</p>
 <script type="math/tex; mode=display">
-\frac{\partial E}{\partial u_{ji}} = \left[ {\sum\limits_{l = 1}^r { - \left( o_{nl} - y_{nl} \right) \cdot y_{nl}\left( 1 - y_{nl} \right) \cdot w_{lj}} } \right] \cdot \left[ {h_j}\left( 1 - {h_j} \right) \right] \cdot x_{ni} \tag{20}</script><h2 id="2-5-权重更新"><a href="#2-5-权重更新" class="headerlink" title="2.5 权重更新"></a>2.5 权重更新</h2><p>经过2.3~2.4节分别对输入层到隐含层权重 $\mathbf{U}<em>{xh}$、隐含层到输出层权重 $\mathbf{W}</em>{hy}$求导，现在可以得到相应的权重梯度更新算法为</p>
+\frac{\partial E}{\partial u_{ji}} = \left[ {\sum\limits_{l = 1}^r { - \left( o_{nl} - y_{nl} \right) \cdot y_{nl}\left( 1 - y_{nl} \right) \cdot w_{lj}} } \right] \cdot \left[ {h_j}\left( 1 - {h_j} \right) \right] \cdot x_{ni} \tag{20}</script><h2 id="2-5-权重更新"><a href="#2-5-权重更新" class="headerlink" title="2.5 权重更新"></a>2.5 权重更新</h2><p>经过2.3~2.4节分别对输入层到隐含层权重 $\mathbf{U}_{xh}$、隐含层到输出层权重 $\mathbf{W}_{hy}$求导，现在可以得到相应的权重梯度更新算法为</p>
 <script type="math/tex; mode=display">
 u_{ji}^+ = u_{ji} - \eta  \frac{\partial E}{\partial u_{ji}}\tag{21}</script><script type="math/tex; mode=display">
 w_{kj}^+ = w_{kj} - \xi \frac{\partial E}{\partial w_{kj}}\tag{22}</script><p>式中，$\eta$、$\xi$ 表示学习因子。</p>
@@ -515,7 +515,10 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
   <div class="popular-posts-header">推荐阅读</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/9765ce4h.html" rel="bookmark">cmake生成动态链接库并调用</a></div>
+      <div class="popular-posts-title"><a href="/archives/c12048c3.html" rel="bookmark">Pytorch 学习笔记（梯度的求取）</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/archives/fa516be2.html" rel="bookmark">cmake生成动态链接库并调用</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/9765ce4r.html" rel="bookmark">Numpy 学习笔记</a></div>
@@ -525,9 +528,6 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/archives/9765ce7e.html" rel="bookmark">Pytorch 学习笔记（基础篇）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/9765ce6d.html" rel="bookmark">Python 基础篇</a></div>
     </li>
   </ul>
 
@@ -664,7 +664,7 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">91</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -752,12 +752,12 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">288k</span>
+    <span title="站点总字数">296k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:22</span>
+    <span title="站点阅读时长">4:29</span>
 </div>
 
 

@@ -344,22 +344,22 @@
 <h1 id="2-SDH建立坐标系的过程"><a href="#2-SDH建立坐标系的过程" class="headerlink" title="2 SDH建立坐标系的过程"></a>2 SDH建立坐标系的过程</h1><p><img src="/images/20210519/rvc_SDH.png" alt="SDH"></p>
 <p>上图所示的转动关节 DH 参数的定义<sup>[1]</sup>：</p>
 <ol>
-<li>关节距离 $d<em>j$：从 $x</em>{j-1}$ 轴沿 $z_{j-1}$ 轴到 $x_j$ 轴的距离；</li>
-<li>关节转角 $\theta <em>j$：从 $x</em>{j-1}$ 轴沿 $z_{j-1}$ 轴转到 $x_j$ 轴的角度，且  $\theta_j \in (-\pi,\pi]$；</li>
-<li>杆间距离 $a<em>j$：从 $z</em>{j-1}$ 轴沿 $x_j$ 轴到 $z_j$ 轴的距离；</li>
-<li>杆件扭角 $\alpha<em>j$：从 $z</em>{j-1}$ 轴沿 $x_j$ 轴转到 $z_j$ 轴的角度，且 $\alpha_j \in (-\pi,\pi]$.</li>
+<li>关节距离 $d_j$：从 $x_{j-1}$ 轴沿 $z_{j-1}$ 轴到 $x_j$ 轴的距离；</li>
+<li>关节转角 $\theta _j$：从 $x_{j-1}$ 轴沿 $z_{j-1}$ 轴转到 $x_j$ 轴的角度，且  $\theta_j \in (-\pi,\pi]$；</li>
+<li>杆间距离 $a_j$：从 $z_{j-1}$ 轴沿 $x_j$ 轴到 $z_j$ 轴的距离；</li>
+<li>杆件扭角 $\alpha_j$：从 $z_{j-1}$ 轴沿 $x_j$ 轴转到 $z_j$ 轴的角度，且 $\alpha_j \in (-\pi,\pi]$.</li>
 </ol>
 <p>DH 坐标系中轴与原点确定的基本原则是<sup>[2]</sup>：</p>
 <ol>
 <li>$z_j$ 轴沿关节 $j+1$ 的轴向(指向可任选，但通常都将各平行的 $z$ 轴均取为相同的指向)；</li>
-<li>原点选取的原则：原点 $O<em>j$ 为 $z</em>{j-1}$ 轴和 $z<em>j$ 轴的公法线与 $z</em>{j-1}$ 轴的交点.<ul>
-<li>当 $z<em>{j-1}$ 轴和 $z_j$ 轴平行时，两轴之间有无数条公垂线，若两轴重合，取 $O_j = O</em>{j-1}$；若两轴平行但不重合，则过 $O<em>{j-1}$ 点作 $z</em>{j-1}$ 轴和 $z_j$ 轴的公垂线，此公垂线与 $z_j$ 轴的交点即 $O_j$.</li>
+<li>原点选取的原则：原点 $O_j$ 为 $z_{j-1}$ 轴和 $z_j$ 轴的公法线与 $z_{j-1}$ 轴的交点.<ul>
+<li>当 $z_{j-1}$ 轴和 $z_j$ 轴平行时，两轴之间有无数条公垂线，若两轴重合，取 $O_j = O_{j-1}$；若两轴平行但不重合，则过 $O_{j-1}$ 点作 $z_{j-1}$ 轴和 $z_j$ 轴的公垂线，此公垂线与 $z_j$ 轴的交点即 $O_j$.</li>
 <li>由于没有 $z_{-1}$，所以上述方法不适用于 $O_0$，这时确定 $O_0$ 的方法是：若 $z_0$ 与 $z_1$ 相交，取 $O_0 = O_1$；若$z_0$ 与 $z_1$ 不相交，取 $O_0$ 在 $z_0$ 与 $z_1$ 的公垂线上。</li>
 </ul>
 </li>
-<li>轴 $x<em>j$ 与轴 $z</em>{j-1}$ 相交且垂直，即 $x<em>j$ 为沿过 $z</em>{j-1}$ 轴和 $z<em>j$ 轴的公垂线，方向从 $z</em>{j-1}$ 指向 $z_j$.<ul>
-<li>当 $z<em>{j-1}$ 轴和 $z_j$ 轴重合时，这时 $O_j = O</em>{j-1}$，那么在零位时要求 $x<em>j = x</em>{j-1}$.</li>
-<li>当 $z<em>{j-1}$ 轴和 $z_j$ 轴相交且不重合时，选择 $x_j = \pm(z</em>{j-1}\times z_j)$，通常使所有平行的 $x$ 轴均具有相同的指向.</li>
+<li>轴 $x_j$ 与轴 $z_{j-1}$ 相交且垂直，即 $x_j$ 为沿过 $z_{j-1}$ 轴和 $z_j$ 轴的公垂线，方向从 $z_{j-1}$ 指向 $z_j$.<ul>
+<li>当 $z_{j-1}$ 轴和 $z_j$ 轴重合时，这时 $O_j = O_{j-1}$，那么在零位时要求 $x_j = x_{j-1}$.</li>
+<li>当 $z_{j-1}$ 轴和 $z_j$ 轴相交且不重合时，选择 $x_j = \pm(z_{j-1}\times z_j)$，通常使所有平行的 $x$ 轴均具有相同的指向.</li>
 <li>当 $j = 0$时，$O_0 = O_1$, 或 $O_0$ 在 $z_0$ 轴和 $z_1$ 轴的公垂线上，选取 $x_0$ 轴与 $x_1$ 轴重合.<blockquote>
 <p>Tip: 上述方法没有考虑平动关节的建系，可参见[2]。</p>
 </blockquote>
@@ -372,7 +372,7 @@
 <p>按照第 2 节给出的 DH 建系原则，进行以下步骤的建模：</p>
 <ol>
 <li>确定各关节的旋转轴，用 $q_j$ 表示(可以参考下一节的图)。</li>
-<li>确定 $z$ 轴，依据 DH 建系方法， $z<em>0 (z</em>{base})$ 应为 $q_1$，$z_1$ 应为 $q_2$，以此类推，最终，$z_6$ 应为 $q_6$，与 $z_5$ 相同。</li>
+<li>确定 $z$ 轴，依据 DH 建系方法， $z_0 (z_{base})$ 应为 $q_1$，$z_1$ 应为 $q_2$，以此类推，最终，$z_6$ 应为 $q_6$，与 $z_5$ 相同。</li>
 <li>确定坐标原点：<ul>
 <li>$j = 0$ 时，$z_0$ 与 $z_1$ 相交，取 $O_0 = O_1$；</li>
 <li>$j = 1$ 时，$z_0$ 与 $z_1$ 相交，取其交点为 $O_1$；</li>
@@ -826,7 +826,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">91</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -914,12 +914,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">288k</span>
+    <span title="站点总字数">296k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:22</span>
+    <span title="站点阅读时长">4:29</span>
 </div>
 
 

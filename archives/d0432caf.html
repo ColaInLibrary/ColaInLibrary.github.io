@@ -354,7 +354,7 @@
 <h4 id="2-2-2-2-param标签"><a href="#2-2-2-2-param标签" class="headerlink" title="2.2.2.2 param标签"></a>2.2.2.2 param标签</h4><p>parameter是ROS系统运行中的参数，存储在参数服务器中。在launch文件中通过<code>&lt;param&gt;</code>元素加载parameter；launch文件执行后，parameter就加载到ROS的参数服务器上了。每个活跃的节点都可以通过 ros::param::get()接口来获取parameter的值，用户也可以在终端中通过rosparam命令获得parameter的值。</p>
 <p><code>&lt;param&gt;</code>的使用方法如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;output_frame&quot;</span> <span class="attr">value</span>=<span class="string">&quot;odom&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure><br>运行launch文件后，output_frame这个parameter的值就设置为odom，并且加载到ROS参数服务器上了。但是在很多复杂的系统中，参数的数量很多，如果这样一个一个的设置会非常麻烦，ROS也为我们提供了另外一种类似的参数加载方式——<code>&lt;rosparam&gt;</code>：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;rosparamfile=&quot;$(find 2dnav_pr2)/config/costmap_common_params.yaml&quot; command=&quot;load&quot; ns=&quot;local_costmap&quot; /&gt;</span><br></pre></td></tr></table></figure><br><code>&lt;rosparam&gt;</code>可以帮助我们将一个yaml格式文件中的参数全部加载到ROS参数服务器中，需要设置command属性为“load”，还可以选择设置命名空间“ns”。</p>
 <p>回到view_arm.launch文件中：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">command</span>=<span class="string">&quot;$(find xacro)/xacro --inorder $(find mastering_ros_robot_description_pkg)/urdf/seven_dof_arm.xacro&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;use_gui&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>依据上述原理，我们知道第一句话的意思是<em>robot_description</em>这个参数，会加载在<strong>mastering_ros_robot_description</strong>中的<strong>urdf/seven<em>dof_arm</em>.xacro</strong>文件，该文件即为七自由度机器人的模型描述文件。第二句话的意思是设置一个GUI参数，从效果上来说就是会出现上一篇博客3.1节中的GUI界面。</p>
+<p>依据上述原理，我们知道第一句话的意思是<em>robot_description</em>这个参数，会加载在<strong>mastering_ros_robot_description</strong>中的<strong>urdf/seven_dof_arm_.xacro</strong>文件，该文件即为七自由度机器人的模型描述文件。第二句话的意思是设置一个GUI参数，从效果上来说就是会出现上一篇博客3.1节中的GUI界面。</p>
 <h4 id="2-2-2-3-node标签"><a href="#2-2-2-3-node标签" class="headerlink" title="2.2.2.3 node标签"></a>2.2.2.3 node标签</h4><p>启动文件的核心是启动ROS节点，采用<code>&lt;node&gt;</code>标签定义，语法如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;package-name&quot;</span><span class="attr">type</span>=<span class="string">&quot;executable-name&quot;</span> <span class="attr">name</span>=<span class="string">&quot;node-name&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>从上边的定义规则可以看出，在启动文件中启动一个节点需要三个属性：pkg、type和name。其中pkg定义节点所在的功能包名称，type定义节点的可执行文件名称，这两个属性等同于在终端中使用rosrun命令执行节点时的输入参数。name属性用来定义节点运行的名称，将覆盖节点中init()赋予节点的名称。这是三个最常用的属性，在某些情况下，我们还有可能用到以下属性：</p>
 <ul>
@@ -561,7 +561,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">91</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -649,12 +649,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">288k</span>
+    <span title="站点总字数">296k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:22</span>
+    <span title="站点阅读时长">4:29</span>
 </div>
 
 
