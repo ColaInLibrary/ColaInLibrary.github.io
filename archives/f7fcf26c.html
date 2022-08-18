@@ -1,364 +1,175 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.1.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
-  <meta name="baidu-site-verification" content="aHT7NgajBz">
-
-<link rel="stylesheet" href="/css/main.css">
-
-<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
-<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('https://colainlibrary.com').hostname,
-    root: '/',
-    scheme: 'Gemini',
-    version: '7.7.0',
-    exturl: true,
-    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
-    copycode: {"enable":true,"show_result":true,"style":"mac"},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
-  };
-</script>
-
-  <meta name="description" content="介绍Windows环境下使用VS Code加LaTeX的配置方法。">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>科研利器—— VS Code + LaTeX | Cola In Library</title><meta name="keywords" content="Library,Windows"><meta name="author" content="Cola &amp; Library"><meta name="copyright" content="Cola &amp; Library"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="介绍Windows环境下使用VS Code加LaTeX的配置方法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="科研利器—— VS Code + LaTeX">
 <meta property="og:url" content="https://colainlibrary.com/archives/f7fcf26c.html">
 <meta property="og:site_name" content="Cola In Library">
 <meta property="og:description" content="介绍Windows环境下使用VS Code加LaTeX的配置方法。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/00.jpeg">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/01.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/02.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/02-1.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/02-2.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/02-3.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/02-4.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/03.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/04.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/05.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/17.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/07.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/08-0.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/08.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/18.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/09.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/10.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/12.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/13.gif">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/16.gif">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/14.png">
-<meta property="og:image" content="https://colainlibrary.com/images/20200529/15.png">
+<meta property="og:image" content="https://colainlibrary.com/images/post-1.jpg">
 <meta property="article:published_time" content="2020-05-29T12:35:23.000Z">
-<meta property="article:modified_time" content="2020-06-11T13:14:38.000Z">
+<meta property="article:modified_time" content="2022-08-18T05:23:16.080Z">
 <meta property="article:author" content="Cola &amp; Library">
 <meta property="article:tag" content="Library">
 <meta property="article:tag" content="Windows">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://colainlibrary.com/images/20200529/00.jpeg">
-
-<link rel="canonical" href="https://colainlibrary.com/archives/f7fcf26c.html">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true
-  };
-</script>
-
-  <title>科研利器—— VS Code + LaTeX | Cola In Library</title>
-  
-
-
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
+<meta name="twitter:image" content="https://colainlibrary.com/images/post-1.jpg"><link rel="shortcut icon" href="/images/favicon-28x32.png"><link rel="canonical" href="https://colainlibrary.com/archives/f7fcf26c"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="stylesheet" href="/css/logofont.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '科研利器—— VS Code + LaTeX',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-18 05:23:16'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
-</head>
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cola In Library</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
   
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-top">
-
-    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-
-</nav>
-  <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
-           placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result"></div>
-
-</div>
-<div class="search-pop-overlay"></div>
-
-  </div>
-</div>
-    </header>
-
-    
-  <div class="reading-progress-bar"></div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
-            
-
-  <div class="posts-expand">
-      
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
   
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/f7fcf26c.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          科研利器—— VS Code + LaTeX
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-29 12:35:23" itemprop="dateCreated datePublished" datetime="2020-05-29T12:35:23Z">2020-05-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/" itemprop="url" rel="index">
-                    <span itemprop="name">工科生的基本功</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
-                    <span itemprop="name">软件技术</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/f7fcf26c.html" class="post-meta-item leancloud_visitors" data-flag-title="科研利器—— VS Code + LaTeX" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
     
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
     
-    <a title="valine" href="/archives/f7fcf26c.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/f7fcf26c.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <p><img src=" /images/20200529/00.jpeg" width=50% /><br>介绍Windows环境下使用VS Code加LaTeX的配置方法。</p>
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/userfont.css"><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/avatar.jpg" onerror="onerror=null;src='/images/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">91</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/post-1.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Cola In Library</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">科研利器—— VS Code + LaTeX</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-05-29T12:35:23.000Z" title="发表于 2020-05-29 12:35:23">2020-05-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-18T05:23:16.080Z" title="更新于 2022-08-18 05:23:16">2022-08-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/">工科生的基本功</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/archives/f7fcf26c.html" data-flag-title="科研利器—— VS Code + LaTeX"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/archives/f7fcf26c.html#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/archives/f7fcf26c.html" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src=" /images/20200529/00.jpeg" width=50% /><br>介绍Windows环境下使用VS Code加LaTeX的配置方法。</p>
 <span id="more"></span>
 <h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h1><p>对于要写论文的科研人员来说，LaTeX是必不可少的神兵利器，但是LaTeX自带的TeX编辑器界面不够美观，之前用过TeX Studio，个人感觉还比较好用。但对于已经深陷Emacs快捷键不能自拔的我来说，当然还是VS Code更香！本文所用软件环境为：Windows + VS Code + LaTeX Workshop8.9.0 + TeXLive2020 + SumatraPDF。</p>
 <p>哦，我还想说一点，对于一个新的VS Code用户来讲，如何打开VS Code的配置文件(settings.json)都是一个问题，好不容易打开了，照着网上好多的教程一顿操作，发现并不能用。（别问我怎么知道的，说多了都是泪…）Anyway，在这里，你可以学到最详细的配置方法。</p>
 <h1 id="1-软件安装"><a href="#1-软件安装" class="headerlink" title="1 软件安装"></a>1 软件安装</h1><h2 id="1-1-VS-Code安装"><a href="#1-1-VS-Code安装" class="headerlink" title="1.1 VS Code安装"></a>1.1 VS Code安装</h2><p>这个直接从官网上下载就好，比较简单，就不介绍啦~</p>
-<h2 id="1-2-TeXLive2020安装"><a href="#1-2-TeXLive2020安装" class="headerlink" title="1.2 TeXLive2020安装"></a>1.2 TeXLive2020安装</h2><h3 id="1-2-1-下载"><a href="#1-2-1-下载" class="headerlink" title="1.2.1 下载"></a>1.2.1 下载</h3><p>如果说你还不明白CTeX、LaTeX、TeXLive之间的关系，那我悄悄地告诉你，你装TeXLive就好了。如果你还想了解它们之间的关系，知乎上有大量的入门介绍，我就不再废话了。TeXLive已经更新到了2020版，为了高速下载TeXLive，可以从清华的镜像源下载，网址是<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLnR1bmEudHNpbmdodWEuZWR1LmNuL0NUQU4vc3lzdGVtcy90ZXhsaXZlL0ltYWdlcy8=" title="https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/">https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/<i class="fa fa-external-link"></i></span>。点进去之后下载下图中红色框圈出的版本即可。<br><img src="/images/20200529/01.png" alt="01"></p>
+<h2 id="1-2-TeXLive2020安装"><a href="#1-2-TeXLive2020安装" class="headerlink" title="1.2 TeXLive2020安装"></a>1.2 TeXLive2020安装</h2><h3 id="1-2-1-下载"><a href="#1-2-1-下载" class="headerlink" title="1.2.1 下载"></a>1.2.1 下载</h3><p>如果说你还不明白CTeX、LaTeX、TeXLive之间的关系，那我悄悄地告诉你，你装TeXLive就好了。如果你还想了解它们之间的关系，知乎上有大量的入门介绍，我就不再废话了。TeXLive已经更新到了2020版，为了高速下载TeXLive，可以从清华的镜像源下载，网址是<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/">https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/</a>。点进去之后下载下图中红色框圈出的版本即可。<br><img src="/images/20200529/01.png" alt="01"></p>
 <h3 id="1-2-2-安装"><a href="#1-2-2-安装" class="headerlink" title="1.2.2 安装"></a>1.2.2 安装</h3><p>TeXLive2020的安装，相较于我曾经用的旧版本来说，可以说是非常简单了。将安装包解压之后，双击下图中标出的<strong>install-tl-windows</strong>，一路点击<strong>下一步</strong>即可。<br><img src="/images/20200529/02.png" alt="02"></p>
 <h2 id="1-3-LaTeX-Workshop插件安装"><a href="#1-3-LaTeX-Workshop插件安装" class="headerlink" title="1.3 LaTeX Workshop插件安装"></a>1.3 LaTeX Workshop插件安装</h2><p>安装好TeXLive后，在VS Code的插件商店中搜索<em>latex</em>，安装出现的第一个插件<strong>LaTeX Workshop</strong>，当前版本是8.9.0。这个插件的作用是将<code>.tex</code>格式的文件语法高亮，并通过它来沟通LaTeX，完成相应的编译、预览等工作。</p>
 <h2 id="1-4-SumatraPDF安装"><a href="#1-4-SumatraPDF安装" class="headerlink" title="1.4 SumatraPDF安装"></a>1.4 SumatraPDF安装</h2><h3 id="1-4-1-介绍"><a href="#1-4-1-介绍" class="headerlink" title="1.4.1 介绍"></a>1.4.1 介绍</h3><p>SumatraPDF是一个非常迷你的PDF阅读器，安装包只有大约9M的大小。我们用它来干嘛呢？当然是预览LaTeX生产的PDF咯。为什么不用自带的呢？有两点原因：第一，因为笔记本屏幕小，用自带的，源码和PDF预览就会各占一半屏幕，无论调节哪个，都会让另一个显示不全；第二，使用这个小的PDF阅读器，可以实现从<code>.tex</code>文件中的光标跳转到PDF文件中，从PDF文件的位置双击鼠标回跳到源码处。</p>
-<h3 id="1-4-2-下载与安装"><a href="#1-4-2-下载与安装" class="headerlink" title="1.4.2 下载与安装"></a>1.4.2 下载与安装</h3><p>SumatraPDF可以从<span class="exturl" data-url="aHR0cHM6Ly93d3cuc3VtYXRyYXBkZnJlYWRlci5vcmcvZG93bmxvYWRhZnRlci5odG1s" title="https://www.sumatrapdfreader.org/downloadafter.html">官网<i class="fa fa-external-link"></i></span>下载，安装方式也很简单，不再赘述。</p>
+<h3 id="1-4-2-下载与安装"><a href="#1-4-2-下载与安装" class="headerlink" title="1.4.2 下载与安装"></a>1.4.2 下载与安装</h3><p>SumatraPDF可以从<a target="_blank" rel="noopener" href="https://www.sumatrapdfreader.org/downloadafter.html">官网</a>下载，安装方式也很简单，不再赘述。</p>
 <h1 id="2-VS-Code的设置方法"><a href="#2-VS-Code的设置方法" class="headerlink" title="2 VS Code的设置方法"></a>2 VS Code的设置方法</h1><h2 id="2-1-已踩过的坑"><a href="#2-1-已踩过的坑" class="headerlink" title="2.1 已踩过的坑"></a>2.1 已踩过的坑</h2><p>LaTeX Workshop就是沟通VS Code与LaTeX的桥梁，与其说是VS Code的设置，不如说是LaTeX workshop的设置方法。网上有很多配置方法，上来就让修改settings.json这个配置文件，对于新用户来讲，他哪知道如何打开这个文件。有的说，通过<code>Ctrl+Shift+P</code>可以在VS Code中搜索，但是搜索到后，打开的是<strong>default settings.json</strong>文件，这个文件是只读文件。如果你从电脑中搜索到<strong>settings.json</strong>这个文件打开，将相应的配置代码复制进去，我不知道你们是什么结果，反正我的是不能使用，因为复制进去之后都会有黄线警告。那么究竟如何才能正确配置呢？赏杯咖啡就告诉你啊~</p>
-<h2 id="2-2-VS-Code编辑-tex初尝试"><a href="#2-2-VS-Code编辑-tex初尝试" class="headerlink" title="2.2 VS Code编辑.tex初尝试"></a>2.2 VS Code编辑.tex初尝试</h2><p>安装好软件后，我们打开<span class="exturl" data-url="aHR0cHM6Ly93d3cuZWxzZXZpZXIuY29tL2F1dGhvcnMvYXV0aG9yLXNjaGVtYXMvbGF0ZXgtaW5zdHJ1Y3Rpb25z" title="https://www.elsevier.com/authors/author-schemas/latex-instructions">Elsevier的模板<i class="fa fa-external-link"></i></span>，打开<em>cas-dc-template.tex</em>文件，<code>.tex</code>格式的文件即Latex的源码文件。如下所示：<br><img src="/images/20200529/02-1.png" alt="02-1"><br>在上图中，可以看到侧边栏多了<strong>TEX</strong>图标，点开，如下：<br><img src="/images/20200529/02-2.png" alt="02-2"></p>
+<h2 id="2-2-VS-Code编辑-tex初尝试"><a href="#2-2-VS-Code编辑-tex初尝试" class="headerlink" title="2.2 VS Code编辑.tex初尝试"></a>2.2 VS Code编辑.tex初尝试</h2><p>安装好软件后，我们打开<a target="_blank" rel="noopener" href="https://www.elsevier.com/authors/author-schemas/latex-instructions">Elsevier的模板</a>，打开<em>cas-dc-template.tex</em>文件，<code>.tex</code>格式的文件即Latex的源码文件。如下所示：<br><img src="/images/20200529/02-1.png" alt="02-1"><br>在上图中，可以看到侧边栏多了<strong>TEX</strong>图标，点开，如下：<br><img src="/images/20200529/02-2.png" alt="02-2"></p>
 <p>如果你已经跃跃欲试，那就点击<strong>Recipe:pdflatex→bibtex→pdflatex x2</strong>进行编译吧，编译完后，再点击<strong>View in VSCode tab</strong>就可以看到编译好的PDF了。<br><img src="/images/20200529/02-3.png" alt="02-3"></p>
 <blockquote>
 <p>Tip: 在PDF页面中Ctrl+单击可以跳转到源文件相应的位置哦~</p>
 </blockquote>
 <p>一般来讲，LaTeX装好后默认的编译方式是<strong>pdflatex</strong>，但是这种方式不能编译中文源码。对于中文源码，采用的是<strong>xelatex</strong>的编译方式。对于编译中文文档有两种方式，第一种：在中文源文件首行添加：<code>% !TEX program = xelatex</code>，如果有参考文献，可以再添加<code>% !BIB options = &quot;%DOCFILE%&quot;</code>。显然，这个操作不够智能，因此，我们第一步是，添加<strong>xelatex</strong>的编译方式(2.3节)。</p>
 <blockquote>
-<p>上述编译的方法来自<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phbWVzLVl1L0xhVGVYLVdvcmtzaG9wL3dpa2kvQ29tcGlsZSNsYXRleC1yZWNpcGU=" title="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">官方Compile解释<i class="fa fa-external-link"></i></span>.<br><img src="/images/20200529/02-4.png" alt="02-4"></p>
+<p>上述编译的方法来自<a target="_blank" rel="noopener" href="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">官方Compile解释</a>.<br><img src="/images/20200529/02-4.png" alt="02-4"></p>
 </blockquote>
 <p>从上面VS Code中预览PDF可以看到，整块屏幕被三分天下，左边的编译之类的提示可以再点一下<code>TEX</code>关掉，但是tex文档和PDF预览两个同时存在，无论调节哪一个，小小的笔记本屏幕都无法同时满足二者清晰呈现。因此我们需要在外面链接一个PDF阅读器(2.4节)。</p>
 <h2 id="2-3-编译方式的配置"><a href="#2-3-编译方式的配置" class="headerlink" title="2.3 编译方式的配置"></a>2.3 编译方式的配置</h2><p>从VS Code中左下角的齿轮，打开设置。</p>
@@ -406,443 +217,100 @@
 <h1 id="3-部分快捷键"><a href="#3-部分快捷键" class="headerlink" title="3 部分快捷键"></a>3 部分快捷键</h1><p>Ctrl+Alt+X：显示LaTeX面板(左侧编译命令面板和文档大纲)。<br>Ctrl+Alt+C：清除辅助文件<br>Ctrl+Alt+V：查看编译的pdf文件(预览)<br>Ctrl+Alt+J：正向搜索</p>
 <h1 id="4-一点感悟"><a href="#4-一点感悟" class="headerlink" title="4 一点感悟"></a>4 一点感悟</h1><p>OK，到这里，本篇博客主体就结束了。有一个小的感受，新手找settings.json这个配置文件是真的难。直接把网上各位大佬的配置源码粘贴进来，总是有问题，这可能是由于软件版本更新后不太适用了。当然，我的这个教程也可能会过时，所以我都写明了软件版本。我认为，从设置页面里打开的settings.json或许可以直接从网上的各位大佬的配置文件源码中复制，有兴趣的可以多多尝试~</p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
-<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phbWVzLVl1L0xhVGVYLVdvcmtzaG9wL3dpa2kvQ29tcGlsZSNsYXRleC1yZWNpcGU=" title="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">编译的官方解释<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phbWVzLVl1L0xhVGVYLVdvcmtzaG9wL3dpa2kvQ29tcGlsZSNsYXRleC1yZWNpcGU=" title="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">正向搜索的官方解释<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC85MDUyNjIxOA==" title="https://zhuanlan.zhihu.com/p/90526218">配置VScode编辑LaTeX及正反向搜索等设置<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMUpFNDExSzdpaj9mcm9tPXNlYXJjaCZhbXA7c2VpZD0xNDc5MzIxMzUwODY3Nzk0NTc1Nw==" title="https://www.bilibili.com/video/BV1JE411K7ij?from=search&amp;seid=14793213508677945757">一个直观的VS Code+Latex视频简介<i class="fa fa-external-link"></i></span></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">编译的官方解释</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipe">正向搜索的官方解释</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/90526218">配置VScode编辑LaTeX及正反向搜索等设置</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1JE411K7ij?from=search&amp;seid=14793213508677945757">一个直观的VS Code+Latex视频简介</a></li>
 </ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://colainlibrary.com">Cola &amp; Library</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://colainlibrary.com/archives/f7fcf26c.html">https://colainlibrary.com/archives/f7fcf26c.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://colainlibrary.com" target="_blank">Cola In Library</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Library/">Library</a><a class="post-meta__tags" href="/tags/Windows/">Windows</a></div><div class="post_share"><div class="social-share" data-image="/images/post-1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/images/wechatpay.png" target="_blank"><img class="post-qr-code-img" src="/images/wechatpay.png" alt="微信支付"/></a><div class="post-qr-code-desc">微信支付</div></li><li class="reward-item"><a href="/images/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/images/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/archives/85e5f27f.html"><img class="prev-cover" src="/images/post-2.jpg" onerror="onerror=null;src='/images/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">opencv_contrib的安装方法</div></div></a></div><div class="next-post pull-right"><a href="/archives/4c622d61.html"><img class="next-cover" src="/images/post-0.jpg" onerror="onerror=null;src='/images/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Windows修改按键的方法</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/archives/4c622d61.html" title="Windows修改按键的方法"><img class="cover" src="/images/post-0.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-05</div><div class="title">Windows修改按键的方法</div></div></a></div><div><a href="/archives/22360.html" title="Win10下安装Linux双系统的方法"><img class="cover" src="/images/post-3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-21</div><div class="title">Win10下安装Linux双系统的方法</div></div></a></div><div><a href="/archives/56794.html" title="Win10下完美安装MathType的方法"><img class="cover" src="/images/post-2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-21</div><div class="title">Win10下完美安装MathType的方法</div></div></a></div><div><a href="/archives/c12048c3.html" title="Pytorch 学习笔记（梯度的求取）"><img class="cover" src="/images/post-0.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-14</div><div class="title">Pytorch 学习笔记（梯度的求取）</div></div></a></div><div><a href="/archives/fa516be2.html" title="cmake生成动态链接库并调用"><img class="cover" src="/images/post-9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-13</div><div class="title">cmake生成动态链接库并调用</div></div></a></div><div><a href="/archives/9765ce4r.html" title="Numpy 学习笔记"><img class="cover" src="/images/post-8.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-11</div><div class="title">Numpy 学习笔记</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/images/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Cola &amp; Library</div><div class="author-info__description">Understand, don't memorize.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">91</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">如果阅读过程中有任何疑问，欢迎评论或留言，看到后会及时回复。</div><div class="xpand" style="height:200px;"><canvas class="illo" width="800" height="800" style="max-width: 200px; max-height: 200px; touch-action: none; width: 640px; height: 640px;"></canvas></div></div><script src="https://fastly.jsdelivr.net/gh/xiaopengand/blogCdn@latest/xzxr/twopeople1.js"></script><script src="https://fastly.jsdelivr.net/gh/xiaopengand/blogCdn@latest/xzxr/zdog.dist.js"></script><script id="rendered-js" src="https://fastly.jsdelivr.net/gh/xiaopengand/blogCdn@latest/xzxr/twopeople.js"></script><style>.card-widget.card-announcement {
+margin: 0;
+align-items: center;
+justify-content: center;
+text-align: center;
+}
+canvas {
+display: block;
+margin: 0 auto;
+cursor: move;
+}</style><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">0 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">1 软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-VS-Code%E5%AE%89%E8%A3%85"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 VS Code安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-TeXLive2020%E5%AE%89%E8%A3%85"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 TeXLive2020安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E4%B8%8B%E8%BD%BD"><span class="toc-number">2.2.1.</span> <span class="toc-text">1.2.1 下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E5%AE%89%E8%A3%85"><span class="toc-number">2.2.2.</span> <span class="toc-text">1.2.2 安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-LaTeX-Workshop%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 LaTeX Workshop插件安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-SumatraPDF%E5%AE%89%E8%A3%85"><span class="toc-number">2.4.</span> <span class="toc-text">1.4 SumatraPDF安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-1-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.4.1.</span> <span class="toc-text">1.4.1 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-2-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="toc-number">2.4.2.</span> <span class="toc-text">1.4.2 下载与安装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-VS-Code%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">2 VS Code的设置方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%B7%B2%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 已踩过的坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-VS-Code%E7%BC%96%E8%BE%91-tex%E5%88%9D%E5%B0%9D%E8%AF%95"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 VS Code编辑.tex初尝试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E7%BC%96%E8%AF%91%E6%96%B9%E5%BC%8F%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 编译方式的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-PDF%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.4.</span> <span class="toc-text">2.4 PDF阅读器的设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-1-%E5%85%B3%E8%81%94%E5%A4%96%E9%83%A8PDF%E9%98%85%E8%AF%BB%E5%99%A8"><span class="toc-number">3.4.1.</span> <span class="toc-text">2.4.1 关联外部PDF阅读器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-2-%E5%89%8D%E5%90%91%E6%90%9C%E7%B4%A2%E4%B8%8E%E5%8F%8D%E5%90%91%E6%90%9C%E7%B4%A2%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.4.2.</span> <span class="toc-text">2.4.2 前向搜索与反向搜索设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-3-%E5%8F%8D%E5%90%91%E6%90%9C%E7%B4%A2%E7%9A%84PDF%E9%98%85%E8%AF%BB%E5%99%A8%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.4.3.</span> <span class="toc-text">2.4.3 反向搜索的PDF阅读器设置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E9%83%A8%E5%88%86%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">4.</span> <span class="toc-text">3 部分快捷键</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E4%B8%80%E7%82%B9%E6%84%9F%E6%82%9F"><span class="toc-number">5.</span> <span class="toc-text">4 一点感悟</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">6.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/archives/c12048c3.html" title="Pytorch 学习笔记（梯度的求取）"><img src="/images/post-0.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Pytorch 学习笔记（梯度的求取）"/></a><div class="content"><a class="title" href="/archives/c12048c3.html" title="Pytorch 学习笔记（梯度的求取）">Pytorch 学习笔记（梯度的求取）</a><time datetime="2022-08-14T15:00:00.000Z" title="发表于 2022-08-14 15:00:00">2022-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/fa516be2.html" title="cmake生成动态链接库并调用"><img src="/images/post-9.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="cmake生成动态链接库并调用"/></a><div class="content"><a class="title" href="/archives/fa516be2.html" title="cmake生成动态链接库并调用">cmake生成动态链接库并调用</a><time datetime="2022-08-13T13:00:00.000Z" title="发表于 2022-08-13 13:00:00">2022-08-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/9765ce4r.html" title="Numpy 学习笔记"><img src="/images/post-8.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Numpy 学习笔记"/></a><div class="content"><a class="title" href="/archives/9765ce4r.html" title="Numpy 学习笔记">Numpy 学习笔记</a><time datetime="2022-08-11T11:00:00.000Z" title="发表于 2022-08-11 11:00:00">2022-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/9765ce3g.html" title="Pytorch 学习笔记（神经网络篇）"><img src="/images/post-7.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Pytorch 学习笔记（神经网络篇）"/></a><div class="content"><a class="title" href="/archives/9765ce3g.html" title="Pytorch 学习笔记（神经网络篇）">Pytorch 学习笔记（神经网络篇）</a><time datetime="2022-08-10T11:00:00.000Z" title="发表于 2022-08-10 11:00:00">2022-08-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/9765ce7e.html" title="Pytorch 学习笔记（基础篇）"><img src="/images/post-6.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Pytorch 学习笔记（基础篇）"/></a><div class="content"><a class="title" href="/archives/9765ce7e.html" title="Pytorch 学习笔记（基础篇）">Pytorch 学习笔记（基础篇）</a><time datetime="2022-08-09T11:00:00.000Z" title="发表于 2022-08-09 11:00:00">2022-08-09</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/post-1.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By Cola & Library</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
 
-    </div>
-
-	<div>
-    
-      <div>
-    
-        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读------</div>
-    
-</div>
-    
-    </div>
-    
-    
-    
-      
-  <div class="popular-posts-header">推荐阅读</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/4c622d61.html" rel="bookmark">Windows修改按键的方法</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/56794.html" rel="bookmark">Win10下完美安装MathType的方法</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/22360.html" rel="bookmark">Win10下安装Linux双系统的方法</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/c12048c3.html" rel="bookmark">Pytorch 学习笔记（梯度的求取）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/archives/fa516be2.html" rel="bookmark">cmake生成动态链接库并调用</a></div>
-    </li>
-  </ul>
-
-        <div class="reward-container">
-  <div>Donate a cup of cola?</div>
-  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.png" alt="Cola & Library 微信支付">
-        <p>微信支付</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="Cola & Library 支付宝">
-        <p>支付宝</p>
-      </div>
-
-  </div>
-</div>
-
-        
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>Cola & Library
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://colainlibrary.com/archives/f7fcf26c.html" title="科研利器—— VS Code + LaTeX">https://colainlibrary.com/archives/f7fcf26c.html</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-
-      <footer class="post-footer">
-          
-          <div class="post-tags">
-              <a href="/tags/Library/" rel="tag"><i class="fa fa-tag"></i> Library</a>
-              <a href="/tags/Windows/" rel="tag"><i class="fa fa-tag"></i> Windows</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/archives/4c622d61.html" rel="prev" title="Windows修改按键的方法">
-      <i class="fa fa-chevron-left"></i> Windows修改按键的方法
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/archives/85e5f27f.html" rel="next" title="opencv_contrib的安装方法">
-      opencv_contrib的安装方法 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let activeClass = CONFIG.comments.activeClass;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
       }
     }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
   }
-</script>
-
-        </div>
-          
   
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-%E5%89%8D%E8%A8%80"><span class="nav-text">0 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">1 软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-VS-Code%E5%AE%89%E8%A3%85"><span class="nav-text">1.1 VS Code安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-TeXLive2020%E5%AE%89%E8%A3%85"><span class="nav-text">1.2 TeXLive2020安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E4%B8%8B%E8%BD%BD"><span class="nav-text">1.2.1 下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%AE%89%E8%A3%85"><span class="nav-text">1.2.2 安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-LaTeX-Workshop%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">1.3 LaTeX Workshop插件安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-SumatraPDF%E5%AE%89%E8%A3%85"><span class="nav-text">1.4 SumatraPDF安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-%E4%BB%8B%E7%BB%8D"><span class="nav-text">1.4.1 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="nav-text">1.4.2 下载与安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-VS-Code%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-text">2 VS Code的设置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%B7%B2%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91"><span class="nav-text">2.1 已踩过的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-VS-Code%E7%BC%96%E8%BE%91-tex%E5%88%9D%E5%B0%9D%E8%AF%95"><span class="nav-text">2.2 VS Code编辑.tex初尝试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E7%BC%96%E8%AF%91%E6%96%B9%E5%BC%8F%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">2.3 编译方式的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-PDF%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="nav-text">2.4 PDF阅读器的设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-%E5%85%B3%E8%81%94%E5%A4%96%E9%83%A8PDF%E9%98%85%E8%AF%BB%E5%99%A8"><span class="nav-text">2.4.1 关联外部PDF阅读器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-%E5%89%8D%E5%90%91%E6%90%9C%E7%B4%A2%E4%B8%8E%E5%8F%8D%E5%90%91%E6%90%9C%E7%B4%A2%E8%AE%BE%E7%BD%AE"><span class="nav-text">2.4.2 前向搜索与反向搜索设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-%E5%8F%8D%E5%90%91%E6%90%9C%E7%B4%A2%E7%9A%84PDF%E9%98%85%E8%AF%BB%E5%99%A8%E8%AE%BE%E7%BD%AE"><span class="nav-text">2.4.3 反向搜索的PDF阅读器设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E9%83%A8%E5%88%86%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-text">3 部分快捷键</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E4%B8%80%E7%82%B9%E6%84%9F%E6%82%9F"><span class="nav-text">4 一点感悟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Cola & Library"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">Cola & Library</p>
-  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">91</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">19</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
-      </span>
-      <span class="links-of-author-item">
-        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
-      </span>
-      <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
-      </span>
-      <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
-      </span>
-  </div>
-
-
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      友链
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
-        </li>
-    </ul>
-  </div>
-
-      </div>
-        <div class="back-to-top motion-element">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
-        </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    <span title="站点总字数">296k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">4:29</span>
-</div>
-
-
-<!-- 网站运行时间的设置 -->
-<div>
-<span id="sitetime"></span>
-<script language=javascript>
-	function siteTime(){
-		window.setTimeout("siteTime()", 1000);
-		var seconds = 1000;
-		var minutes = seconds * 60;
-		var hours = minutes * 60;
-		var days = hours * 24;
-		var years = days * 365;
-		var today = new Date();
-		var todayYear = today.getFullYear();
-		var todayMonth = today.getMonth()+1;
-		var todayDate = today.getDate();
-		var todayHour = today.getHours();
-		var todayMinute = today.getMinutes();
-		var todaySecond = today.getSeconds();
-		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
-		year - 作为date对象的年份，为4位年份值
-		month - 0-11之间的整数，做为date对象的月份
-		day - 1-31之间的整数，做为date对象的天数
-		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
-		minutes - 0-59之间的整数，做为date对象的分钟数
-		seconds - 0-59之间的整数，做为date对象的秒数
-		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
-		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
-		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
-		var diff = t2-t1;
-		var diffYears = Math.floor(diff/years);
-		var diffDays = Math.floor((diff/days)-diffYears*365);
-		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
-		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
-		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
-		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
-	}
-	siteTime();
-</script>
-</div>
-
-<!-- 网站底部统计本站访问数量 -->
-<!--
-<div>
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
-    <span class="post-meta-divider">|</span>
-已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
-</div>
--->
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-       	<i class="fa fa-"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        共观看 <span id="busuanzi_value_site_pv"></span> 次
-      </span>
-    </span>
-</div>
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-
-<script>
-NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-    var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail,link';
-    guest = guest.split(',').filter(item => {
-      return GUEST.includes(item);
-    });
-    new Valine({
-      el: '#valine-comments',
-      verify: false,
-      notify: false,
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
       appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
       appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
-      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
-      avatar: 'mm',
-      meta: guest,
-      pageSize: '10' || 10,
-      visitor: true,
-      lang: '' || 'zh-cn',
-      path: location.pathname,
-      recordIP: false,
-      serverURLs: ''
-    });
-  }, window.Valine);
-});
-</script>
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
 
-	
-</body>
-</html>
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

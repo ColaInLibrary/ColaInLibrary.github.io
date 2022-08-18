@@ -1,1828 +1,301 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.1.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-28x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-21x24.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="google-site-verification" content="2VZb2lYKbfftXRl2p-BE2CpPN0YMTwNgl_rPUO7CTPQ">
-  <meta name="baidu-site-verification" content="aHT7NgajBz">
-
-<link rel="stylesheet" href="/css/main.css">
-
-<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
-<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('https://colainlibrary.com').hostname,
-    root: '/',
-    scheme: 'Gemini',
-    version: '7.7.0',
-    exturl: true,
-    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
-    copycode: {"enable":true,"show_result":true,"style":"mac"},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
-  };
-</script>
-
-  <meta name="description" content="Understand, don&#39;t memorize.">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Cola In Library</title><meta name="author" content="Cola &amp; Library"><meta name="copyright" content="Cola &amp; Library"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Understand, don&#39;t memorize.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cola In Library">
 <meta property="og:url" content="https://colainlibrary.com/page/3/index.html">
 <meta property="og:site_name" content="Cola In Library">
 <meta property="og:description" content="Understand, don&#39;t memorize.">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://colainlibrary.com/images/avatar.jpg">
 <meta property="article:author" content="Cola &amp; Library">
 <meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="https://colainlibrary.com/page/3/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: true,
-    isPost: false
-  };
-</script>
-
-  <title>Cola In Library</title>
-  
-
-
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
+<meta name="twitter:image" content="https://colainlibrary.com/images/avatar.jpg"><link rel="shortcut icon" href="/images/favicon-28x32.png"><link rel="canonical" href="https://colainlibrary.com/page/3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="stylesheet" href="/css/logofont.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Cola In Library',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-08-18 10:32:24'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-<link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cola In Library</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-top">
-
-    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-
-</nav>
-  <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
-           placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result"></div>
-
-</div>
-<div class="search-pop-overlay"></div>
-
-  </div>
-</div>
-    </header>
-
-    
-  <div class="reading-progress-bar"></div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
-            
-
-  <div class="posts-expand">
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/22acf33e.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/archives/22acf33e.html" class="post-title-link" itemprop="url">SDH，一学就会</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-19 11:00:00" itemprop="dateCreated datePublished" datetime="2021-05-19T11:00:00Z">2021-05-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index">
-                    <span itemprop="name">机器人控制</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">专栏——机器人动力学</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/22acf33e.html" class="post-meta-item leancloud_visitors" data-flag-title="SDH，一学就会" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/archives/22acf33e.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/22acf33e.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>介绍标准 DH(SDH) 机器人建系方法。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/22acf33e.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-	<div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/6d0d409.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/archives/6d0d409.html" class="post-title-link" itemprop="url">Ethercat 主站调试</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-22 11:00:00" itemprop="dateCreated datePublished" datetime="2021-04-22T11:00:00Z">2021-04-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index">
-                    <span itemprop="name">机器人控制</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index">
-                    <span itemprop="name">专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/6d0d409.html" class="post-meta-item leancloud_visitors" data-flag-title="Ethercat 主站调试" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/archives/6d0d409.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/6d0d409.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>记录 Ethercat 驱动电机所用到的函数。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/6d0d409.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-	<div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/456588d2.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/archives/456588d2.html" class="post-title-link" itemprop="url">Linux 多内核切换和设置默认开启内核</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-21 11:00:00" itemprop="dateCreated datePublished" datetime="2021-04-21T11:00:00Z">2021-04-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index">
-                    <span itemprop="name">机器人控制</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index">
-                    <span itemprop="name">专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/456588d2.html" class="post-meta-item leancloud_visitors" data-flag-title="Linux 多内核切换和设置默认开启内核" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/archives/456588d2.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/456588d2.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>784</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>记录 Ubuntu16.04 多内核切换的方法。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/456588d2.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-	<div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/e5d7cd24.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/archives/e5d7cd24.html" class="post-title-link" itemprop="url">Ethercat 主站搭建</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-17 11:00:00" itemprop="dateCreated datePublished" datetime="2021-04-17T11:00:00Z">2021-04-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index">
-                    <span itemprop="name">机器人控制</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index">
-                    <span itemprop="name">专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/e5d7cd24.html" class="post-meta-item leancloud_visitors" data-flag-title="Ethercat 主站搭建" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/archives/e5d7cd24.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/e5d7cd24.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>介绍 Ubuntu16.04 下 Igh Ethercat 主站搭建的过程。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/e5d7cd24.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-	<div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/d44fcc81.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/archives/d44fcc81.html" class="post-title-link" itemprop="url">preempt_rt 实时内核补丁</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-16 11:00:00" itemprop="dateCreated datePublished" datetime="2021-04-16T11:00:00Z">2021-04-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index">
-                    <span itemprop="name">机器人控制</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index">
-                    <span itemprop="name">专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/d44fcc81.html" class="post-meta-item leancloud_visitors" data-flag-title="preempt_rt 实时内核补丁" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/archives/d44fcc81.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/d44fcc81.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>介绍在 Ubuntu16.04 下安装 preempt_rt 实时内核的方法。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/d44fcc81.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-	<div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/4347a04c.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/archives/4347a04c.html" class="post-title-link" itemprop="url">两台Ubuntu系统文件共享</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-10 11:00:00" itemprop="dateCreated datePublished" datetime="2021-03-10T11:00:00Z">2021-03-10</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/" itemprop="url" rel="index">
-                    <span itemprop="name">工科生的基本功</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
-                    <span itemprop="name">软件技术</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/4347a04c.html" class="post-meta-item leancloud_visitors" data-flag-title="两台Ubuntu系统文件共享" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/archives/4347a04c.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/4347a04c.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>149</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>介绍两台Ubuntu系统共享文件的方法。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/4347a04c.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-	<div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/e2bb99c2.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/archives/e2bb99c2.html" class="post-title-link" itemprop="url">KDL的安装</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-06 11:00:00" itemprop="dateCreated datePublished" datetime="2021-03-06T11:00:00Z">2021-03-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index">
-                    <span itemprop="name">机器人控制</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/e2bb99c2.html" class="post-meta-item leancloud_visitors" data-flag-title="KDL的安装" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/archives/e2bb99c2.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/e2bb99c2.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <span id="more"></span>
-<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>为了快速搭建一个机器人控制器，方便后期进行机器人控制算法开发，需要用到 Orocos 的 KDL 库。本文将介绍一下 KDL 相关的基础知识。</p>
-<h1 id="2-Orocos"><a href="#2-Orocos" class="headerlink" title="2 Orocos"></a>2 Orocos</h1><h2 id="2-1-综述"><a href="#2-1-综述" class="headerlink" title="2.1 综述"></a>2.1 综述</h2><p>“Orocos”代表“Open Robot Control Software”，即开源机器人控制软件。 Orocos 为软件开发人员提供了开源的机器人软件框架，提供了很多功能，方便开发人员快速的开发机器人软件模块。Orocos 由 Kinematics Dynamics Library(KDL)，Bayesian Filtering Library 及 Orocos Toolchain 组成。 官方网站：<span class="exturl" data-url="aHR0cHM6Ly9vcm9jb3Mub3JnLw==" title="https://orocos.org/">https://orocos.org/<i class="fa fa-external-link"></i></span></p>
-<h2 id="2-2-KDL"><a href="#2-2-KDL" class="headerlink" title="2.2 KDL"></a>2.2 KDL</h2><p>KDL（Kinematics and Dynamics）：机器人运动学与动力学组件，为运动学提供了实时的动力学约束计算，这个组件非常有用，有了这个组件，很多机器人开发者可以快速地开发机器人算法。 这是本系列主要研究内容。</p>
-<h2 id="2-3-BFL"><a href="#2-3-BFL" class="headerlink" title="2.3 BFL"></a>2.3 BFL</h2><p>BFL（Bayesian Filtering Library）：贝叶斯过滤库提供了一个独立于应用程序的动态贝叶斯网络推导框架，即基于贝叶斯规则的递归信息处理和估计算法，如卡尔曼滤波器，粒子滤波器法等。 </p>
-<h2 id="2-4-Toolchain"><a href="#2-4-Toolchain" class="headerlink" title="2.4 Toolchain"></a>2.4 Toolchain</h2><p>Toolchain：Orocos工具链是使用模块化运行时可配置软件组件创建实时机器人应用程序的主要工具。工具链包含了实时工具集（Real-Time Toolkit）、Orocos组件库（Orocos Component Library）等。</p>
-<h1 id="3-KDL的安装"><a href="#3-KDL的安装" class="headerlink" title="3 KDL的安装"></a>3 KDL的安装</h1><ol>
-<li>安装Eigen依赖库<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure></li>
-<li>从 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL29yb2Nvcy9vcm9jb3Nfa2luZW1hdGljc19keW5hbWljcw==" title="https://github.com/orocos/orocos_kinematics_dynamics">https://github.com/orocos/orocos_kinematics_dynamics<i class="fa fa-external-link"></i></span> 下载源码，源码中包含 c++ 和 python 两个版本。</li>
-<li>执行下列语句：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> orocos_kdl</span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">cmake ..</span><br><span class="line">make -j6</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="4-PyKDL的安装"><a href="#4-PyKDL的安装" class="headerlink" title="4 PyKDL的安装"></a>4 PyKDL的安装</h1><p>在安装好c++版本的kdl后，再安装Python版本的kdl。<br>从 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3B5YmluZC9weWJpbmQxMS90cmVlL2UzMTVlMWZlMmJhZDU1M2ZmNTQxY2UzYmMwMDgwNGUwZTcwNTgzYTI=" title="https://github.com/pybind/pybind11/tree/e315e1fe2bad553ff541ce3bc00804e0e70583a2">https://github.com/pybind/pybind11/tree/e315e1fe2bad553ff541ce3bc00804e0e70583a2<i class="fa fa-external-link"></i></span> 下载pybind11，下载完成后解压，将其中的所有文件复制到 pthon_orocos_kdl/pybind11 目录下。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> python_orocos_kdl</span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">(<span class="keyword">if</span> conda use)conda activate py37</span><br><span class="line">cmake .. -DPYTHON_VERSION=3.7 -DCMAKE_BUILD_TYPE=Release  <span class="comment"># 注意指定Python版本，不一样的编译出来的未必能用。16.04默认python2.7，如果写成3，默认是3.5，3.7的虚拟环境不能用3.5编译好的结果</span></span><br><span class="line">make -j</span><br><span class="line">(<span class="keyword">if</span> conda use)<span class="built_in">cp</span> PyKDL.so /home/robot/anaconda3/envs/py37/lib/python3.7/site_packages/</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p>
-<p>如果是conda的虚拟环境，做如下设置将系统默认的Python版本修改。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.bashrc</span><br><span class="line"><span class="built_in">export</span> PYTHONPATH=<span class="string">&quot;/home/robot/anaconda3/envs/py37/lib/python3.7/site-packages:<span class="variable">$PYTHONPATH</span>&quot;</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure></p>
-<p>测试方法如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda activate py37</span><br><span class="line">python</span><br><span class="line">import PyKDL</span><br></pre></td></tr></table></figure></p>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
-<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC82NTQ5NjU2MA==" title="https://zhuanlan.zhihu.com/p/65496560">机器人学与OROCOS-KDL（一）简介<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL29yb2Nvcy9vcm9jb3Nfa2luZW1hdGljc19keW5hbWljcw==" title="https://github.com/orocos/orocos_kinematics_dynamics">github源码<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9vcm9jb3Mub3JnLw==" title="https://orocos.org/">官网<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNjEyNTExMDc=" title="https://zhuanlan.zhihu.com/p/361251107">安装PyKDL到虚环境<i class="fa fa-external-link"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMjM3NjYyL2FydGljbGUvZGV0YWlscy8xMDk3ODM5MzU=" title="https://blog.csdn.net/qq_42237662/article/details/109783935">如何在基于python3的conda虚拟环境中从头编译PyKDL<i class="fa fa-external-link"></i></span></li>
-</ol>
-
-      
-    </div>
-
-	<div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/9a2f84b2.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/archives/9a2f84b2.html" class="post-title-link" itemprop="url">Mujoco安装</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-05 11:00:00" itemprop="dateCreated datePublished" datetime="2021-03-05T11:00:00Z">2021-03-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index">
-                    <span itemprop="name">人工智能</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">强化学习</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/9a2f84b2.html" class="post-meta-item leancloud_visitors" data-flag-title="Mujoco安装" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/archives/9a2f84b2.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/9a2f84b2.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文将介绍Mujoco的安装过程。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/9a2f84b2.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-	<div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/1efdabd.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/archives/1efdabd.html" class="post-title-link" itemprop="url">Ubuntu系统备份</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-04 11:00:00" itemprop="dateCreated datePublished" datetime="2021-01-04T11:00:00Z">2021-01-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/" itemprop="url" rel="index">
-                    <span itemprop="name">工科生的基本功</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
-                    <span itemprop="name">软件技术</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/1efdabd.html" class="post-meta-item leancloud_visitors" data-flag-title="Ubuntu系统备份" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/archives/1efdabd.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/1efdabd.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>介绍Ubuntu系统备份的方法。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/1efdabd.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-	<div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://colainlibrary.com/archives/86188ed1.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Cola & Library">
-      <meta itemprop="description" content="Understand, don't memorize.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cola In Library">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/archives/86188ed1.html" class="post-title-link" itemprop="url">机场行李筐智能分拣</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-			
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-12-31 11:00:00" itemprop="dateCreated datePublished" datetime="2020-12-31T11:00:00Z">2020-12-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index">
-                    <span itemprop="name">机器人控制</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E6%9C%BA%E5%9C%BA%E8%A1%8C%E6%9D%8E%E7%AD%90%E5%88%86%E6%8B%A3%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
-                    <span itemprop="name">专栏——机场行李筐分拣项目</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/archives/86188ed1.html" class="post-meta-item leancloud_visitors" data-flag-title="机场行李筐智能分拣" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/archives/86188ed1.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/archives/86188ed1.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>225</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <!-- b站分享按钮下"嵌入" -->
-<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"> <iframe style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;" src="//player.bilibili.com/player.html?aid=503939372&bvid=BV1pg411u7x2&cid=363000331&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe> </div>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/archives/86188ed1.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-	<div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-  </div>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let activeClass = CONFIG.comments.activeClass;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
   }
-</script>
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-  <aside class="sidebar">
-    <div class="sidebar-inner">
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
 
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Cola & Library"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">Cola & Library</p>
-  <div class="site-description" itemprop="description">Understand, don't memorize.</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">91</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">19</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbGFJbkxpYnJhcnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ColaInLibrary"><i class="fa fa-fw fa-github"></i>GitHub</span>
-      </span>
-      <span class="links-of-author-item">
-        <span class="exturl" data-url="bWFpbHRvOmNvbGFpbmxpYnJhcnlAMTYzLmNvbQ==" title="E-Mail → mailto:colainlibrary@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
-      </span>
-      <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vY29sYWlubGlicmFyeQ==" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;colainlibrary"><i class="fa fa-fw fa-weibo"></i>微博</span>
-      </span>
-      <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9ydWxueWwx" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;rulnyl1"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
-      </span>
-  </div>
-
-
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      友链
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9jb2xhaW5saWJyYXJ5L2FjdGl2aXRpZXM=" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;colainlibrary&#x2F;activities">个人知乎</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly9tZS5jc2RuLm5ldC9Db2xhSW5MaWJyYXJ5" title="https:&#x2F;&#x2F;me.csdn.net&#x2F;ColaInLibrary">个人CSDN</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHJvcHRoZXRoZT9mcm9tPW15Zm9sbG93X2dyb3Vw" title="https:&#x2F;&#x2F;weibo.com&#x2F;dropthethe?from&#x3D;myfollow_group">张潇雨</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZGlhbm1pbmdzaGlqaWFuP3RvcG5hdj0xJnd2cj02JnRvcHN1Zz0x" title="https:&#x2F;&#x2F;weibo.com&#x2F;dianmingshijian?topnav&#x3D;1&amp;wvr&#x3D;6&amp;topsug&#x3D;1">何峰</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdG9pcmRlY29sYS5naXRodWIuaW8=" title="https:&#x2F;&#x2F;accotoirdecola.github.io">AccotoirDeCola</span>
-        </li>
-    </ul>
-  </div>
-
-      </div>
-        <div class="back-to-top motion-element">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
-        </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Cola & Library</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    <span title="站点总字数">296k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">4:29</span>
-</div>
-
-
-<!-- 网站运行时间的设置 -->
-<div>
-<span id="sitetime"></span>
-<script language=javascript>
-	function siteTime(){
-		window.setTimeout("siteTime()", 1000);
-		var seconds = 1000;
-		var minutes = seconds * 60;
-		var hours = minutes * 60;
-		var days = hours * 24;
-		var years = days * 365;
-		var today = new Date();
-		var todayYear = today.getFullYear();
-		var todayMonth = today.getMonth()+1;
-		var todayDate = today.getDate();
-		var todayHour = today.getHours();
-		var todayMinute = today.getMinutes();
-		var todaySecond = today.getSeconds();
-		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
-		year - 作为date对象的年份，为4位年份值
-		month - 0-11之间的整数，做为date对象的月份
-		day - 1-31之间的整数，做为date对象的天数
-		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
-		minutes - 0-59之间的整数，做为date对象的分钟数
-		seconds - 0-59之间的整数，做为date对象的秒数
-		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
-		var t1 = Date.UTC(2019,04,28,15,00,00); //北京时间2018-2-13 00:00:00
-		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
-		var diff = t2-t1;
-		var diffYears = Math.floor(diff/years);
-		var diffDays = Math.floor((diff/days)-diffYears*365);
-		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
-		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
-		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
-		document.getElementById("sitetime").innerHTML=" 已在此等候你"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
-	}
-	siteTime();
-</script>
-</div>
-
-<!-- 网站底部统计本站访问数量 -->
-<!--
-<div>
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-共访问 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
-    <span class="post-meta-divider">|</span>
-已邂逅  <span id="busuanzi_value_site_uv"></span> 位有缘人
-</div>
--->
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-       	<i class="fa fa-"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        已邂逅 <span id="busuanzi_value_site_uv"></span> 位有缘人
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        共观看 <span id="busuanzi_value_site_pv"></span> 次
-      </span>
-    </span>
-</div>
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-      
-<script type="text/x-mathjax-config">
-    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
-
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
-      processEscapes: true,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        extensions: ['[mhchem]/mhchem.js'],
-      equationNumbers: {
-        autoNumber: 'AMS'
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
     }
-  });
-
-  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
-    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
-      if (data.display) {
-        var next = data.script.nextSibling;
-        while (next && next.nodeName.toLowerCase() === '#text') {
-          next = next.nextSibling;
-        }
-        if (next && next.nodeName.toLowerCase() === 'br') {
-          next.parentNode.removeChild(next);
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
         }
       }
-    });
-  });
-
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for (i = 0; i < all.length; i += 1) {
-      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
-      if (element.nodeName.toLowerCase() == 'li') {
-        element = element.parentNode;
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
       }
-      element.classList.add('has-jax');
-    }
-  });
-</script>
-<script>
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
-    MathJax.Hub.Typeset();
-  }, window.MathJax);
-</script>
-
+      const t = saveToLocal.get('theme')
     
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/userfont.css"><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/avatar.jpg" onerror="onerror=null;src='/images/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">91</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/images/home-top.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Cola In Library</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Cola In Library</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/archives/22acf33e.html" title="SDH，一学就会"><img class="post_bg" src="/images/post-0.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="SDH，一学就会"></a></div><div class="recent-post-info"><a class="article-title" href="/archives/22acf33e.html" title="SDH，一学就会">SDH，一学就会</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-19T11:00:00.000Z" title="发表于 2021-05-19 11:00:00">2021-05-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/">机器人控制</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6/">专栏——机器人动力学</a></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-comments"></i><a href="/archives/22acf33e.html#post-comment"><span class="valine-comment-count" data-xid="/archives/22acf33e.html"><i class="fa-solid fa-spinner fa-spin"></i></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">介绍标准 DH(SDH) 机器人建系方法。
 
-  
+1 前言在做机器人控制的时候，为了能够方便地对机器人进行力矩控制，自己搭建了一套控制器。在搭建完基本的硬件平台后，需要对机器人进行建模。首先是机器人坐标系的建立。以UR10为例。
+有两种可以在 MATLAB 中使用的工具箱：
+
+PerterCoke的Robotics ToolBox
+ARTE: A ROBOTICS TOOLBOX FOR EDUCATION
+
+第一种工具箱对应的有一本书 《Robotics, Vision and Control》[1]，这个用的比较多，不再赘述。
+第二种工具箱下载好后将路径添加到 MATLAB 中，然后在它的文件夹下运行一下命令即可。
+12345init_librobot = load_robot(&#x27;UR&#x27;,&#x27;UR10&#x27;);% 关节坐标轴是否可见% robot.graphical.draw_axes = 1 drawrobot3d(robot,[0 0 0 0 0 0])
+2 SDH建立坐标系的过程
+上图所示的转动关节 DH 参数的定义[1]：
+
+关节距离 $d_j ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/archives/6d0d409.html" title="Ethercat 主站调试"><img class="post_bg" src="/images/post-9.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Ethercat 主站调试"></a></div><div class="recent-post-info"><a class="article-title" href="/archives/6d0d409.html" title="Ethercat 主站调试">Ethercat 主站调试</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-04-22T11:00:00.000Z" title="发表于 2021-04-22 11:00:00">2021-04-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/">机器人控制</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置</a></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-comments"></i><a href="/archives/6d0d409.html#post-comment"><span class="valine-comment-count" data-xid="/archives/6d0d409.html"><i class="fa-solid fa-spinner fa-spin"></i></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">记录 Ethercat 驱动电机所用到的函数。
+
+参考链接
+Igh1.5.2 etherCAT接口分析
+Ethercat解析（十二）之命令行工具的使用
+Ethercat系列—-IGH DC模式测试电机程序（Preempt-RT）
+
+1 前言在做机器人控制的时候，为了能够方便地对机器人进行力矩控制，自己搭建了一套控制器。笔者从机器人Ethercat主站的工作开始做起。实时内核补丁、操作系统在搭建的时候有如下探索结果：
+
+xenomai3.1/xenomai3.0.5 + Ubuntu16.04，编译时 rtdm 模块有问题，编译 Igh Ethercat 时，使能rtai 模块，总是编译无法通过，xenomai的自带例程涉及到 rtdm 的无法使用，自己写程序的时候需要有xenomai.cmake模块才能编译，不知道该如何处理rtai的问题。
+xenomai2.6.5 + ubuntu12/14，可以使用，但是系统版本太老了…
+preempt_rt + Ubuntu16.04，当前使用结果，preempt_rt 的实时内核能到 us 级，而 xenomai 能到 ns 级，考虑到机器人实 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/archives/456588d2.html" title="Linux 多内核切换和设置默认开启内核"><img class="post_bg" src="/images/post-8.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Linux 多内核切换和设置默认开启内核"></a></div><div class="recent-post-info"><a class="article-title" href="/archives/456588d2.html" title="Linux 多内核切换和设置默认开启内核">Linux 多内核切换和设置默认开启内核</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-04-21T11:00:00.000Z" title="发表于 2021-04-21 11:00:00">2021-04-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/">机器人控制</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置</a></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-comments"></i><a href="/archives/456588d2.html#post-comment"><span class="valine-comment-count" data-xid="/archives/456588d2.html"><i class="fa-solid fa-spinner fa-spin"></i></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">记录 Ubuntu16.04 多内核切换的方法。
+
+1 前言最近在Ubuntu中装了多个内核，涉及到了默认启动内核选择的问题，在此做一个简要记录。
+2 更新grub1sudo gedit /boot/grub/grub.cfg 
+
+第134行”memuentry”开始是Ubuntu启动时的开机选项，用数字表示为0，单引号中的’Ubuntu’就是grub的第一个启动项；
+第151行”submenu”表示二级目录，用数字表示为1，该目录下的”memuentry”再从0开始计；
+第152行”memuentry”单引号中的’Ubuntu, with Linux 4.19.72-rt26’就是grub的另一个启动项，以此类推。
+1sudo gedit /etc/default/grub
+
+第6行改为 GRUB_DEFAULT=”Advanced options for Ubuntu&gt;Ubuntu, with Linux 4.14.226-rt-109”，就修改了默认的启动内核。
+当要启动的内核版本比你安装系统时的内核版本低，且只有这两中内核时，这种修改会存在不生效的可能。如果不生效，就写成 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/archives/e5d7cd24.html" title="Ethercat 主站搭建"><img class="post_bg" src="/images/post-7.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Ethercat 主站搭建"></a></div><div class="recent-post-info"><a class="article-title" href="/archives/e5d7cd24.html" title="Ethercat 主站搭建">Ethercat 主站搭建</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-04-17T11:00:00.000Z" title="发表于 2021-04-17 11:00:00">2021-04-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/">机器人控制</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置</a></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-comments"></i><a href="/archives/e5d7cd24.html#post-comment"><span class="valine-comment-count" data-xid="/archives/e5d7cd24.html"><i class="fa-solid fa-spinner fa-spin"></i></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">介绍 Ubuntu16.04 下 Igh Ethercat 主站搭建的过程。
+
+1 前言从 https://github.com/ribalda/ethercat 下载 ethercat 安装包。
+2 安装流程用 lspci -vvv 查看网卡的型号以及驱动类型，也可以系统桌面右上角的网络连接中查看网卡的型号，从网上搜驱动类型。
+
+Ethernet controller 可以看到网卡型号为 82576，Kernel modules 可以看到网卡驱动类型为 igb。
+用 ifconfig 查看所有网卡的MAC地址，也可以从系统桌面右上角的网络连接中通过 Edit Connections —&gt; Edit —&gt; Ethernet —&gt; Device 中查看。
+
+12345678910111213141516sudo apt-get install autoconf autogen libtool   # 安装依赖项cd 安装包路径./bootstrap./configure --prefix=/opt/etherlab --enable-generic --enable-8 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/archives/d44fcc81.html" title="preempt_rt 实时内核补丁"><img class="post_bg" src="/images/post-6.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="preempt_rt 实时内核补丁"></a></div><div class="recent-post-info"><a class="article-title" href="/archives/d44fcc81.html" title="preempt_rt 实时内核补丁">preempt_rt 实时内核补丁</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-04-16T11:00:00.000Z" title="发表于 2021-04-16 11:00:00">2021-04-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/">机器人控制</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E-Preempt-rt-%E5%92%8C-Igh-Ethercat-%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">专栏——基于 Preempt_rt 和 Igh Ethercat 的环境配置</a></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-comments"></i><a href="/archives/d44fcc81.html#post-comment"><span class="valine-comment-count" data-xid="/archives/d44fcc81.html"><i class="fa-solid fa-spinner fa-spin"></i></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">介绍在 Ubuntu16.04 下安装 preempt_rt 实时内核的方法。
+注意：因为 Realtek 网卡的 Ethercat 驱动只支持到了 4.14 版本的内核，所以笔者最后使用了 4.14.226 版本： 
+
+linux-4.14.226.tar.xz: https://mirrors.edge.kernel.org/pub/linux/kernel/v4.x/
+patch-4.14.226-rt109.patch.gz: https://mirrors.edge.kernel.org/pub/linux/kernel/projects/rt/4.14/older/
+
+1 前言硬件平台： Core™ i5-8400 CPU @ 2.80GHz × 6 
+软件平台： Ubuntu16.04.7
+从 (https://mirrors.edge.kernel.org/pub/linux/kernel/v4.x/) 下载4.19.72版本的内核 linux-4.19.72.tar.xz。
+从 (https://mirrors.edge.kernel.org/pub/linux/ke ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/archives/4347a04c.html" title="两台Ubuntu系统文件共享"><img class="post_bg" src="/images/post-5.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="两台Ubuntu系统文件共享"></a></div><div class="recent-post-info"><a class="article-title" href="/archives/4347a04c.html" title="两台Ubuntu系统文件共享">两台Ubuntu系统文件共享</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-03-10T11:00:00.000Z" title="发表于 2021-03-10 11:00:00">2021-03-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/">工科生的基本功</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-comments"></i><a href="/archives/4347a04c.html#post-comment"><span class="valine-comment-count" data-xid="/archives/4347a04c.html"><i class="fa-solid fa-spinner fa-spin"></i></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">介绍两台Ubuntu系统共享文件的方法。
+
+首先设定好两台电脑的静态ip；
+然后A主机进入需要传送的文件目录，然后执行1python -m SimpleHTTPServer
+再打开B主机的浏览器访问 A主机的IP:8000;
+最后，点击链接就可以了。
+参考链接：两台ubuntu的电脑，怎么用一根网线直连，传输文件？
+</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/archives/e2bb99c2.html" title="KDL的安装"><img class="post_bg" src="/images/post-4.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="KDL的安装"></a></div><div class="recent-post-info"><a class="article-title" href="/archives/e2bb99c2.html" title="KDL的安装">KDL的安装</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-03-06T11:00:00.000Z" title="发表于 2021-03-06 11:00:00">2021-03-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/">机器人控制</a></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-comments"></i><a href="/archives/e2bb99c2.html#post-comment"><span class="valine-comment-count" data-xid="/archives/e2bb99c2.html"><i class="fa-solid fa-spinner fa-spin"></i></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">
+1 前言为了快速搭建一个机器人控制器，方便后期进行机器人控制算法开发，需要用到 Orocos 的 KDL 库。本文将介绍一下 KDL 相关的基础知识。
+2 Orocos2.1 综述“Orocos”代表“Open Robot Control Software”，即开源机器人控制软件。 Orocos 为软件开发人员提供了开源的机器人软件框架，提供了很多功能，方便开发人员快速的开发机器人软件模块。Orocos 由 Kinematics Dynamics Library(KDL)，Bayesian Filtering Library 及 Orocos Toolchain 组成。 官方网站：https://orocos.org/
+2.2 KDLKDL（Kinematics and Dynamics）：机器人运动学与动力学组件，为运动学提供了实时的动力学约束计算，这个组件非常有用，有了这个组件，很多机器人开发者可以快速地开发机器人算法。 这是本系列主要研究内容。
+2.3 BFLBFL（Bayesian Filtering Library）：贝叶斯过滤库提供了一个独立于应用程序的动态贝叶斯网络推导 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/archives/9a2f84b2.html" title="Mujoco安装"><img class="post_bg" src="/images/post-3.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Mujoco安装"></a></div><div class="recent-post-info"><a class="article-title" href="/archives/9a2f84b2.html" title="Mujoco安装">Mujoco安装</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-03-05T11:00:00.000Z" title="发表于 2021-03-05 11:00:00">2021-03-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-comments"></i><a href="/archives/9a2f84b2.html#post-comment"><span class="valine-comment-count" data-xid="/archives/9a2f84b2.html"><i class="fa-solid fa-spinner fa-spin"></i></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">本文将介绍Mujoco的安装过程。
+1 介绍安装平台：Ubuntu16.04 + Mujoco 2.0 + mujoco_py
+2 证书的获取2021年10月18日，DeepMind收购了Mujoco,目前从 https://www.roboti.us/license.html 提供了一个免费的证书，可以用到2031年10月18日。
+Mujoco不同的身份可以获取不同的证书，用学生邮箱(edu)可以获取到一年的使用时间。证书获取地址见：https://www.roboti.us/license.html.
+学生身份获取 license 的操作流程是：
+
+首先通过提交自己的信息，如下图所示，申请一个Account Number（这可能需要几天的时间）。
+在下图中点击 Linux，会下载一个 getid_linux 的文件，执行下面的指令以获取你要注册的计算机的 id。123cd ~/Downloads            # 打开文件下载目录chmod a+x getid_linux     # 获取权限./getid_linux             # 获取计算机id
+将邮件中的 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/archives/1efdabd.html" title="Ubuntu系统备份"><img class="post_bg" src="/images/post-2.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Ubuntu系统备份"></a></div><div class="recent-post-info"><a class="article-title" href="/archives/1efdabd.html" title="Ubuntu系统备份">Ubuntu系统备份</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-01-04T11:00:00.000Z" title="发表于 2021-01-04 11:00:00">2021-01-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/">工科生的基本功</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-comments"></i><a href="/archives/1efdabd.html#post-comment"><span class="valine-comment-count" data-xid="/archives/1efdabd.html"><i class="fa-solid fa-spinner fa-spin"></i></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">介绍Ubuntu系统备份的方法。
+1 前言在Ubuntu下经常会遇到系统环境崩溃、目录误删除等问题，为了提升开发效率，有必要对系统已有的环境进行备份。经与公司yym探究，总结如下方案。
+2 几种备份命令备份前先切换到root用户，避免权限问题，然后切换到/(根目录)，执行以下命令12sudo sucd /
+2.1 备份根目录命令1tar -cvpzf /media/yangfei/jk-robot/backup/system/ubuntu_backup@`date +%Y-%m+%d`.tar.gz --exclude=/proc --exclude=/tmp --exclude=/boot --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run /
+注意：备份到最后系统会提示”tar: 由于前次错误,将以上次的错误状态退出”，这个警告可以忽略.
+2.2 备份home命令1tar -cvpzf /media/yangfei/jk-robot/backup/system/ub ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/archives/86188ed1.html" title="机场行李筐智能分拣"><img class="post_bg" src="/images/post-1.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="机场行李筐智能分拣"></a></div><div class="recent-post-info"><a class="article-title" href="/archives/86188ed1.html" title="机场行李筐智能分拣">机场行李筐智能分拣</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-12-31T11:00:00.000Z" title="发表于 2020-12-31 11:00:00">2020-12-31</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/">机器人控制</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94%E6%9C%BA%E5%9C%BA%E8%A1%8C%E6%9D%8E%E7%AD%90%E5%88%86%E6%8B%A3%E9%A1%B9%E7%9B%AE/">专栏——机场行李筐分拣项目</a></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-comments"></i><a href="/archives/86188ed1.html#post-comment"><span class="valine-comment-count" data-xid="/archives/86188ed1.html"><i class="fa-solid fa-spinner fa-spin"></i></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">
+   
 
 
-<script>
-NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-    var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail,link';
-    guest = guest.split(',').filter(item => {
-      return GUEST.includes(item);
-    });
-    new Valine({
-      el: '#valine-comments',
-      verify: false,
-      notify: false,
-      appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
-      appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
-      placeholder: "有什么想说的？留下邮箱可及时收到回复哦~",
-      avatar: 'mm',
-      meta: guest,
-      pageSize: '10' || 10,
-      visitor: true,
-      lang: '' || 'zh-cn',
-      path: location.pathname,
-      recordIP: false,
-      serverURLs: ''
-    });
-  }, window.Valine);
-});
-</script>
+机场行李筐智能分拣系统实现结果:
 
-	
-</body>
-</html>
+图像识别算法可以准确识别传送带上的行李与行李筐，识别率达 99% 以上；
+受限于上位机与下位机的通信方式、机器人末端吸盘及配件，机器人抓取成功率可达 97% 以上；
+受限于盒体模具并不完全一致，码垛成功率可达 97% 以上;
+码跺区有人进入时,具有安全保护功能;
+受限于图像处理的速度,机器人运动时的速度,一个筐码跺完成后可能会出现不能立即抓取到达机器人下方的筐.
+
+为方便复现,记录本项目中用到的环境安装方法:机场行李筐分拣项目环境安装汇总
+</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#content-inner">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#content-inner">10</a><a class="extend next" rel="next" href="/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/images/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Cola &amp; Library</div><div class="author-info__description">Understand, don't memorize.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">91</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">如果阅读过程中有任何疑问，欢迎评论或留言，看到后会及时回复。</div><div class="xpand" style="height:200px;"><canvas class="illo" width="800" height="800" style="max-width: 200px; max-height: 200px; touch-action: none; width: 640px; height: 640px;"></canvas></div></div><script src="https://fastly.jsdelivr.net/gh/xiaopengand/blogCdn@latest/xzxr/twopeople1.js"></script><script src="https://fastly.jsdelivr.net/gh/xiaopengand/blogCdn@latest/xzxr/zdog.dist.js"></script><script id="rendered-js" src="https://fastly.jsdelivr.net/gh/xiaopengand/blogCdn@latest/xzxr/twopeople.js"></script><style>.card-widget.card-announcement {
+margin: 0;
+align-items: center;
+justify-content: center;
+text-align: center;
+}
+canvas {
+display: block;
+margin: 0 auto;
+cursor: move;
+}</style><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/archives/c12048c3.html" title="Pytorch 学习笔记（梯度的求取）"><img src="/images/post-0.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Pytorch 学习笔记（梯度的求取）"/></a><div class="content"><a class="title" href="/archives/c12048c3.html" title="Pytorch 学习笔记（梯度的求取）">Pytorch 学习笔记（梯度的求取）</a><time datetime="2022-08-14T15:00:00.000Z" title="发表于 2022-08-14 15:00:00">2022-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/fa516be2.html" title="cmake生成动态链接库并调用"><img src="/images/post-9.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="cmake生成动态链接库并调用"/></a><div class="content"><a class="title" href="/archives/fa516be2.html" title="cmake生成动态链接库并调用">cmake生成动态链接库并调用</a><time datetime="2022-08-13T13:00:00.000Z" title="发表于 2022-08-13 13:00:00">2022-08-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/9765ce4r.html" title="Numpy 学习笔记"><img src="/images/post-8.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Numpy 学习笔记"/></a><div class="content"><a class="title" href="/archives/9765ce4r.html" title="Numpy 学习笔记">Numpy 学习笔记</a><time datetime="2022-08-11T11:00:00.000Z" title="发表于 2022-08-11 11:00:00">2022-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/9765ce3g.html" title="Pytorch 学习笔记（神经网络篇）"><img src="/images/post-7.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Pytorch 学习笔记（神经网络篇）"/></a><div class="content"><a class="title" href="/archives/9765ce3g.html" title="Pytorch 学习笔记（神经网络篇）">Pytorch 学习笔记（神经网络篇）</a><time datetime="2022-08-10T11:00:00.000Z" title="发表于 2022-08-10 11:00:00">2022-08-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/9765ce7e.html" title="Pytorch 学习笔记（基础篇）"><img src="/images/post-6.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="Pytorch 学习笔记（基础篇）"/></a><div class="content"><a class="title" href="/archives/9765ce7e.html" title="Pytorch 学习笔记（基础篇）">Pytorch 学习笔记（基础篇）</a><time datetime="2022-08-09T11:00:00.000Z" title="发表于 2022-08-09 11:00:00">2022-08-09</time></div></div></div></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">91</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2019-04-28T07:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">102.4k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-08-18T10:32:23.515Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/home-top.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By Cola & Library</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>(() => {
+  function loadValine () {
+    function initValine () {
+      let initData = {
+        el: '#vcomment',
+        appId: 'owryKYMxVRpqksq7EoJmoJHy-gzGzoHsz',
+        appKey: 'W7BaIi1FbwpgIDuNXyGAfUsl',
+        serverURLs: ''
+      }
+      
+      const valine = new Valine(initData)
+    }
+
+    if (typeof Valine === 'function') initValine() 
+    else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+  }
+
+  window.pjax ? loadValine() : window.addEventListener('load', loadValine)
+})()</script><script>function subtitleType () {
+  if (true) { 
+    window.typed = new Typed("#subtitle", {
+      strings: ["这世界万千美丽，都比不上和你在一起。","The world is no more beautiful than being with you."],
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: false,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '这世界万千美丽，都比不上和你在一起。'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}</script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

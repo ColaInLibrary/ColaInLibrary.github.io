@@ -6,7 +6,7 @@
   <link href="https://colainlibrary.com/atom.xml" rel="self"/>
   
   <link href="https://colainlibrary.com/"/>
-  <updated>2022-08-15T09:34:28.640Z</updated>
+  <updated>2022-08-18T05:23:16.092Z</updated>
   <id>https://colainlibrary.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://colainlibrary.com/archives/c12048c3.html"/>
     <id>https://colainlibrary.com/archives/c12048c3.html</id>
     <published>2022-08-14T15:00:00.000Z</published>
-    <updated>2022-08-15T09:34:28.640Z</updated>
+    <updated>2022-08-18T05:23:16.092Z</updated>
     
     
     <summary type="html">再学习Pytorch中的 backward() 和求导</summary>
@@ -44,7 +44,7 @@
     <link href="https://colainlibrary.com/archives/fa516be2.html"/>
     <id>https://colainlibrary.com/archives/fa516be2.html</id>
     <published>2022-08-13T13:00:00.000Z</published>
-    <updated>2022-08-15T09:32:38.915Z</updated>
+    <updated>2022-08-18T05:23:16.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文记录了使用cmake生成动态链接库并调用的方法。&lt;br&gt;</summary>
@@ -69,7 +69,7 @@
     <link href="https://colainlibrary.com/archives/9765ce4r.html"/>
     <id>https://colainlibrary.com/archives/9765ce4r.html</id>
     <published>2022-08-11T11:00:00.000Z</published>
-    <updated>2022-08-12T14:54:12.132Z</updated>
+    <updated>2022-08-18T05:23:16.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文主要记录Numpy的一些学习笔记，方便自己查阅。&lt;br&gt;</summary>
@@ -92,7 +92,7 @@
     <link href="https://colainlibrary.com/archives/9765ce3g.html"/>
     <id>https://colainlibrary.com/archives/9765ce3g.html</id>
     <published>2022-08-10T11:00:00.000Z</published>
-    <updated>2022-08-12T15:06:48.639Z</updated>
+    <updated>2022-08-18T05:23:16.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文主要记录在用Pytorch时和神经网络相关的一些笔记。&lt;br&gt;</summary>
@@ -115,7 +115,7 @@
     <link href="https://colainlibrary.com/archives/9765ce7e.html"/>
     <id>https://colainlibrary.com/archives/9765ce7e.html</id>
     <published>2022-08-09T11:00:00.000Z</published>
-    <updated>2022-08-12T14:53:41.889Z</updated>
+    <updated>2022-08-18T05:23:16.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文主要是记录Pytorch学习过程中的一些基础运算方法，方便自己查阅。&lt;br&gt;</summary>
@@ -138,7 +138,7 @@
     <link href="https://colainlibrary.com/archives/9765ce6d.html"/>
     <id>https://colainlibrary.com/archives/9765ce6d.html</id>
     <published>2022-08-08T11:00:00.000Z</published>
-    <updated>2022-08-12T14:54:00.648Z</updated>
+    <updated>2022-08-18T05:23:16.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文简单记录一下早期学习Python的笔记。&lt;br&gt;</summary>
@@ -161,7 +161,7 @@
     <link href="https://colainlibrary.com/archives/9765ce9e.html"/>
     <id>https://colainlibrary.com/archives/9765ce9e.html</id>
     <published>2022-07-26T11:00:00.000Z</published>
-    <updated>2022-07-26T09:46:21.547Z</updated>
+    <updated>2022-08-18T05:23:16.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文将介绍Mujoco210的安装过程。&lt;br&gt;</summary>
@@ -182,7 +182,7 @@
     <link href="https://colainlibrary.com/archives/7cd1c910.html"/>
     <id>https://colainlibrary.com/archives/7cd1c910.html</id>
     <published>2022-04-06T23:00:00.000Z</published>
-    <updated>2022-04-07T10:10:23.000Z</updated>
+    <updated>2022-08-18T10:27:37.842Z</updated>
     
     
     <summary type="html">&lt;p&gt;记录利用 seaborn、matplot 绘制带有误差带阴影的图。&lt;br&gt;</summary>
@@ -203,7 +203,7 @@
     <link href="https://colainlibrary.com/archives/17259b03.html"/>
     <id>https://colainlibrary.com/archives/17259b03.html</id>
     <published>2022-04-06T21:00:00.000Z</published>
-    <updated>2022-04-06T14:45:18.000Z</updated>
+    <updated>2022-08-18T10:24:51.880Z</updated>
     
     
     <summary type="html">&lt;p&gt;记录利用 Seaborn 中关于类别变量的分析方法。&lt;br&gt;</summary>
@@ -224,7 +224,7 @@
     <link href="https://colainlibrary.com/archives/feaf6c34.html"/>
     <id>https://colainlibrary.com/archives/feaf6c34.html</id>
     <published>2022-04-06T20:00:00.000Z</published>
-    <updated>2022-04-07T01:51:00.000Z</updated>
+    <updated>2022-08-18T10:21:40.240Z</updated>
     
     
     <summary type="html">&lt;p&gt;记录利用 Seaborn 中关于两个变量的联合分布绘图方法。&lt;br&gt;</summary>
@@ -245,7 +245,7 @@
     <link href="https://colainlibrary.com/archives/1bc7b37e.html"/>
     <id>https://colainlibrary.com/archives/1bc7b37e.html</id>
     <published>2022-04-06T19:30:00.000Z</published>
-    <updated>2022-04-06T13:15:33.000Z</updated>
+    <updated>2022-08-18T10:17:06.767Z</updated>
     
     
     <summary type="html">&lt;p&gt;记录利用 Seaborn 中关于 lmplot 的相关用法&lt;br&gt;</summary>
@@ -266,7 +266,7 @@
     <link href="https://colainlibrary.com/archives/3617e253.html"/>
     <id>https://colainlibrary.com/archives/3617e253.html</id>
     <published>2022-04-06T17:00:00.000Z</published>
-    <updated>2022-04-06T13:28:06.000Z</updated>
+    <updated>2022-08-18T10:14:16.758Z</updated>
     
     
     <summary type="html">&lt;p&gt;记录利用 Seaborn 中关于 relplot 的相关用法&lt;br&gt;</summary>
@@ -287,7 +287,7 @@
     <link href="https://colainlibrary.com/archives/b4c0319e.html"/>
     <id>https://colainlibrary.com/archives/b4c0319e.html</id>
     <published>2022-04-06T15:00:00.000Z</published>
-    <updated>2022-04-06T09:32:52.000Z</updated>
+    <updated>2022-08-18T10:10:12.255Z</updated>
     
     
     <summary type="html">&lt;p&gt;记录利用 Seaborn 中关于 displot 的相关用法&lt;br&gt;</summary>
@@ -308,7 +308,7 @@
     <link href="https://colainlibrary.com/archives/853893d9.html"/>
     <id>https://colainlibrary.com/archives/853893d9.html</id>
     <published>2022-04-06T11:00:00.000Z</published>
-    <updated>2022-04-07T02:07:00.000Z</updated>
+    <updated>2022-08-18T09:47:07.239Z</updated>
     
     
     <summary type="html">&lt;p&gt;记录利用 Seaborn 绘图的方法，方便后续查阅。&lt;br&gt;</summary>
@@ -329,7 +329,7 @@
     <link href="https://colainlibrary.com/archives/f900a735.html"/>
     <id>https://colainlibrary.com/archives/f900a735.html</id>
     <published>2022-03-21T11:00:00.000Z</published>
-    <updated>2022-03-21T14:10:53.000Z</updated>
+    <updated>2022-08-18T05:23:16.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;记录利用Python调用TwinCAT ADS接口的方法及效率测试。&lt;br&gt;</summary>
@@ -348,7 +348,7 @@
     <link href="https://colainlibrary.com/archives/7e62fd0f.html"/>
     <id>https://colainlibrary.com/archives/7e62fd0f.html</id>
     <published>2022-03-09T11:00:00.000Z</published>
-    <updated>2022-03-21T07:47:21.000Z</updated>
+    <updated>2022-08-18T05:23:16.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;记录利用Python获取系统时间戳的方法。&lt;br&gt;</summary>
@@ -369,7 +369,7 @@
     <link href="https://colainlibrary.com/archives/d1830d13.html"/>
     <id>https://colainlibrary.com/archives/d1830d13.html</id>
     <published>2022-01-26T11:00:00.000Z</published>
-    <updated>2022-01-26T04:04:07.000Z</updated>
+    <updated>2022-08-18T05:23:16.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;记录Ubuntu自动挂载硬盘的方法。&lt;br&gt;</summary>
@@ -390,7 +390,7 @@
     <link href="https://colainlibrary.com/archives/dc5dd3f8.html"/>
     <id>https://colainlibrary.com/archives/dc5dd3f8.html</id>
     <published>2021-12-19T21:30:00.000Z</published>
-    <updated>2022-03-21T07:27:54.000Z</updated>
+    <updated>2022-08-18T05:23:16.088Z</updated>
     
     
     <summary type="html">介绍动捕软件Motive的基本使用</summary>
@@ -409,7 +409,7 @@
     <link href="https://colainlibrary.com/archives/d5db4349.html"/>
     <id>https://colainlibrary.com/archives/d5db4349.html</id>
     <published>2021-06-15T11:00:00.000Z</published>
-    <updated>2022-03-09T06:16:45.000Z</updated>
+    <updated>2022-08-18T05:23:16.084Z</updated>
     
     
     <summary type="html">&lt;!-- b站分享按钮下&quot;嵌入&quot; --&gt;
@@ -436,7 +436,7 @@
     <link href="https://colainlibrary.com/archives/1a88a2b6.html"/>
     <id>https://colainlibrary.com/archives/1a88a2b6.html</id>
     <published>2021-05-20T11:00:00.000Z</published>
-    <updated>2021-05-23T09:16:16.000Z</updated>
+    <updated>2022-08-18T09:45:46.702Z</updated>
     
     
     <summary type="html">&lt;p&gt;介绍标准DH(SDH)确定坐标系间的齐次变换矩阵&lt;/p&gt;</summary>

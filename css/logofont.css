@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'logofont';
+    /* 字体名自定义即可 */
+    src: url('/css/myFont/BY-Dodge-Rabbit-2.ttf') format("truetype");
+    /* 字体文件路径 */
+    font-display: swap;
+}
+
+
+
+
