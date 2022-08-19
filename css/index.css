@@ -4969,6 +4969,24 @@ mjx-container[display],
 #article-container .fj-gallery .img-alt {
   display: none;
 }
+.post-body .group-picture img {
+  margin: 0 auto;
+  padding: 0 3px;
+}
+.group-picture-row {
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+.group-picture-column {
+  float: left;
+  margin-bottom: 10px;
+}
+.page-post-detail .post-body .group-picture-column {
+  margin-top: 10px;
+}
+.page-post-detail .post-body .group-picture-column img {
+  margin: 0 auto;
+}
 blockquote.pullquote {
   position: relative;
   max-width: 45%;
