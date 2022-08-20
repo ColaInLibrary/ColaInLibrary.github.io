@@ -38,27 +38,9 @@
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/archives/Infinity.html</loc>
+    <loc>https://colainlibrary.com/archives/36e68834.html</loc>
     
     <lastmod>2022-08-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://colainlibrary.com/archives/9765ce6d.html</loc>
-    
-    <lastmod>2022-08-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://colainlibrary.com/archives/f301cdf2.html</loc>
-    
-    <lastmod>2022-08-19</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -138,51 +120,6 @@
   
   <url>
     <loc>https://colainlibrary.com/archives/853893d9.html</loc>
-    
-    <lastmod>2022-08-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://colainlibrary.com/archives/c12048c3.html</loc>
-    
-    <lastmod>2022-08-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://colainlibrary.com/archives/fa516be2.html</loc>
-    
-    <lastmod>2022-08-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://colainlibrary.com/archives/9765ce4r.html</loc>
-    
-    <lastmod>2022-08-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://colainlibrary.com/archives/9765ce3g.html</loc>
-    
-    <lastmod>2022-08-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://colainlibrary.com/archives/9765ce7e.html</loc>
     
     <lastmod>2022-08-18</lastmod>
     
@@ -926,14 +863,14 @@
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/tags/Linux/</loc>
+    <loc>https://colainlibrary.com/tags/C/</loc>
     <lastmod>2022-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/tags/C/</loc>
+    <loc>https://colainlibrary.com/tags/Linux/</loc>
     <lastmod>2022-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1010,13 +947,6 @@
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/tags/cmake/</loc>
-    <lastmod>2022-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://colainlibrary.com/tags/Github/</loc>
     <lastmod>2022-08-20</lastmod>
     <changefreq>weekly</changefreq>
@@ -1033,14 +963,14 @@
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/GitHub/</loc>
+    <loc>https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/</loc>
     <lastmod>2022-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/</loc>
+    <loc>https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/GitHub/</loc>
     <lastmod>2022-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1117,14 +1047,14 @@
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94seaborn%E7%BB%98%E5%9B%BE/</loc>
+    <loc>https://colainlibrary.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2022-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://colainlibrary.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94seaborn%E7%BB%98%E5%9B%BE/</loc>
     <lastmod>2022-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

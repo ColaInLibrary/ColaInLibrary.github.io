@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>使用hexo+NexT+GitHub搭建个人博客 | Cola In Library</title><meta name="keywords" content="GitHub,Library,Linux"><meta name="author" content="Cola &amp; Library"><meta name="copyright" content="Cola &amp; Library"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="简要记录Ubuntu下用hexo搭建个人博客的一些关键步骤，不包含NexT主题的具体优化。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用hexo+NexT+GitHub搭建个人博客">
+<meta property="og:url" content="https://colainlibrary.com/archives/36e68834.html">
+<meta property="og:site_name" content="Cola In Library">
+<meta property="og:description" content="简要记录Ubuntu下用hexo搭建个人博客的一些关键步骤，不包含NexT主题的具体优化。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://colainlibrary.com/images/post-7.jpg">
+<meta property="article:published_time" content="2020-01-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-20T09:33:00.532Z">
+<meta property="article:author" content="Cola &amp; Library">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="Library">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://colainlibrary.com/images/post-7.jpg"><link rel="shortcut icon" href="/images/favicon-28x32.png"><link rel="canonical" href="https://colainlibrary.com/archives/36e68834"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?42fb0ad9fb188b1965ef3ab7b4344df5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><link rel="stylesheet" href="/css/logofont.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '使用hexo+NexT+GitHub搭建个人博客',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-20 09:33:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/userfont.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="Cola In Library" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/avatar.jpg" onerror="onerror=null;src='/images/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">85</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/post-7.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Cola In Library</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">使用hexo+NexT+GitHub搭建个人博客</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-01-28T16:00:00.000Z" title="发表于 2020-01-28 16:00:00">2020-01-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-20T09:33:00.532Z" title="更新于 2022-08-20 09:33:00">2022-08-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/">工科生的基本功</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/GitHub/">GitHub</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/archives/36e68834.html" data-flag-title="使用hexo+NexT+GitHub搭建个人博客"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/archives/36e68834.html#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/archives/36e68834.html" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><span id="more"></span>
+<h1 id="〇、前言"><a href="#〇、前言" class="headerlink" title="〇、前言"></a>〇、前言</h1><p>新换了一台电脑后，重搭建了一次博客，记录一些关键步骤及参考网页。本文实践的环境：Ubuntu16.04、NexT7.7、hexo。</p>
+<h1 id="一、安装环境"><a href="#一、安装环境" class="headerlink" title="一、安装环境"></a>一、安装环境</h1><p>1.移除hexo：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/<span class="built_in">bin</span></span><br><span class="line">npm uninstall hexo -g</span><br></pre></td></tr></table></figure><br>2.移除node和npm<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># apt method</span></span><br><span class="line">sudo apt remove node</span><br><span class="line">sudo apt remove nodejs</span><br><span class="line">sudo apt remove npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># nvm method</span></span><br><span class="line">nvm deactivate</span><br><span class="line">nvm uninstall node</span><br><span class="line"></span><br><span class="line"><span class="comment"># delete nvm</span></span><br><span class="line">rm -rf ~/.nvm</span><br><span class="line"><span class="comment"># 再删除 ~/.bashrc 文件中 export NVM_DIR= 这一行和它的下一行。</span></span><br></pre></td></tr></table></figure></p>
+<p>3.安装git</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+<p>4.安装nvm<br>这里的nvm实际上是node的包版本控制工具，在这里你可以找到各种你想要的版本，这里我们想要成功搭建肯定后面要安装稳定版的node了。直接在终端中执行下列语句</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NVM_DIR=<span class="string">&quot;<span class="variable">$HOME</span>/.nvm&quot;</span> &amp;&amp; (</span><br><span class="line">  git <span class="built_in">clone</span> https://github.com/creationix/nvm.git <span class="string">&quot;<span class="variable">$NVM_DIR</span>&quot;</span></span><br><span class="line">  <span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$NVM_DIR</span>&quot;</span></span><br><span class="line">  git checkout `git describe --abbrev=0 --tags --match <span class="string">&quot;v[0-9]*&quot;</span> origin`</span><br><span class="line">) &amp;&amp; . <span class="string">&quot;<span class="variable">$NVM_DIR</span>/nvm.sh&quot;</span></span><br></pre></td></tr></table></figure>
+<p>5.配置开机自启<br>在你的<code>~/.bashrc</code>, <code>~/.profile</code>,或者<code>~/.zshrc</code>中加入如下配置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.bashrc  <span class="comment"># 打开该文件，并将下面的语句直接复制到文件末尾，保存关闭</span></span><br><span class="line"><span class="built_in">export</span> NVM_DIR=<span class="string">&quot;<span class="variable">$HOME</span>/.nvm&quot;</span></span><br><span class="line">[ -s <span class="string">&quot;<span class="variable">$NVM_DIR</span>/nvm.sh&quot;</span> ] &amp;&amp; . <span class="string">&quot;<span class="variable">$NVM_DIR</span>/nvm.sh&quot;</span></span><br></pre></td></tr></table></figure></p>
+<p>6.使用nvm安装node和npm<br>如果执行完上面的命令都没有问题，这里就应该要使用nvm来安装node和npm了，首先先检查远程仓库的版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm ls-remote</span><br></pre></td></tr></table></figure><br>如果网不好的情况下这一步骤可能会失败，如果失败再多试几次，或者找个网好的地方就能更下来了，我之前网络情况不太好大概执行了4/5次才刷出来。</p>
+<p>7.安装稳定版<br>如果上面那一步没问题的话，这里就开始安装node的稳定版了。<br><strong>实践证明，在2022年4月份的时候，用最新版本的会报一些警告出来，比较稳妥的解决方式是使用12.22.1版本的</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nvm install 12.22.1</span><br><span class="line"><span class="comment"># or install stable version</span></span><br><span class="line"><span class="comment"># nvm install stable</span></span><br><span class="line">nvm use node            <span class="comment"># 启用安装好的版本</span></span><br><span class="line">nvm <span class="built_in">alias</span> default node  <span class="comment"># 设置为默认版本</span></span><br></pre></td></tr></table></figure></p>
+<p>8.安装hexo<br>如果nvm安装完成且成功配置好稳定版以后，就可以安装hexo了，安装hexo的过程其实和大家之前搜的没什么不同，之前安装失败的主要问题，要么是版本不匹配，要么是版本过低，在github也搜索过作者回答大致是低一点的版本是会有bug，不过高版本已经修复了。这边还是再重复一遍吧。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli         <span class="comment"># 安装hexo</span></span><br><span class="line"><span class="built_in">mkdir</span> blog                      <span class="comment"># 新建一个文件夹用来存放博客</span></span><br><span class="line">hexo init blog                  <span class="comment"># 用hexoa初始化文件夹</span></span><br><span class="line"><span class="built_in">cd</span> blog                         <span class="comment"># 打开博客文件夹</span></span><br><span class="line">npm install                     <span class="comment"># 安装npm</span></span><br><span class="line">npm update -g                   <span class="comment"># 更新npm</span></span><br><span class="line">hexo g                          <span class="comment"># 生成静态界面</span></span><br><span class="line">hexo s                          <span class="comment"># 开启本地服务</span></span><br></pre></td></tr></table></figure>
+<p>顺利的话,经过上述操作,可以在浏览器中通过网址<code>http://localhost:4000</code>打开一个静态网页,作为调试所用。</p>
+<h1 id="二、Git的环境配置"><a href="#二、Git的环境配置" class="headerlink" title="二、Git的环境配置"></a>二、Git的环境配置</h1><p>1.配置本机全局git环境<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br><span class="line">git config --global user.email <span class="string">&quot;YourEmail&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;YourName&quot;</span></span><br></pre></td></tr></table></figure></p>
+<p>2.生成SSH密钥<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">less ~/.ssh/id_rsa.pub          <span class="comment"># 验证是否之前生成过ssh的key，若有，则会出现一串秘钥</span></span><br><span class="line">ssh-keygen -t rsa -C YourEmail    <span class="comment"># 若无，则重新生成秘钥</span></span><br></pre></td></tr></table></figure><br>3.Github网页配置<br>从网页上打开<a target="_blank" rel="noopener" href="https://github.com/">github</a>，没有注册的话需要注册一个账号，注册后正常登录，从头像那里选择<code>settings</code>-&gt;<code>SSH and GPG keys</code>，填入刚刚生成的SSH秘钥，名字可以自己填。在Terminal中输入下列命令测试是否成功。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<p>如果成功，会提示<code>Hi YourName! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code></p>
+<p>4.博客文件夹与GitHub关联<br>打开blog文件夹，在根目录下有一个主题配置文件<code>_config.yml</code>，打开后，找到<code>deploy</code>，并加入下面的内容：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:YourName/YourName.github.io.git</span> <span class="comment"># 用户名改成你自己的</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<h1 id="三、推送博客到GitHub"><a href="#三、推送博客到GitHub" class="headerlink" title="三、推送博客到GitHub"></a>三、推送博客到GitHub</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+<h1 id="四、安装插件"><a href="#四、安装插件" class="headerlink" title="四、安装插件"></a>四、安装插件</h1><p>安装插件及配置参考<a target="_blank" rel="noopener" href="https://tding.top/archives/567debe0.html">小丁的博客使用的插件</a>。对于非重新建立网站，只需安装插件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-symbols-count-time --save</span><br><span class="line">npm install hexo-related-popular-posts --save</span><br><span class="line">npm install hexo-douban --save</span><br><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br><span class="line">npm install hexo-baidu-url-submit --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm uninstall hexo-generator-index --save</span><br><span class="line">npm install hexo-generator-index-pin-top --save</span><br><span class="line">npm install hexo-blog-encrypt --save</span><br><span class="line">npm install hexo-neat --save</span><br><span class="line">hexo clean &amp;&amp; hexo douban -bgm &amp;&amp; hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure></p>
+<h1 id="五、一些其他的修改"><a href="#五、一些其他的修改" class="headerlink" title="五、一些其他的修改"></a>五、一些其他的修改</h1><ol>
+<li>底部增加网站运行时间，修改位置:<code>blog/themes/next/layout/_partials/footer.swig</code>。</li>
+<li>底部增加总访问量，修改掉主题配置文件中busuanzi的计数，增加提示语，修改位置：<code>blog/themes/next/layout/_partials/footer.swig</code>。</li>
+<li>文章置顶：只需在博客源文件xx.md开始部分的<code>tags</code>后再添加一个<code>top: 100</code>，这个数字越大越靠前。置顶图标的设置：<code>blog/themes/next/layout/_macro/post.swig</code>文件，在<code>&lt;div class=&quot;post-meta&quot;&gt;</code> 的第一个 <code>&lt;span&gt;</code> 标签下的一段代码。</li>
+<li>文章加密：在博客源文件xx.md开始部分添加如下内容：<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">password: abcd</span><br><span class="line">abstract: 这是一篇加密的博客哦～</span><br><span class="line">message: 请输入密码</span><br></pre></td></tr></table></figure></li>
+<li>博客字体的修改. 参见<a target="_blank" rel="noopener" href="https://hexo-next.readthedocs.io/zh_CN/latest/next/advanced/%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE/">链接5</a></li>
+</ol>
+<h1 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h1><p>1.<a target="_blank" rel="noopener" href="https://tding.top">小丁的个人博客</a><br>2.<a target="_blank" rel="noopener" href="https://blog.csdn.net/pan861190079/article/details/80860153">Ubuntu 上使用hexo+github打造个人blog</a><br>3.<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a6d03d13788b">linux 下 Hexo + GitHub 搭建个人博客</a><br>4.<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f2285d63b3a8">在github上搭建hexo个人博客（Linux-Ubuntu）</a><br>5.<a target="_blank" rel="noopener" href="https://hexo-next.readthedocs.io/zh_CN/latest/next/advanced/%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE/">Next中文字体设置</a></p>
+</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>使用hexo+NexT+GitHub搭建个人博客</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://colainlibrary.com/archives/36e68834.html">https://colainlibrary.com/archives/36e68834.html</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>Cola &amp; Library</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2020-01-28</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2022-08-20</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/GitHub/">GitHub</a><a class="post-meta__tags" href="/tags/Library/">Library</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="/images/post-7.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/images/wechatpay.png" target="_blank"><img class="post-qr-code-img" src="/images/wechatpay.png" alt="微信支付"/></a><div class="post-qr-code-desc">微信支付</div></li><li class="reward-item"><a href="/images/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/images/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/archives/3a0407be.html"><img class="prev-cover" src="/images/post-8.jpg" onerror="onerror=null;src='/images/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">多设备管理个人博客</div></div></a></div><div class="next-post pull-right"><a href="/archives/d44b8445.html"><img class="next-cover" src="/images/post-6.jpg" onerror="onerror=null;src='/images/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">基于深度学习的3D无序分拣</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/archives/c9238145.html" title="加密文档测试"><img class="cover" src="/images/post-9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-31</div><div class="title">加密文档测试</div></div></a></div><div><a href="/archives/3a0407be.html" title="多设备管理个人博客"><img class="cover" src="/images/post-8.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-30</div><div class="title">多设备管理个人博客</div></div></a></div><div><a href="/archives/58743.html" title="远程仓库与本地仓库的同步"><img class="cover" src="/images/post-6.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-11</div><div class="title">远程仓库与本地仓库的同步</div></div></a></div><div><a href="/archives/7130.html" title="个人网站的创建及NexT模板的使用"><img class="cover" src="/images/post-2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-28</div><div class="title">个人网站的创建及NexT模板的使用</div></div></a></div><div><a href="/archives/456588d2.html" title="Linux 多内核切换和设置默认�
