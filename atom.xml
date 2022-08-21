@@ -6,7 +6,7 @@
   <link href="https://colainlibrary.com/atom.xml" rel="self"/>
   
   <link href="https://colainlibrary.com/"/>
-  <updated>2022-08-21T05:56:30.827Z</updated>
+  <updated>2022-08-21T16:01:43.022Z</updated>
   <id>https://colainlibrary.com/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>ROS自定义动态链接库并调用</title>
+    <link href="https://colainlibrary.com/archives/ff2330c4.html"/>
+    <id>https://colainlibrary.com/archives/ff2330c4.html</id>
+    <published>2022-08-21T19:00:00.000Z</published>
+    <updated>2022-08-21T16:01:43.022Z</updated>
+    
+    
+    <summary type="html">本文记录用ROS原生CMakeLists.txt和catkin_simple两种方式分别生成自定义动态链接库和调用的方式。</summary>
+    
+    
+    
+    <category term="机器人控制" scheme="https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/"/>
+    
+    <category term="ROS学习笔记" scheme="https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/ROS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+    <category term="C++" scheme="https://colainlibrary.com/tags/C/"/>
+    
+    <category term="ROS" scheme="https://colainlibrary.com/tags/ROS/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hexo-Butterfly 自定义加载动画</title>
     <link href="https://colainlibrary.com/archives/5851a8db.html"/>
     <id>https://colainlibrary.com/archives/5851a8db.html</id>
     <published>2022-08-21T11:00:00.000Z</published>
-    <updated>2022-08-21T05:56:30.827Z</updated>
+    <updated>2022-08-21T15:23:55.260Z</updated>
     
     
     <summary type="html">本文简要记录如何实现自定义加载动画。</summary>
@@ -30,12 +55,12 @@
     
     <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
     
-    <category term="Github" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/Github/"/>
+    <category term="GitHub" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/GitHub/"/>
     
+    
+    <category term="GitHub" scheme="https://colainlibrary.com/tags/GitHub/"/>
     
     <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
-    
-    <category term="Github" scheme="https://colainlibrary.com/tags/Github/"/>
     
   </entry>
   
@@ -44,7 +69,7 @@
     <link href="https://colainlibrary.com/archives/10259deb.html"/>
     <id>https://colainlibrary.com/archives/10259deb.html</id>
     <published>2022-08-19T15:00:00.000Z</published>
-    <updated>2022-08-20T11:20:48.929Z</updated>
+    <updated>2022-08-21T15:24:18.255Z</updated>
     
     
     <summary type="html">本文介绍Hexo+Butterfly实现多图排版的方法。</summary>
@@ -53,12 +78,12 @@
     
     <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
     
-    <category term="Github" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/Github/"/>
+    <category term="GitHub" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/GitHub/"/>
     
+    
+    <category term="GitHub" scheme="https://colainlibrary.com/tags/GitHub/"/>
     
     <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
-    
-    <category term="Github" scheme="https://colainlibrary.com/tags/Github/"/>
     
   </entry>
   
@@ -67,7 +92,7 @@
     <link href="https://colainlibrary.com/archives/f301cdf2.html"/>
     <id>https://colainlibrary.com/archives/f301cdf2.html</id>
     <published>2022-08-18T22:00:00.000Z</published>
-    <updated>2022-08-19T14:03:27.734Z</updated>
+    <updated>2022-08-21T15:24:30.950Z</updated>
     
     
     <summary type="html">介绍Hexo博客中外挂标签的使用方法.</summary>
@@ -76,12 +101,12 @@
     
     <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
     
-    <category term="Github" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/Github/"/>
+    <category term="GitHub" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/GitHub/"/>
     
+    
+    <category term="GitHub" scheme="https://colainlibrary.com/tags/GitHub/"/>
     
     <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
-    
-    <category term="Github" scheme="https://colainlibrary.com/tags/Github/"/>
     
   </entry>
   
@@ -430,27 +455,6 @@
     
     
     <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ubuntu 自动挂载硬盘</title>
-    <link href="https://colainlibrary.com/archives/d1830d13.html"/>
-    <id>https://colainlibrary.com/archives/d1830d13.html</id>
-    <published>2022-01-26T11:00:00.000Z</published>
-    <updated>2022-08-18T05:23:16.088Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;记录Ubuntu自动挂载硬盘的方法。&lt;br&gt;</summary>
-    
-    
-    
-    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
-    
-    <category term="软件技术" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="Linux" scheme="https://colainlibrary.com/tags/Linux/"/>
     
   </entry>
   
