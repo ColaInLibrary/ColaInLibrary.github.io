@@ -7,6 +7,8 @@
 <ul>
 <li>原汁原味的catkin_make建立共享库以及调用；</li>
 <li>使用catkin_simple来简化CMakeLists.txt，实现同样的效果，调试更简单。（推荐使用）</li>
+<li>工程源码见：<div class="tag link"><a class="link-card" title="ROS_share_library" href="https://github.com/ColaInLibrary/ros_share_library"><div class="left"><img src="/images/github.png"/></div><div class="right"><p class="text">ROS_share_library</p><p class="url">https://github.com/ColaInLibrary/ros_share_library</p></div></a></div> 
+</li>
 </ul>
 <h1 id="2-创建共享库"><a href="#2-创建共享库" class="headerlink" title="2 创建共享库"></a>2 创建共享库</h1><h2 id="2-1-使用原生-CMakeLists-txt"><a href="#2-1-使用原生-CMakeLists-txt" class="headerlink" title="2.1 使用原生 CMakeLists.txt"></a>2.1 使用原生 CMakeLists.txt</h2><p>首先在工作空间创建包 <code>creating_a_ros_library</code>：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">catkin_create_pkg creating_a_ros_library roscpp std_msgs std_srvs</span><br></pre></td></tr></table></figure><br>然后添加以下文件到工程中，目录如下：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── include</span><br><span class="line">│   └── creating_a_ros_library</span><br><span class="line">│       └── example_ros_class.h</span><br><span class="line">├── package.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── example_ros_class.cpp</span><br><span class="line">    └── example_ros_class_test_main.cpp</span><br></pre></td></tr></table></figure></p>
 <blockquote>

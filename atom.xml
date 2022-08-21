@@ -6,7 +6,7 @@
   <link href="https://colainlibrary.com/atom.xml" rel="self"/>
   
   <link href="https://colainlibrary.com/"/>
-  <updated>2022-08-21T16:01:43.022Z</updated>
+  <updated>2022-08-21T16:04:12.885Z</updated>
   <id>https://colainlibrary.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://colainlibrary.com/archives/ff2330c4.html"/>
     <id>https://colainlibrary.com/archives/ff2330c4.html</id>
     <published>2022-08-21T19:00:00.000Z</published>
-    <updated>2022-08-21T16:01:43.022Z</updated>
+    <updated>2022-08-21T16:04:12.885Z</updated>
     
     
     <summary type="html">本文记录用ROS原生CMakeLists.txt和catkin_simple两种方式分别生成自定义动态链接库和调用的方式。</summary>
