@@ -6,7 +6,7 @@
   <link href="https://colainlibrary.com/atom.xml" rel="self"/>
   
   <link href="https://colainlibrary.com/"/>
-  <updated>2022-08-20T11:20:48.929Z</updated>
+  <updated>2022-08-21T05:56:30.827Z</updated>
   <id>https://colainlibrary.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo-Butterfly 自定义加载动画</title>
+    <link href="https://colainlibrary.com/archives/5851a8db.html"/>
+    <id>https://colainlibrary.com/archives/5851a8db.html</id>
+    <published>2022-08-21T11:00:00.000Z</published>
+    <updated>2022-08-21T05:56:30.827Z</updated>
+    
+    
+    <summary type="html">本文简要记录如何实现自定义加载动画。</summary>
+    
+    
+    
+    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    
+    <category term="Github" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/Github/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+    <category term="Github" scheme="https://colainlibrary.com/tags/Github/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo-Butterfly 多图排版</title>
@@ -428,25 +451,6 @@
     
     
     <category term="Linux" scheme="https://colainlibrary.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Motive 软件使用方法</title>
-    <link href="https://colainlibrary.com/archives/dc5dd3f8.html"/>
-    <id>https://colainlibrary.com/archives/dc5dd3f8.html</id>
-    <published>2021-12-19T21:30:00.000Z</published>
-    <updated>2022-08-18T05:23:16.088Z</updated>
-    
-    
-    <summary type="html">介绍动捕软件Motive的基本使用</summary>
-    
-    
-    
-    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
-    
-    
-    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
     
   </entry>
   

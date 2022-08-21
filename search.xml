@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo-Butterfly 自定义加载动画</title>
+    <url>/archives/5851a8db.html</url>
+    <content><![CDATA[<div class="note info disabled"><p>本文在Akiar的基础上进行自定义加载动画的实现，在操作之前，应确保你已经阅读过原文链接：</p>
+</div>
+<div class="tag link"><a class="link-card" title="Loading Animation" href="https://akilar.top/posts/3d221bf2/"><div class="left"><img src="/images/20220815/favicon.ico"/></div><div class="right"><p class="text">Loading Animation</p><p class="url">https://akilar.top/posts/3d221bf2/</p></div></a></div>
+<div class="note warning flat"><p>上述链接给出的教程是针对一个已经写好的<code>.styl</code>文件，但更多的动画是<code>.css</code>格式，因此本文介绍加载<code>.css</code>格式的动画方法。</p>
+</div>
+<p>[<a href="https://codepen.io/">CodeOpen</a>]提供了很多已有的动画案例，并且能在其上以<code>.pug</code>形式、<code>.styl</code>格式调试（通过齿轮图标进行设置）。将该网站上现有的CSS格式文件导出后，可以用 stylus 转换（参考[<a href="https://blog.csdn.net/lyt_angularjs/article/details/80457099">stylus基础教程</a>]。具体语法如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i stylus@latest -g</span><br><span class="line">stylus -C assets/css/index.css  <span class="comment"># 将assets/css/index.css 编译成assets/css/index.styl</span></span><br><span class="line">stylus -c assets/css/index.styl assets/css/index.css  <span class="comment"># 将.styl转换成.css</span></span><br></pre></td></tr></table></figure>
+<p>将HTML转换为<code>.pug</code>在[<a href="https://akilar.top/posts/3d221bf2/">Loading Animation</a>]中有介绍，剩余的操作流程与该链接中的一致。</p>
+]]></content>
+      <categories>
+        <category>工科生的基本功</category>
+        <category>Github</category>
+      </categories>
+      <tags>
+        <tag>Library</tag>
+        <tag>Github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo-Butterfly 多图排版</title>
     <url>/archives/10259deb.html</url>
     <content><![CDATA[<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>Butterfly 主题自带的照片墙排版方式可以对多图并排，但是要求预先对图片尺寸设计好，也就是不能自行修改图片尺寸，体验不好；网上流传的各种 html 标签的写法要么不能正常显示，要么不能实现多图并排。笔者在此引入一种可以实现多图并排、并能调整大小的方式。该方式通过构建外挂标签，实现多图并排。因为笔者之前使用 Next 主题样式是比较容易实现多图并排的，因此就从 Next 主题中找出了相关的文件。</p>
@@ -4365,8 +4386,8 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
       </categories>
       <tags>
         <tag>Library</tag>
-        <tag>C++</tag>
         <tag>Linux</tag>
+        <tag>C++</tag>
         <tag>OpenCV</tag>
       </tags>
   </entry>
@@ -4646,8 +4667,8 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
       </categories>
       <tags>
         <tag>Library</tag>
-        <tag>C++</tag>
         <tag>Linux</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
