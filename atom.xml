@@ -6,7 +6,7 @@
   <link href="https://colainlibrary.com/atom.xml" rel="self"/>
   
   <link href="https://colainlibrary.com/"/>
-  <updated>2022-08-21T16:04:12.885Z</updated>
+  <updated>2022-08-25T08:39:31.229Z</updated>
   <id>https://colainlibrary.com/</id>
   
   <author>
@@ -15,6 +15,52 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C++ template function</title>
+    <link href="https://colainlibrary.com/archives/444d4f15.html"/>
+    <id>https://colainlibrary.com/archives/444d4f15.html</id>
+    <published>2022-08-25T09:00:00.000Z</published>
+    <updated>2022-08-25T08:39:31.229Z</updated>
+    
+    
+    <summary type="html">本文记录对于C++模板函数的学习笔记，主要给出基本的使用方式和编译方式。</summary>
+    
+    
+    
+    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    
+    <category term="快乐码农" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+    <category term="C++" scheme="https://colainlibrary.com/tags/C/"/>
+    
+    <category term="cmake" scheme="https://colainlibrary.com/tags/cmake/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>路由器无线桥接</title>
+    <link href="https://colainlibrary.com/archives/9a3d56a3.html"/>
+    <id>https://colainlibrary.com/archives/9a3d56a3.html</id>
+    <published>2022-08-24T09:00:00.000Z</published>
+    <updated>2022-08-25T08:45:06.113Z</updated>
+    
+    
+    <summary type="html">本文记录路由器无线桥接的方法。</summary>
+    
+    
+    
+    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    
+    <category term="软件技术" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+  </entry>
   
   <entry>
     <title>ROS自定义动态链接库并调用</title>
@@ -412,46 +458,6 @@
     <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
     
     <category term="专栏——seaborn绘图" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94seaborn%E7%BB%98%E5%9B%BE/"/>
-    
-    
-    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python 调用 ADS 接口及时间分析</title>
-    <link href="https://colainlibrary.com/archives/f900a735.html"/>
-    <id>https://colainlibrary.com/archives/f900a735.html</id>
-    <published>2022-03-21T11:00:00.000Z</published>
-    <updated>2022-08-18T05:23:16.088Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;记录利用Python调用TwinCAT ADS接口的方法及效率测试。&lt;br&gt;</summary>
-    
-    
-    
-    <category term="机器人控制" scheme="https://colainlibrary.com/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A7%E5%88%B6/"/>
-    
-    
-    <category term="机器人" scheme="https://colainlibrary.com/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ubuntu和Windows获取系统时间的比较</title>
-    <link href="https://colainlibrary.com/archives/7e62fd0f.html"/>
-    <id>https://colainlibrary.com/archives/7e62fd0f.html</id>
-    <published>2022-03-09T11:00:00.000Z</published>
-    <updated>2022-08-18T05:23:16.088Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;记录利用Python获取系统时间戳的方法。&lt;br&gt;</summary>
-    
-    
-    
-    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
-    
-    <category term="快乐码农" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/"/>
     
     
     <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
