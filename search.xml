@@ -999,18 +999,6 @@ x_2+3x_4 & 5x_2+9x_4 \\
     <title>双系统蓝牙耳机的设置</title>
     <url>/archives/b0cecbd3.html</url>
     <content><![CDATA[<p>本文转载自：</p>
-<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>在Windows和Ubuntu的双系统切换后，蓝牙耳机每次都需要重新配对连接，体验很差。本文记录解决方案。解决之后，每次切换系统只需要点连接即可，不需要配对了。</p>
-<h1 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2 解决方案"></a>2 解决方案</h1><ol>
-<li>在Windows下删除蓝牙耳机；</li>
-<li>在Windows下重新连接蓝牙耳机；</li>
-<li>在Ubuntu下删除蓝牙耳机；</li>
-<li>在Ubuntu下重连蓝牙耳机；</li>
-<li>在Ubuntu下依次执行如下指令：<br><img src="/images/20220408/001.png" alt="01"></li>
-<li>打开info文件后，记录<code>LinkKey</code>中的<code>Key</code>值<br><img src="/images/20220408/002.png" alt="01"></li>
-<li>从[<a href="https://docs.microsoft.com/zh-cn/sysinternals/downloads/psexec">链接</a>]下载PsExec工具，解压；</li>
-<li>以管理员身份运行PowerShell，进入到PsExec软件的目录下，执行：<code>.\PsExec.exe -s -i regedit</code>，打开注册表，依次找到<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\BTHPORT\Parameters\Keys\</code>，然后将对应的数字项二进制值（与第5步中出现的第一串数字名一致）打开，修改为第6步中的<code>Key</code>值。</li>
-<li>重启电脑。</li>
-</ol>
 ]]></content>
       <categories>
         <category>工科生的基本功</category>
