@@ -157,6 +157,27 @@
   </entry>
   
   <entry>
+    <title>关于Pytorch中LSTM前向传播的一个验证</title>
+    <link href="https://colainlibrary.com/archives/b0cecbd3.html"/>
+    <id>https://colainlibrary.com/archives/b0cecbd3.html</id>
+    <published>2022-08-15T15:30:00.000Z</published>
+    <updated>2022-08-27T13:03:19.294Z</updated>
+    
+    
+    <summary type="html">介绍pytorch中LSTM的前向传播的验证</summary>
+    
+    
+    
+    <category term="人工智能" scheme="https://colainlibrary.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="神经网络" scheme="https://colainlibrary.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Pytorch 学习笔记（梯度的求取）</title>
     <link href="https://colainlibrary.com/archives/c12048c3.html"/>
     <id>https://colainlibrary.com/archives/c12048c3.html</id>
@@ -201,6 +222,31 @@
     <category term="C++" scheme="https://colainlibrary.com/tags/C/"/>
     
     <category term="cmake" scheme="https://colainlibrary.com/tags/cmake/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pandas 学习笔记</title>
+    <link href="https://colainlibrary.com/archives/dcaa8099.html"/>
+    <id>https://colainlibrary.com/archives/dcaa8099.html</id>
+    <published>2022-08-12T11:00:00.000Z</published>
+    <updated>2022-08-27T13:05:36.927Z</updated>
+    
+    
+    <summary type="html">记录pandas的一些学习笔记，供自己查阅。</summary>
+    
+    
+    
+    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    
+    <category term="快乐码农" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
+    
+    <category term="pandas" scheme="https://colainlibrary.com/tags/pandas/"/>
     
   </entry>
   
@@ -301,7 +347,7 @@
     <link href="https://colainlibrary.com/archives/9765ce9e.html"/>
     <id>https://colainlibrary.com/archives/9765ce9e.html</id>
     <published>2022-07-26T11:00:00.000Z</published>
-    <updated>2022-08-18T05:23:16.088Z</updated>
+    <updated>2022-08-27T13:22:48.783Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文将介绍Mujoco210的安装过程。&lt;br&gt;</summary>
@@ -311,6 +357,27 @@
     <category term="人工智能" scheme="https://colainlibrary.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="强化学习" scheme="https://colainlibrary.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>双系统蓝牙耳机的设置</title>
+    <link href="https://colainlibrary.com/archives/b0cecbd3.html"/>
+    <id>https://colainlibrary.com/archives/b0cecbd3.html</id>
+    <published>2022-04-08T15:30:00.000Z</published>
+    <updated>2022-08-27T13:20:03.142Z</updated>
+    
+    
+    <summary type="html">记录Win、Ubuntu双系统切换时蓝牙耳机总是需要重新配对的解决方案。</summary>
+    
+    
+    
+    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    
+    <category term="软件技术" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/"/>
     
     
     <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
@@ -389,69 +456,6 @@
     
     
     <summary type="html">&lt;p&gt;记录利用 Seaborn 中关于 lmplot 的相关用法&lt;br&gt;</summary>
-    
-    
-    
-    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
-    
-    <category term="专栏——seaborn绘图" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94seaborn%E7%BB%98%E5%9B%BE/"/>
-    
-    
-    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Seaborn绘图——relplot(relative plot)</title>
-    <link href="https://colainlibrary.com/archives/3617e253.html"/>
-    <id>https://colainlibrary.com/archives/3617e253.html</id>
-    <published>2022-04-06T17:00:00.000Z</published>
-    <updated>2022-08-19T12:59:40.141Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;记录利用 Seaborn 中关于 relplot 的相关用法&lt;br&gt;</summary>
-    
-    
-    
-    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
-    
-    <category term="专栏——seaborn绘图" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94seaborn%E7%BB%98%E5%9B%BE/"/>
-    
-    
-    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Seaborn绘图——displot(distribution plot)</title>
-    <link href="https://colainlibrary.com/archives/b4c0319e.html"/>
-    <id>https://colainlibrary.com/archives/b4c0319e.html</id>
-    <published>2022-04-06T15:00:00.000Z</published>
-    <updated>2022-08-19T12:57:30.754Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;记录利用 Seaborn 中关于 displot 的相关用法&lt;br&gt;</summary>
-    
-    
-    
-    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
-    
-    <category term="专栏——seaborn绘图" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94seaborn%E7%BB%98%E5%9B%BE/"/>
-    
-    
-    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Seaborn绘图——概述</title>
-    <link href="https://colainlibrary.com/archives/853893d9.html"/>
-    <id>https://colainlibrary.com/archives/853893d9.html</id>
-    <published>2022-04-06T11:00:00.000Z</published>
-    <updated>2022-08-18T09:47:07.239Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;记录利用 Seaborn 绘图的方法，方便后续查阅。&lt;br&gt;</summary>
     
     
     
