@@ -979,7 +979,7 @@ x_2+3x_4 & 5x_2+9x_4 \\
 <p>注意两个环境变量中间用一个:隔开<br><img src="/images/20220726/07.png" alt="7"></p>
 </blockquote>
 <h1 id="6-Windows下的安装"><a href="#6-Windows下的安装" class="headerlink" title="6 Windows下的安装"></a>6 Windows下的安装</h1><p>参考：<a href="https://zhuanlan.zhihu.com/p/462948069">https://zhuanlan.zhihu.com/p/462948069</a></p>
-<h1 id="6-1-流程及安装包下载"><a href="#6-1-流程及安装包下载" class="headerlink" title="6.1 流程及安装包下载"></a>6.1 流程及安装包下载</h1><p>在Windows上装mujoco_py的流程分为三步：</p>
+<h2 id="6-1-流程及安装包下载"><a href="#6-1-流程及安装包下载" class="headerlink" title="6.1 流程及安装包下载"></a>6.1 流程及安装包下载</h2><p>在Windows上装mujoco_py的流程分为三步：</p>
 <ol>
 <li>安装Microsoft Visual C++ 2015，安装这个东西主要为了解决两个顽疾：<ul>
 <li><code>Microsoft Visual C++ 14.0 or later is required</code></li>
@@ -3218,7 +3218,7 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
 <blockquote>
 <p>注意：关于Emacs的一些快捷键使用方法可以参考<a href="https://www.jianshu.com/p/8b4e1f77b686">vscode emacs 快捷键</a>。<br>说明：上面的链接中不一定所有的快捷键都有效，但是可以参考他的设置方法来做一些设置。</p>
 </blockquote>
-<h2 id="3-3-CapsLock键改为Ctrl键"><a href="#3-3-CapsLock键改为Ctrl键" class="headerlink" title="3.3 CapsLock键改为Ctrl键"></a>3.3 CapsLock键改为Ctrl键</h2><p>打开一个终端，输入<code>sudo gedit ~/.Xmodmap</code>，打开后在文件中写入：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">remove Lock = Caps_Lock</span><br><span class="line">keysym Caps_Lock = Control_L</span><br><span class="line">add control = Control_L</span><br></pre></td></tr></table></figure><br>保存关闭后，在终端中执行<code>xmodmap ~/.Xmodmap</code>。Ubuntu18.04 中设置开机自启动的方法：<br>在终端中执行 <code>gnome-session-properties</code>。打开后新增一条，如下所示：<br><img src="/images/20200308/08.png" alt="08"></p>
+<h2 id="3-3-CapsLock键改为Ctrl键"><a href="#3-3-CapsLock键改为Ctrl键" class="headerlink" title="3.3 CapsLock键改为Ctrl键"></a>3.3 CapsLock键改为Ctrl键</h2><p>打开一个终端，输入<code>sudo gedit ~/.Xmodmap</code>，打开后在文件中写入：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">remove Lock = Caps_Lock</span><br><span class="line">keysym Caps_Lock = Control_L</span><br><span class="line">add control = Control_L</span><br></pre></td></tr></table></figure><br>保存关闭后，在终端中执行<code>xmodmap ~/.Xmodmap</code>。Ubuntu18.04 中设置开机自启动的方法：<br>在终端中执行 <code>gnome-session-properties</code>。打开后新增一条，如下所示：<br><img src="/images/20200308/08.png" alt="08"><br>打开后写入要执行的命令<code>xmodmap ~/.Xmodmap</code>。</p>
 <blockquote>
 <p>Note: 在Ubuntu20.04中，需要将上图中的命令写为 <code>xmodmap /home/YOURNAME/.Xmodmap</code>.</p>
 </blockquote>
