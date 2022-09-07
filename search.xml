@@ -332,7 +332,7 @@
   </entry>
   <entry>
     <title>关于Pytorch中LSTM前向传播的一个验证</title>
-    <url>/archives/b0cecbd3.html</url>
+    <url>/archives/b0cecbd4.html</url>
     <content><![CDATA[<p>简要记录Pytorch中LSTM前向传播的验证。</p>
 <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>在使用Pytorch中LSTM的使用，一直会存在几点疑问：</p>
 <ul>
