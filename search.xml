@@ -1009,6 +1009,24 @@ x_2+3x_4 & 5x_2+9x_4 \\
       </tags>
   </entry>
   <entry>
+    <title>Ubuntu换源与共享文件夹</title>
+    <url>/archives/c0bcc16d.html</url>
+    <content><![CDATA[<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>在Ubuntu设置共享文件夹的时候，按照提示自行安装samba，结果一直报错缺少依赖项，如果一项项去安装，会一直提示缺少更下一级的依赖项。最后通过换源的方法解决了。换源的方法参考：<br><div class="tag link"><a class="link-card" title="ubuntu18.04 更改设置镜像源" href="https://blog.csdn.net/q12373/article/details/108773090"><div class="left"><img src="/images/csdn.jpeg"/></div><div class="right"><p class="text">ubuntu18.04 更改设置镜像源</p><p class="url">https://blog.csdn.net/q12373/article/details/108773090</p></div></a></div></p>
+<h1 id="2-换源方法"><a href="#2-换源方法" class="headerlink" title="2 换源方法"></a>2 换源方法</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list</span><br><span class="line"><span class="comment"># 打开后添加下面的一种源即可</span></span><br><span class="line"><span class="comment">#阿里源</span></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line"></span><br><span class="line"><span class="comment">#网易源</span></span><br><span class="line">deb http://mirrors.163.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line"></span><br><span class="line"><span class="comment">#清华源</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line"></span><br><span class="line"><span class="comment">##中科大源</span></span><br><span class="line">deb https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存后执行：</span></span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<h1 id="3-安装samba"><a href="#3-安装samba" class="headerlink" title="3 安装samba"></a>3 安装samba</h1><p>执行<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install samba</span><br></pre></td></tr></table></figure><br><div class="note pink icon-padding modern"><i class="note-icon fas fa-car-crash"></i><p>如果遇到错误，就先执行<code>sudo apt-get update --fix-missing</code>， 再执行<code>sudo apt install samba</code></p>
+</div>。</p>
+<p>安装完就可以愉快地设置共享文件夹了。</p>
+]]></content>
+      <categories>
+        <category>工科生的基本功</category>
+        <category>软件技术</category>
+      </categories>
+      <tags>
+        <tag>Library</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>双系统蓝牙耳机的设置</title>
     <url>/archives/b0cecbd3.html</url>
     <content><![CDATA[<p>本文转载自：<br><div class="tag link"><a class="link-card" title="win10与ubuntu双系统蓝牙配对问题" href="https://lushuangning.github.io/posts/64dfce40/"><div class="left"><img src="/images/linkcard3.png"/></div><div class="right"><p class="text">win10与ubuntu双系统蓝牙配对问题</p><p class="url">https://lushuangning.github.io/posts/64dfce40/</p></div></a></div></p>
@@ -4724,8 +4742,8 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
       </categories>
       <tags>
         <tag>Library</tag>
-        <tag>Linux</tag>
         <tag>C++</tag>
+        <tag>Linux</tag>
         <tag>OpenCV</tag>
       </tags>
   </entry>
@@ -5005,8 +5023,8 @@ y = \frac{1}{1 + e^{ - x}}\tag{23}</script><p>求导，有</p>
       </categories>
       <tags>
         <tag>Library</tag>
-        <tag>Linux</tag>
         <tag>C++</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>

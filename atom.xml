@@ -364,6 +364,29 @@
   </entry>
   
   <entry>
+    <title>Ubuntu换源与共享文件夹</title>
+    <link href="https://colainlibrary.com/archives/c0bcc16d.html"/>
+    <id>https://colainlibrary.com/archives/c0bcc16d.html</id>
+    <published>2022-04-09T15:30:00.000Z</published>
+    <updated>2022-09-08T02:55:25.444Z</updated>
+    
+    
+    <summary type="html">在Ubuntu设置共享文件夹的的时候，遇到了无法安装samba的问题，最后通过换源的方法解决了，特此记录。</summary>
+    
+    
+    
+    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    
+    <category term="软件技术" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+    <category term="Linux" scheme="https://colainlibrary.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
     <title>双系统蓝牙耳机的设置</title>
     <link href="https://colainlibrary.com/archives/b0cecbd3.html"/>
     <id>https://colainlibrary.com/archives/b0cecbd3.html</id>
@@ -435,27 +458,6 @@
     
     
     <summary type="html">&lt;p&gt;记录利用 Seaborn 中关于两个变量的联合分布绘图方法。&lt;br&gt;</summary>
-    
-    
-    
-    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
-    
-    <category term="专栏——seaborn绘图" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94seaborn%E7%BB%98%E5%9B%BE/"/>
-    
-    
-    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Seaborn绘图——lmplot(linear model plot)</title>
-    <link href="https://colainlibrary.com/archives/1bc7b37e.html"/>
-    <id>https://colainlibrary.com/archives/1bc7b37e.html</id>
-    <published>2022-04-06T19:30:00.000Z</published>
-    <updated>2022-08-19T13:01:47.656Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;记录利用 Seaborn 中关于 lmplot 的相关用法&lt;br&gt;</summary>
     
     
     
