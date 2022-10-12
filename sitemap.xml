@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://colainlibrary.com/about/index.html</loc>
+    
+    <lastmod>2022-10-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://colainlibrary.com/archives/d5db4349.html</loc>
     
     <lastmod>2022-10-12</lastmod>
@@ -878,15 +887,6 @@
     <loc>https://colainlibrary.com/archives/7130.html</loc>
     
     <lastmod>2022-08-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://colainlibrary.com/about/index.html</loc>
-    
-    <lastmod>2022-08-17</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
