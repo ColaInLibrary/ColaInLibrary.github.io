@@ -27,6 +27,24 @@
       </tags>
   </entry>
   <entry>
+    <title>机器人阻抗控制</title>
+    <url>/archives/d5db4349.html</url>
+    <content><![CDATA[<!-- b站分享按钮下"嵌入" -->
+<!-- <iframe src="//player.bilibili.com/player.html?aid=248891855&bvid=BV17v411H7Dm&cid=362984310&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe> -->
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"> <iframe style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;" src="//player.bilibili.com/player.html?aid=248891855&bvid=BV17v411H7Dm&cid=362984310&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe> </div>
+
+<p>基于自行搭建的机器人控制器,从电机力矩层面实现阻抗控制.<br><span id="more"></span></p>
+]]></content>
+      <categories>
+        <category>机器人控制</category>
+        <category>专栏——机器人动力学</category>
+      </categories>
+      <tags>
+        <tag>Library</tag>
+        <tag>机器人</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于深度学习的3D无序分拣</title>
     <url>/archives/d44b8445.html</url>
     <content><![CDATA[<!-- b站分享按钮下"嵌入" -->
@@ -1505,24 +1523,6 @@ x_2+3x_4 & 5x_2+9x_4 \\
       </categories>
       <tags>
         <tag>Library</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器人阻抗控制</title>
-    <url>/archives/d5db4349.html</url>
-    <content><![CDATA[<!-- b站分享按钮下"嵌入" -->
-<!-- <iframe src="//player.bilibili.com/player.html?aid=248891855&bvid=BV17v411H7Dm&cid=362984310&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe> -->
-<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"> <iframe style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;" src="//player.bilibili.com/player.html?aid=248891855&bvid=BV17v411H7Dm&cid=362984310&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe> </div>
-
-<p>基于自行搭建的机器人控制器,从电机力矩层面实现阻抗控制.<br><span id="more"></span></p>
-]]></content>
-      <categories>
-        <category>机器人控制</category>
-        <category>专栏——机器人动力学</category>
-      </categories>
-      <tags>
-        <tag>Library</tag>
-        <tag>机器人</tag>
       </tags>
   </entry>
   <entry>
