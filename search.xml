@@ -102,13 +102,13 @@
 <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>在用mujoco_py做仿真的时候，为了能直观地看到一些数据的曲线，因此需要使用PyQt5。<br>系统与软件版本： Ubuntu18.04 + Python3.8.13 + PyQt5-5.15</p>
 <h1 id="2-PyQt5的安装"><a href="#2-PyQt5的安装" class="headerlink" title="2 PyQt5的安装"></a>2 PyQt5的安装</h1><p>PyQt5的官方链接：<a href="https://pypi.org/project/PyQt5/">link</a><br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda activate py38  <span class="comment"># 在自己的conda环境中进行配置</span></span><br><span class="line">pip install PyQt5</span><br><span class="line">pip install pyqt5-tools</span><br><span class="line"><span class="comment"># 安装图像化界面 designer</span></span><br><span class="line">sudo apt-get install qttools5-dev-tools</span><br><span class="line">sudo apt-get install qttools5-dev</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>如果安装<code>qttools5-dev</code>时出现下图所示的错误，可以取消对Ubuntu的software更新的禁用后（但无需安装推荐的更新）再安装。<br><img src="images/20221016/1016-04.png" alt="04"><br>安装好之后两个软件的位置：</p>
+<p>如果安装<code>qttools5-dev</code>时出现下图所示的错误，可以取消对Ubuntu的software更新的禁用后（但无需安装推荐的更新）再安装。<br><img src="/images/20221016/1016-04.png" alt="04"><br>安装好之后两个软件的位置：</p>
 <ul>
 <li>designer： /usr/lib/x86_64-linux-gnu/qt5/bin/designer</li>
 <li>pyuic5: /media/robot/ubuntu/anaconda3/envs/py38/bin/pyuic5<br>查看在哪里可以借助<code>which</code>命令，例如：<code>which pyuic5</code></li>
 </ul>
 </blockquote>
-<h1 id="3-vscode上配置"><a href="#3-vscode上配置" class="headerlink" title="3 vscode上配置"></a>3 vscode上配置</h1><p>VS Code中安装插件 <code>PYQT Integration</code>。然后设置插件的两个位置如下：<br><img src="images/20221016/1016-01.png" alt="1"><br><img src="images/20221016/1016-02.png" alt="2"></p>
+<h1 id="3-vscode上配置"><a href="#3-vscode上配置" class="headerlink" title="3 vscode上配置"></a>3 vscode上配置</h1><p>VS Code中安装插件 <code>PYQT Integration</code>。然后设置插件的两个位置如下：<br><img src="/images/20221016/1016-01.png" alt="1"><br><img src="/images/20221016/1016-02.png" alt="2"></p>
 <h1 id="4-使用"><a href="#4-使用" class="headerlink" title="4 使用"></a>4 使用</h1><p>界面的布局有两种方式打开：</p>
 <ul>
 <li>直接搜索软件 designer</li>
@@ -120,7 +120,7 @@
 <li>在 vscode 中文件栏处，右键<code>hello.py</code>，选择<code>PyQt: Compile Form</code>。</li>
 </ul>
 <p>生成的 <code>hello.py</code> 文件不要修改，这样便于后续界面的更改后进行覆盖。使用 <code>hello.py</code> 文件时，需要新建一个文件 <code>main.py</code>，在其中调用，示例代码如下：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># main.py</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> QApplication, QMainWindow</span><br><span class="line"><span class="keyword">import</span> Ui_hello  <span class="comment"># 生成的文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>: </span><br><span class="line">    app = QApplication(sys.argv) </span><br><span class="line">    MainWindow = QMainWindow() </span><br><span class="line">    ui = Ui_hello.Ui_MainWindow() </span><br><span class="line">    ui.setupUi(MainWindow) </span><br><span class="line">    MainWindow.show() </span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure></p>
-<p>如果感觉上述方法比较麻烦，还可以在vscode中设置 <code>Pyqt-integration &gt; Pyuic &gt; Compile: Add Options</code> 添加 <code>-x</code> 参数，这样自动生成的<code>.py</code>文件是可以直接运行的，会将上面<code>main.py</code>中的内容自动添加到生成的<code>Ui_hello.py</code>中。<br><img src="images/20221016/1016-03.png" alt="03"></p>
+<p>如果感觉上述方法比较麻烦，还可以在vscode中设置 <code>Pyqt-integration &gt; Pyuic &gt; Compile: Add Options</code> 添加 <code>-x</code> 参数，这样自动生成的<code>.py</code>文件是可以直接运行的，会将上面<code>main.py</code>中的内容自动添加到生成的<code>Ui_hello.py</code>中。<br><img src="/images/20221016/1016-03.png" alt="03"></p>
 ]]></content>
       <categories>
         <category>工科生的基本功</category>
