@@ -6,7 +6,7 @@
   <link href="https://colainlibrary.com/atom.xml" rel="self"/>
   
   <link href="https://colainlibrary.com/"/>
-  <updated>2022-10-17T06:42:58.603Z</updated>
+  <updated>2022-10-28T05:10:27.395Z</updated>
   <id>https://colainlibrary.com/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Qt多线程以及调用Python</title>
+    <link href="https://colainlibrary.com/archives/421adcd5.html"/>
+    <id>https://colainlibrary.com/archives/421adcd5.html</id>
+    <published>2022-10-27T16:30:00.000Z</published>
+    <updated>2022-10-28T05:10:27.395Z</updated>
+    
+    
+    <summary type="html">记录用QT实现多线程以及调用Python的学习笔记</summary>
+    
+    
+    
+    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    
+    <category term="快乐码农" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E5%BF%AB%E4%B9%90%E7%A0%81%E5%86%9C/"/>
+    
+    
+    <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
+    
+    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Ubuntu下PyQt的使用</title>
     <link href="https://colainlibrary.com/archives/55530d2c.html"/>
     <id>https://colainlibrary.com/archives/55530d2c.html</id>
     <published>2022-10-16T16:30:00.000Z</published>
-    <updated>2022-10-17T06:42:58.603Z</updated>
+    <updated>2022-10-18T07:31:04.054Z</updated>
     
     
     <summary type="html">记录在Ubuntu下PyQt的安装与基本使用</summary>
@@ -448,27 +471,6 @@
     
     
     <category term="Library" scheme="https://colainlibrary.com/tags/Library/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>用seaborn/matplot绘制误差带阴影图</title>
-    <link href="https://colainlibrary.com/archives/7cd1c910.html"/>
-    <id>https://colainlibrary.com/archives/7cd1c910.html</id>
-    <published>2022-04-06T23:00:00.000Z</published>
-    <updated>2022-08-19T13:16:47.975Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;记录利用 seaborn、matplot 绘制带有误差带阴影的图。&lt;br&gt;</summary>
-    
-    
-    
-    <category term="工科生的基本功" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
-    
-    <category term="专栏——seaborn绘图" scheme="https://colainlibrary.com/categories/%E5%B7%A5%E7%A7%91%E7%94%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F/%E4%B8%93%E6%A0%8F%E2%80%94%E2%80%94seaborn%E7%BB%98%E5%9B%BE/"/>
-    
-    
-    <category term="Python" scheme="https://colainlibrary.com/tags/Python/"/>
     
   </entry>
   
